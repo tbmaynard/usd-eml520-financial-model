@@ -1,0 +1,14 @@
+:focus-visible { outline-offset: 2px; }
+
+/* Printing: the app is dark on screen, but prints on white paper. */
+@media print {
+  @page { margin: 14mm; }
+  html, body, #root, main { background: #fff !important; color: #111 !important; }
+  .no-print, .MuiDrawer-root, header { display: none !important; }
+  main { padding: 0 !important; }
+  .MuiCard-root, .MuiPaper-root { background: #fff !important; border-color: #ccc !important; break-inside: avoid; }
+  .MuiTypography-root, .MuiTableCell-root, .prose { color: #111 !important; }
+  .MuiTableCell-root { border-color: #ddd !important; }
+  .recharts-cartesian-grid line { stroke: #ddd !important; }
+  .recharts-text { fill: #333 !important; }
+}
