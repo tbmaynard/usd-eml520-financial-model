@@ -71,7 +71,7 @@ describe('Excel export', () => {
   it('builds a workbook that opens on the instructor summary', async () => {
     const p = timesceneProject();
     const wb = await buildWorkbook(p, all(p));
-    expect(wb.worksheets.map((w) => w.name)).toEqual(['Instructor Summary', 'Rubric', 'Projection - Base', 'Projection - Downside', 'Projection - Upside', 'Assumptions']);
+    expect(wb.worksheets.map((w) => w.name)).toEqual(['Instructor Summary', 'Rubric', 'Projection - Base', 'Projection - Downside', 'Projection - Upside', 'Assumptions', 'Exit (bonus)']);
     expect(String(wb.getWorksheet('Instructor Summary')!.getCell('A1').value)).toContain('TimeScene');
     const buf = await wb.xlsx.writeBuffer();
     expect(buf.byteLength).toBeGreaterThan(10000);

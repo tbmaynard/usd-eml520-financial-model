@@ -54,6 +54,7 @@ GitHub Pages sites are public. Nothing students type is sent anywhere, so a publ
 | Financial Projections | Dashboard (KPIs and four charts), income statement, cash flow with balances, business metrics, and a Calculations tab that explains every formula |
 | Scenarios | Base, downside and upside cases that override specific drivers, plus hiring delays, slower customer payments and pay changes; side-by-side comparison; one-at-a-time sensitivity analysis with a tornado chart |
 | Model Review | Review prompts (questions, not verdicts) with space for responses; a "what must be true" reflection; the one-page instructor summary |
+| Exit Strategy (bonus, ungraded) | A simple cap table (founders, option pool, SAFEs, priced rounds, liquidation preferences) and what founders would take home from a strategic acquisition, private equity buyout, IPO, acqui-hire, or keeping the company. Covers earn-outs, escrow, cash vs. stock, PE rollover, IPO lock-ups, California capital gains tax and federal QSBS. A "what would it take?" tab works backwards from a target take-home. |
 
 Every headline number has an **ƒ** button that opens its definition, formula, the values used in any chosen month, the student's assumptions behind it (with basis and confidence), links to trace further back, and the simplifications involved.
 
@@ -69,6 +70,7 @@ src/engine/            pure TypeScript, no UI; fully unit tested
   formulas.ts          documentation for the shared engine's calculations
   sensitivity.ts       one-at-a-time sensitivity analysis
   review.ts            model-review prompts
+  exit.ts              cap table, liquidation waterfall and exit outcomes (bonus page)
 src/state/             browser storage, project files, React store
 src/export/            CSV and Excel exports, rubric
 src/ui/                React + MUI pages and components
@@ -102,11 +104,12 @@ src/ui/                React + MUI pages and components
 - **Benchmarks** in review prompts (for example typical gross margins) are broad rules of thumb meant to prompt questions, not standards.
 - **Customer concentration** is an input for most models. Enterprise and licensing calculate it from identical-sized customers.
 - **Marketplace pass-through cash** (buyer payments forwarded to sellers) is not modeled; only the platform's fee is.
+- **Exit Strategy** is deliberately simple: one class of preferred with equal-ranking preferences, post-money SAFEs, no option vesting or exercise price, tax on stock received deferred until sale, and California rates for every founder. QSBS follows the rules for stock issued after July 4, 2025 (50%/75%/100% at 3/4/5 years, $15M cap); California does not conform. It is excluded from progress and the instructor summary but included in the Excel export as an "Exit (bonus)" sheet.
 - **Storage** is browser-local. Students must download project files to keep their work safely.
 
 ## Tests
 
-`npm test` runs 93 tests (`src/engine/__tests__/`). They include hand-calculated cases for every model:
+`npm test` runs 111 tests (`src/engine/__tests__/`). They include hand-calculated cases for every model:
 
 | Model | Test case (hand-calculated) |
 |---|---|
@@ -119,7 +122,7 @@ src/ui/                React + MUI pages and components
 | Licensing | Upfront $10k + $1k/month earned in month 1 with $22k invoiced; renewal at month 13; royalties $50/month collected 60 days later. |
 | Enterprise | 10 prospects × 50% × 20% → one pilot a month; 50% conversion → whole contracts in months 3 and 5; software revenue $1k, $1k, $2k, $2k; $12k billed annually at each start; unpaid pilots as selling cost; procurement delay shifts revenue; signed-but-not-started contracts count in contracted ARR but not revenue. |
 
-The suite also checks, for every model with every option on, that ending cash equals starting cash plus every month's change, that invoices equal collections plus receivables, that revenue equals invoices minus deferred revenue, that costs plus inventory equal cash paid plus unpaid bills, and that loan balances reconcile. Further tests cover hiring from the start month only (not retroactively), one-time vs. recurring expenses, tax with loss carryforward paid quarterly, scenarios moving drivers, a cash shortfall hidden by a positive ending balance, a sustained break-even case, the TimeScene scenario ordering, review prompts, sensitivity, project-file round trips and the Excel workbook.
+The suite also checks, for every model with every option on, that ending cash equals starting cash plus every month's change, that invoices equal collections plus receivables, that revenue equals invoices minus deferred revenue, that costs plus inventory equal cash paid plus unpaid bills, and that loan balances reconcile. Further tests cover hiring from the start month only (not retroactively), one-time vs. recurring expenses, tax with loss carryforward paid quarterly, scenarios moving drivers, a cash shortfall hidden by a positive ending balance, a sustained break-even case, the TimeScene scenario ordering, review prompts, sensitivity, project-file round trips and the Excel workbook. Exit tests check the cap table (pool, post-money SAFE, priced round dilution), the waterfall (preference vs. conversion, participating, payouts always summing to the exit value), California and QSBS taxes, earn-outs, PE rollover, IPO conversion of preferred, an acqui-hire where preferences take the whole price, and the price-needed solver.
 
 ## TimeScene demonstration
 

@@ -7,7 +7,7 @@ import type { ModelKind, Project, ProjectResult, ScenarioId } from '../engine/ty
 import { normalizeProject } from './fileio';
 import { deleteStored, loadCurrentId, loadIndex, loadProject, saveProject, storageAvailable, type IndexEntry } from './storage';
 
-export type Section = 'setup' | 'model' | 'assumptions' | 'projections' | 'scenarios' | 'review';
+export type Section = 'setup' | 'model' | 'assumptions' | 'projections' | 'scenarios' | 'review' | 'exit';
 export const SECTIONS: { id: Section; label: string; short: string }[] = [
   { id: 'setup', label: 'Venture Setup', short: 'Setup' },
   { id: 'model', label: 'Business Model', short: 'Model' },
@@ -15,7 +15,10 @@ export const SECTIONS: { id: Section; label: string; short: string }[] = [
   { id: 'projections', label: 'Financial Projections', short: 'Projections' },
   { id: 'scenarios', label: 'Scenarios', short: 'Scenarios' },
   { id: 'review', label: 'Model Review', short: 'Review' },
+  { id: 'exit', label: 'Exit Strategy', short: 'Exit' },
 ];
+/** Sections that count toward model progress (Exit Strategy is an ungraded bonus). */
+export const GRADED: Section[] = ['setup', 'model', 'assumptions', 'projections', 'scenarios', 'review'];
 
 interface Store {
   project: Project;

@@ -3,6 +3,7 @@
 
 import { a, emptyScenarios, makeStream, newProject } from '../data/defaults';
 import { getModule, MODULES } from '../engine/models';
+import { defaultExit, type ExitSettings } from '../engine/exit';
 import type { Assumption, ModelKind, Project, Stream } from '../engine/types';
 
 export const FILE_FORMAT = 'venture-financial-model';
@@ -127,5 +128,29 @@ export function normalizeProject(raw: unknown): Project {
     scenarios,
     reviewResponses: isObj(raw.reviewResponses) ? (raw.reviewResponses as Record<string, string>) : {},
     reflection: typeof raw.reflection === 'string' ? raw.reflection : '',
+    exit: normExit(raw.exit, defaultExit({ streams, funding: [] })),
+  };
+}
+
+function normExit(x: unknown, d: ExitSettings): ExitSettings {
+  if (!isObj(x)) return d;
+  const num = (v: unknown, f: number) => (Number.isFinite(Number(v)) ? Number(v) : f);
+  const sub = <T extends Record<string, number>>(v: unknown, f: T): T => {
+    const o = isObj(v) ? v : {};
+    return Object.fromEntries(Object.entries(f).map(([k, fv]) => [k, num(o[k], fv)])) as T;
+  };
+  const founders = Array.isArray(x.founders) ? (x.founders as unknown[]).filter(isObj).map((f, i) => ({ id: String(f.id ?? `f${i}`), name: String(f.name ?? 'Founder'), pct: num(f.pct, 0) })) : d.founders;
+  const rounds = Array.isArray(x.rounds) ? (x.rounds as unknown[]).filter(isObj).map((r, i) => ({ id: String(r.id ?? `r${i}`), name: String(r.name ?? 'Round'), kind: r.kind === 'priced' ? 'priced' as const : 'safe' as const, amount: num(r.amount, 0), valuation: num(r.valuation, 0) })) : d.rounds;
+  return {
+    ...d,
+    founders: founders.length ? founders : d.founders,
+    rounds,
+    poolPct: num(x.poolPct, d.poolPct), prefMultiple: num(x.prefMultiple, d.prefMultiple), participating: x.participating === true,
+    exitYear: num(x.exitYear, d.exitYear), growthPct: num(x.growthPct, d.growthPct), exitMarginPct: num(x.exitMarginPct, d.exitMarginPct),
+    netCashAtExit: num(x.netCashAtExit, d.netCashAtExit), feesPct: num(x.feesPct, d.feesPct),
+    capGainsFedPct: num(x.capGainsFedPct, d.capGainsFedPct), capGainsStatePct: num(x.capGainsStatePct, d.capGainsStatePct), ordinaryRatePct: num(x.ordinaryRatePct, d.ordinaryRatePct),
+    qsbs: x.qsbs !== false,
+    strategic: sub(x.strategic, d.strategic), pe: sub(x.pe, d.pe), ipo: sub(x.ipo, d.ipo), acquihire: sub(x.acquihire, d.acquihire), lifestyle: sub(x.lifestyle, d.lifestyle),
+    focus: typeof x.focus === 'string' ? x.focus : 'all',
   };
 }

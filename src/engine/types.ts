@@ -1,3 +1,5 @@
+import type { ExitSettings } from './exit';
+
 // Core data types shared by the calculation engine, the UI and the file format.
 // Everything the student types lives in `Project`. Everything the engine
 // produces lives in `ProjectResult`. The engine never mutates a Project.
@@ -155,6 +157,8 @@ export interface Project {
   reviewResponses: Record<string, string>;
   /** Free-text reflection shown on the instructor summary. */
   reflection: string;
+  /** Exit Strategy (bonus, ungraded). */
+  exit: ExitSettings;
 }
 
 // ---------------------------------------------------------------------------

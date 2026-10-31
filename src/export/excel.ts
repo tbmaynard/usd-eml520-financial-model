@@ -1,4 +1,5 @@
 import type { Workbook, Worksheet } from 'exceljs';
+import { EXIT_KINDS, evaluateAll } from '../engine/exit';
 import { getModule } from '../engine/models';
 import { getValue, listAssumptions } from '../engine/paths';
 import { reviewModel } from '../engine/review';
@@ -201,6 +202,45 @@ function assumptionsSheet(wb: Workbook, p: Project) {
   ws.views = [{ state: 'frozen', ySplit: 1 }];
 }
 
+function exitSheet(wb: Workbook, p: Project, results: Record<ScenarioId, ProjectResult>) {
+  const ws = wb.addWorksheet('Exit (bonus)', { views: [{ showGridLines: false }] });
+  ws.columns = [{ width: 44 }, ...EXIT_KINDS.map(() => ({ width: 20 }))];
+  const { cap, base, outcomes } = evaluateAll(p, results.base);
+  const s = p.exit;
+  ws.getCell('A1').value = 'Exit Strategy (bonus, not graded): illustrative only, not financial, legal or tax advice';
+  ws.getCell('A1').font = { bold: true, size: 13, color: { argb: NAVY } };
+  const who = s.focus === 'all' || !s.founders.some((f) => f.id === s.focus) ? 'All founders combined' : s.founders.find((f) => f.id === s.focus)!.name;
+  ws.getCell('A2').value = `Take-home for: ${who} · exit in year ${s.exitYear} · exit revenue ${fmt(base.exitRevenue)} · EBITDA ${fmt(base.exitEbitda)} · California taxes${s.qsbs && p.tax.entity === 'c_corp' ? ' · QSBS on' : ''}`;
+  let r = section(ws, 4, 'Outcomes by exit', 6);
+  header(ws, r, ['', ...outcomes.map((o) => o.title)]);
+  r++;
+  const rows: [string, (o: (typeof outcomes)[number]) => number][] = [
+    ['Headline price (enterprise value)', (o) => o.enterpriseValue],
+    ['Founder share at headline price (gross)', (o) => o.founder.gross],
+    ['Cash at closing', (o) => o.founder.cashAtClose],
+    ['Cash later (escrow, earn-out, payouts)', (o) => o.founder.cashLater],
+    ['Retention pay', (o) => o.founder.retention],
+    ['Stock (taxed when sold)', (o) => o.founder.stock],
+    ['Rollover value at second bite', (o) => o.founder.rolloverFuture],
+    ['Taxes', (o) => -o.founder.tax],
+    ['Expected take-home', (o) => o.founder.net],
+  ];
+  for (const [label, f] of rows) {
+    ws.getCell(r, 1).value = label;
+    outcomes.forEach((o, k) => { const c = ws.getCell(r, 2 + k); c.value = Math.round(f(o)); c.numFmt = MONEY; });
+    if (label === 'Expected take-home') ws.getRow(r).font = { bold: true };
+    r++;
+  }
+  r = section(ws, r + 1, 'Cap table at exit (fully diluted)', 6);
+  header(ws, r, ['Holder', 'Shares', 'Ownership', 'Invested', 'Preference', '']);
+  r++;
+  for (const h of cap.holders) {
+    ws.getRow(r).values = [h.name, Math.round(h.shares), h.shares / cap.totalShares, h.invested || null, h.pref || null];
+    ws.getCell(r, 2).numFmt = '#,##0'; ws.getCell(r, 3).numFmt = '0.0%'; ws.getCell(r, 4).numFmt = MONEY; ws.getCell(r, 5).numFmt = MONEY;
+    r++;
+  }
+}
+
 function fmt(x: number) {
   return `$${Math.round(x).toLocaleString('en-US')}`;
 }
@@ -215,6 +255,7 @@ export async function buildWorkbook(p: Project, results: Record<ScenarioId, Proj
   const sheet = { base: 'Projection - Base', downside: 'Projection - Downside', upside: 'Projection - Upside' };
   for (const id of ['base', 'downside', 'upside'] as const) projectionSheet(wb, sheet[id], p.scenarios[id].label, p, results[id]);
   assumptionsSheet(wb, p);
+  exitSheet(wb, p, results);
   return wb;
 }
 

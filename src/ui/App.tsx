@@ -17,13 +17,14 @@ import { exportProjectionCsv, exportRegisterCsv } from '../export/csv';
 import { exportExcel } from '../export/excel';
 import { downloadProject, FILE_EXT, readProjectFile } from '../state/fileio';
 import { getFlag, setFlag } from '../state/storage';
-import { SECTIONS, useStore, type Section } from '../state/store';
+import { GRADED, SECTIONS, useStore, type Section } from '../state/store';
 import { PRINCIPLE } from './components/common';
 import { money } from './format';
 import { AssumptionsPage } from './pages/AssumptionsPage';
 import { ModelPage } from './pages/ModelPage';
 import { ProjectionsPage } from './pages/ProjectionsPage';
 import { ReviewPage, useReview } from './pages/ReviewPage';
+import { ExitPage } from './pages/ExitPage';
 import { ScenariosPage } from './pages/ScenariosPage';
 import { SetupPage } from './pages/SetupPage';
 import { FONT_STAT, SURFACE, USD } from './theme';
@@ -87,7 +88,7 @@ export function App() {
       <Box component="main" sx={{ flex: 1, minWidth: 0, px: { xs: 2, md: 4 }, pb: 8 }}>
         <Toolbar sx={{ minHeight: 64 }} className="no-print" />
         <StorageNotice />
-        {section !== 'projections' && section !== 'review' && <LiveStrip />}
+        {section !== 'projections' && section !== 'review' && section !== 'exit' && <LiveStrip />}
         <Box sx={{ maxWidth: 1400, mx: 'auto', pt: 3 }}>
           {section === 'setup' && <SetupPage />}
           {section === 'model' && <ModelPage />}
@@ -95,6 +96,7 @@ export function App() {
           {section === 'projections' && <ProjectionsPage />}
           {section === 'scenarios' && <ScenariosPage />}
           {section === 'review' && <ReviewPage />}
+          {section === 'exit' && <ExitPage />}
           <PageNav />
         </Box>
       </Box>
@@ -123,6 +125,7 @@ function useProgress(): Record<Section, number> {
     projections: getFlag(`viewed.${project.id}`) ? 1 : 0,
     scenarios: notes / 2,
     review: prompts.length ? (answered + (project.reflection.trim() ? 1 : 0)) / (prompts.length + 1) : 1,
+    exit: 0,
   };
 }
 
@@ -130,7 +133,7 @@ function Nav({ onNavigate }: { onNavigate: () => void }) {
   const { section, go, project } = useStore();
   const progress = useProgress();
   useEffect(() => { if (section === 'projections') setFlag(`viewed.${project.id}`, '1'); }, [section, project.id]);
-  const overall = SECTIONS.reduce((a, s) => a + progress[s.id], 0) / SECTIONS.length;
+  const overall = GRADED.reduce((a, s) => a + progress[s], 0) / GRADED.length;
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <Box sx={{ px: 2.5, pt: 2.5, pb: 1 }}>
@@ -143,16 +146,16 @@ function Nav({ onNavigate }: { onNavigate: () => void }) {
           const p = progress[s.id];
           const active = section === s.id;
           return (
-            <ListItemButton key={s.id} selected={active} onClick={() => { go(s.id); onNavigate(); }} sx={{ borderRadius: 2, mb: 0.5, '&.Mui-selected': { bgcolor: SURFACE.raised } }} aria-current={active ? 'page' : undefined}>
+            <ListItemButton key={s.id} selected={active} divider={s.id === 'review'} onClick={() => { go(s.id); onNavigate(); }} sx={{ borderRadius: 2, mb: 0.5, '&.Mui-selected': { bgcolor: SURFACE.raised } }} aria-current={active ? 'page' : undefined}>
               <ListItemIcon sx={{ minWidth: 34 }}>
-                {p >= 1 ? <CheckCircle sx={{ color: USD.sagebrush, fontSize: 22 }} aria-label="Complete" /> : (
+                {s.id === 'exit' ? <Typography component="span" sx={{ fontSize: '1.1rem', width: 22, textAlign: 'center' }} aria-hidden>★</Typography> : p >= 1 ? <CheckCircle sx={{ color: USD.sagebrush, fontSize: 22 }} aria-label="Complete" /> : (
                   <Box sx={{ position: 'relative', width: 22, height: 22 }}>
                     <RadioButtonUnchecked sx={{ color: active ? USD.toreroBlue : SURFACE.textFaint, fontSize: 22 }} />
                     <Typography component="span" sx={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', fontSize: '0.7rem', fontWeight: 700, color: active ? USD.toreroBlue : SURFACE.textMuted }}>{i + 1}</Typography>
                   </Box>
                 )}
               </ListItemIcon>
-              <ListItemText primary={s.label} secondary={p > 0 && p < 1 ? `${Math.round(p * 100)}% done` : undefined} primaryTypographyProps={{ fontWeight: active ? 700 : 500 }} />
+              <ListItemText primary={s.label} secondary={s.id === 'exit' ? 'Bonus, not graded' : p > 0 && p < 1 ? `${Math.round(p * 100)}% done` : undefined} primaryTypographyProps={{ fontWeight: active ? 700 : 500 }} />
             </ListItemButton>
           );
         })}

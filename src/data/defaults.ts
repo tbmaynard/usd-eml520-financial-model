@@ -1,4 +1,5 @@
 import { getModule, MODULES } from '../engine/models';
+import { defaultExit } from '../engine/exit';
 import type { Assumption, Expense, ModelKind, Project, Role, Scenario, ScenarioId, Stream } from '../engine/types';
 
 export const EXAMPLE_BASIS = '';
@@ -125,7 +126,9 @@ export function newProject(kind: ModelKind, name = 'My venture'): Project {
     scenarios: emptyScenarios(),
     reviewResponses: {},
     reflection: '',
+    exit: defaultExit({ streams: [], funding: [] }),
   };
+  p.exit = defaultExit(p);
   p.scenarios.downside.overrides = suggestOverrides(p, 'downside');
   p.scenarios.downside.adjustments.extraCollectionDays = 15;
   p.scenarios.upside.overrides = suggestOverrides(p, 'upside');

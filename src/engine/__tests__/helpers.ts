@@ -1,4 +1,5 @@
 import { a, emptyScenarios, makeStream } from '../../data/defaults';
+import { defaultExit } from '../exit';
 import type { ModelKind, Project, Stream } from '../types';
 
 /** A bare project: one stream, no team, no expenses, no tax, no cash. */
@@ -26,6 +27,7 @@ export function bare(kind: ModelKind, inputs: Record<string, number>, options: S
     scenarios: emptyScenarios(),
     reviewResponses: {},
     reflection: '',
+    exit: defaultExit({ streams: [s], funding: [] }),
   };
 }
 

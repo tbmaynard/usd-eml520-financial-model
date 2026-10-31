@@ -5,6 +5,7 @@
 // read as a forecast of how TimeScene will perform.
 
 import type { Expense, Project, Role } from '../engine/types';
+import { defaultExit } from '../engine/exit';
 import { a, emptyScenarios, makeStream, uid } from './defaults';
 
 const NOTE = 'Illustrative value for the demonstration project. Not an actual TimeScene figure.';
@@ -117,6 +118,32 @@ export function timesceneProject(): Project {
     scenarios: emptyScenarios({ downside: 'Conservative public-sector sales', base: 'Base public-sector sales', upside: 'Aggressive public-sector sales' }),
     reviewResponses: {},
     reflection: '',
+    // Illustrative cap table and exit settings, invented for the demonstration.
+    exit: {
+      ...defaultExit({ streams: [stream], funding: [] }),
+      founders: [
+        { id: 'ts_ceo', name: 'Chief executive officer', pct: 40 },
+        { id: 'ts_cto', name: 'Chief technology officer', pct: 40 },
+        { id: 'ts_cco', name: 'Customer and investigations lead', pct: 10 },
+        { id: 'ts_cmo', name: 'Marketing lead', pct: 10 },
+      ],
+      poolPct: 10,
+      rounds: [
+        { id: 'ts_r1', name: 'Pre-seed SAFE', kind: 'safe', amount: 750000, valuation: 7500000 },
+        { id: 'ts_r2', name: 'Seed round', kind: 'priced', amount: 3000000, valuation: 15000000 },
+        { id: 'ts_r3', name: 'Series A', kind: 'priced', amount: 10000000, valuation: 40000000 },
+      ],
+      exitYear: 7,
+      growthPct: 70,
+      exitMarginPct: 20,
+      netCashAtExit: 2000000,
+      strategic: { multiple: 6, cashPct: 70, escrowPct: 10, earnoutPct: 25, earnoutProbPct: 50 },
+      pe: { multiple: 16, rolloverPct: 25, secondBiteMultiple: 2.5 },
+      ipo: { multiple: 7, sellAtIpoPct: 10, underwritingPct: 7, afterLockupChangePct: -15 },
+      acquihire: { price: 6000000, retentionPerFounder: 750000 },
+      lifestyle: { payoutPct: 50, years: 5 },
+      focus: 'ts_ceo',
+    },
   };
 
   const sid = stream.id;
