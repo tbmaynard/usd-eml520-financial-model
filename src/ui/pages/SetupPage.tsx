@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button, MenuItem, Stack, TextField, Typography } from '@mui/material';
+import { Autocomplete, Box, Button, Chip, MenuItem, Stack, TextField, Typography } from '@mui/material';
 import { useStore } from '../../state/store';
 import { getModule } from '../../engine/models';
 import { Callout, PageHeader, Panel, Principle } from '../components/common';
@@ -25,8 +25,13 @@ export function SetupPage() {
           <TextField label="Venture name" value={s.name} onChange={(e) => set({ name: e.target.value })} required fullWidth />
           <TextField label="Short description" value={s.description} onChange={(e) => set({ description: e.target.value })} multiline minRows={3} fullWidth
             helperText="In two or three sentences: who is the customer, what problem do you solve, and how do you get paid?" inputProps={{ maxLength: 1200 }} />
-          <Autocomplete freeSolo options={INDUSTRIES} value={s.industry} onInputChange={(_, v) => set({ industry: v })}
-            renderInput={(params) => <TextField {...params} label="Industry" />} sx={{ maxWidth: 420 }} />
+          <Autocomplete multiple freeSolo filterSelectedOptions options={INDUSTRIES} value={s.industries}
+            onChange={(_, v) => set({ industries: Array.from(new Set(v.map((x) => x.trim()).filter(Boolean))) })}
+            renderTags={(value, getTagProps) => value.map((option, index) => {
+              const { key, ...rest } = getTagProps({ index });
+              return <Chip key={key} label={option} size="small" {...rest} />;
+            })}
+            renderInput={(params) => <TextField {...params} label="Industries" helperText="Pick one or more. To add one that is not listed, type it and press Enter." />} sx={{ maxWidth: 620 }} />
           <Stack direction="row" spacing={2} alignItems="center" flexWrap="wrap" useFlexGap>
             <Box>
               <Typography variant="body2" color="text.secondary">Business model</Typography>

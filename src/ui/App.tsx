@@ -1,17 +1,19 @@
 import CheckCircle from '@mui/icons-material/CheckCircle';
 import CloudOffOutlined from '@mui/icons-material/CloudOffOutlined';
 import FolderOpen from '@mui/icons-material/FolderOpen';
+import HelpOutline from '@mui/icons-material/HelpOutline';
+import MenuBookOutlined from '@mui/icons-material/MenuBookOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
 import MoreVert from '@mui/icons-material/MoreVert';
 import RadioButtonUnchecked from '@mui/icons-material/RadioButtonUnchecked';
 import SaveAlt from '@mui/icons-material/SaveAlt';
 import {
   Alert, AppBar, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Drawer, IconButton, LinearProgress, List, ListItemButton,
-  ListItemIcon, ListItemText, Menu, MenuItem, Snackbar, Stack, TextField, ToggleButton, ToggleButtonGroup, Toolbar, Tooltip, Typography, useMediaQuery,
+  ListItemIcon, ListItemText, Menu, MenuItem, Popover, Snackbar, Stack, TextField, ToggleButton, ToggleButtonGroup, Toolbar, Tooltip, Typography, useMediaQuery,
 } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
 import { getModule, MODEL_ORDER } from '../engine/models';
-import { listAssumptions } from '../engine/paths';
+import { getValue, listAssumptions } from '../engine/paths';
 import type { ModelKind, ScenarioId } from '../engine/types';
 import { exportProjectionCsv, exportRegisterCsv } from '../export/csv';
 import { exportExcel } from '../export/excel';
@@ -19,12 +21,13 @@ import { downloadProject, FILE_EXT, readProjectFile } from '../state/fileio';
 import { getFlag, setFlag } from '../state/storage';
 import { GRADED, SECTIONS, useStore, type Section } from '../state/store';
 import { PRINCIPLE } from './components/common';
-import { money } from './format';
+import { formatUnit, money } from './format';
 import { AssumptionsPage } from './pages/AssumptionsPage';
 import { ModelPage } from './pages/ModelPage';
 import { ProjectionsPage } from './pages/ProjectionsPage';
 import { ReviewPage, useReview } from './pages/ReviewPage';
 import { ExitPage } from './pages/ExitPage';
+import { GuidePage } from './pages/GuidePage';
 import { ScenariosPage } from './pages/ScenariosPage';
 import { SetupPage } from './pages/SetupPage';
 import { FONT_STAT, SURFACE, USD } from './theme';
@@ -88,8 +91,9 @@ export function App() {
       <Box component="main" sx={{ flex: 1, minWidth: 0, px: { xs: 2, md: 4 }, pb: 8 }}>
         <Toolbar sx={{ minHeight: 64 }} className="no-print" />
         <StorageNotice />
-        {section !== 'projections' && section !== 'review' && section !== 'exit' && <LiveStrip />}
+        {section !== 'guide' && section !== 'projections' && section !== 'review' && section !== 'exit' && <LiveStrip />}
         <Box sx={{ maxWidth: 1400, mx: 'auto', pt: 3 }}>
+          {section === 'guide' && <GuidePage />}
           {section === 'setup' && <SetupPage />}
           {section === 'model' && <ModelPage />}
           {section === 'assumptions' && <AssumptionsPage />}
@@ -110,17 +114,20 @@ export function App() {
 }
 
 function useProgress(): Record<Section, number> {
-  const { project } = useStore();
+  const { project, section } = useStore();
   const prompts = useReview();
   const all = listAssumptions(project);
   const s = project.setup;
   const justified = all.filter((a) => !a.example && a.basis.trim() && a.conf !== 'unset').length;
   const notes = (['downside', 'upside'] as const).filter((id) => project.scenarios[id].notes.trim()).length;
   const answered = prompts.filter((p) => (project.reviewResponses[p.id] ?? '').trim()).length;
-  const touched = project.streams.some((st) => Object.values(st.inputs).some((a) => !a.example));
+  // The Business Model page is a choice, not data entry: it is done once the
+  // student has been there to choose (or confirm) the model and its streams.
+  const modelSeen = section === 'model' || !!getFlag(`visited.model.${project.id}`);
   return {
-    setup: [s.name.trim(), s.description.trim(), s.industry.trim()].filter(Boolean).length / 3,
-    model: touched ? 1 : 0.5,
+    guide: 0,
+    setup: [s.name.trim(), s.description.trim(), s.industries.length > 0].filter(Boolean).length / 3,
+    model: modelSeen ? 1 : 0,
     assumptions: all.length ? justified / all.length : 0,
     projections: getFlag(`viewed.${project.id}`) ? 1 : 0,
     scenarios: notes / 2,
@@ -132,7 +139,10 @@ function useProgress(): Record<Section, number> {
 function Nav({ onNavigate }: { onNavigate: () => void }) {
   const { section, go, project } = useStore();
   const progress = useProgress();
-  useEffect(() => { if (section === 'projections') setFlag(`viewed.${project.id}`, '1'); }, [section, project.id]);
+  useEffect(() => {
+    if (section === 'projections') setFlag(`viewed.${project.id}`, '1');
+    if (section === 'model') setFlag(`visited.model.${project.id}`, '1');
+  }, [section, project.id]);
   const overall = GRADED.reduce((a, s) => a + progress[s], 0) / GRADED.length;
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
@@ -142,20 +152,21 @@ function Nav({ onNavigate }: { onNavigate: () => void }) {
         <Typography variant="caption" color="text.secondary">{Math.round(overall * 100)}% complete</Typography>
       </Box>
       <List sx={{ px: 1 }}>
-        {SECTIONS.map((s, i) => {
+        {SECTIONS.map((s) => {
           const p = progress[s.id];
           const active = section === s.id;
+          const step = GRADED.indexOf(s.id) + 1;
           return (
-            <ListItemButton key={s.id} selected={active} divider={s.id === 'review'} onClick={() => { go(s.id); onNavigate(); }} sx={{ borderRadius: 2, mb: 0.5, '&.Mui-selected': { bgcolor: SURFACE.raised } }} aria-current={active ? 'page' : undefined}>
+            <ListItemButton key={s.id} selected={active} divider={s.id === 'review' || s.id === 'guide'} onClick={() => { go(s.id); onNavigate(); }} sx={{ borderRadius: 2, mb: 0.5, '&.Mui-selected': { bgcolor: SURFACE.raised } }} aria-current={active ? 'page' : undefined}>
               <ListItemIcon sx={{ minWidth: 34 }}>
-                {s.id === 'exit' ? <Typography component="span" sx={{ fontSize: '1.1rem', width: 22, textAlign: 'center' }} aria-hidden>★</Typography> : p >= 1 ? <CheckCircle sx={{ color: USD.sagebrush, fontSize: 22 }} aria-label="Complete" /> : (
+                {s.id === 'guide' ? <MenuBookOutlined sx={{ color: active ? USD.toreroBlue : SURFACE.textMuted, fontSize: 22 }} aria-hidden /> : s.id === 'exit' ? <Typography component="span" sx={{ fontSize: '1.1rem', width: 22, textAlign: 'center' }} aria-hidden>★</Typography> : p >= 1 ? <CheckCircle sx={{ color: USD.sagebrush, fontSize: 22 }} aria-label="Complete" /> : (
                   <Box sx={{ position: 'relative', width: 22, height: 22 }}>
                     <RadioButtonUnchecked sx={{ color: active ? USD.toreroBlue : SURFACE.textFaint, fontSize: 22 }} />
-                    <Typography component="span" sx={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', fontSize: '0.7rem', fontWeight: 700, color: active ? USD.toreroBlue : SURFACE.textMuted }}>{i + 1}</Typography>
+                    <Typography component="span" sx={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', fontSize: '0.7rem', fontWeight: 700, color: active ? USD.toreroBlue : SURFACE.textMuted }}>{step}</Typography>
                   </Box>
                 )}
               </ListItemIcon>
-              <ListItemText primary={s.label} secondary={s.id === 'exit' ? 'Bonus, not graded' : p > 0 && p < 1 ? `${Math.round(p * 100)}% done` : undefined} primaryTypographyProps={{ fontWeight: active ? 700 : 500 }} />
+              <ListItemText primary={s.label} secondary={s.id === 'exit' ? 'Bonus, not graded' : s.id === 'guide' ? 'Key ideas, read this first' : p > 0 && p < 1 ? `${Math.round(p * 100)}% done` : undefined} primaryTypographyProps={{ fontWeight: active ? 700 : 500 }} />
             </ListItemButton>
           );
         })}
@@ -182,15 +193,78 @@ function PageNav() {
 function ScenarioSwitch() {
   const { scenario, setScenario, project } = useStore();
   return (
-    <Tooltip title="Which scenario the projections show">
-      <ToggleButtonGroup size="small" exclusive value={scenario} onChange={(_, v: ScenarioId | null) => v && setScenario(v)} aria-label="Scenario" sx={{ display: { xs: 'none', sm: 'flex' } }}>
-        {(['downside', 'base', 'upside'] as const).map((id) => (
-          <ToggleButton key={id} value={id} sx={{ px: 1.5, maxWidth: 170 }}>
-            <Typography variant="body2" noWrap sx={{ fontWeight: 600 }}>{project.scenarios[id].label.replace(/ case$/i, '')}</Typography>
-          </ToggleButton>
-        ))}
-      </ToggleButtonGroup>
-    </Tooltip>
+    <Stack direction="row" alignItems="center" spacing={0.5} sx={{ display: { xs: 'none', sm: 'flex' } }}>
+      <Tooltip title="Which scenario the projection pages show. Switching never changes your inputs.">
+        <ToggleButtonGroup size="small" exclusive value={scenario} onChange={(_, v: ScenarioId | null) => v && setScenario(v)} aria-label="Scenario shown">
+          {(['downside', 'base', 'upside'] as const).map((id) => (
+            <ToggleButton key={id} value={id} sx={{ px: 1.5, maxWidth: 170 }}>
+              <Typography variant="body2" noWrap sx={{ fontWeight: 600 }}>{project.scenarios[id].label.replace(/ case$/i, '')}</Typography>
+            </ToggleButton>
+          ))}
+        </ToggleButtonGroup>
+      </Tooltip>
+      <ScenarioInfo />
+    </Stack>
+  );
+}
+
+/** Explains the scenario switch: what each case is and exactly what it changes. */
+function ScenarioInfo() {
+  const { project, go } = useStore();
+  const [anchor, setAnchor] = useState<HTMLElement | null>(null);
+  const labels = new Map(listAssumptions(project).map((a) => [a.path, a]));
+  const changes = (id: 'downside' | 'upside') => {
+    const sc = project.scenarios[id];
+    const out: string[] = [];
+    for (const [path, v] of Object.entries(sc.overrides)) {
+      const a = labels.get(path);
+      const base = getValue(project, path);
+      if (!a || base == null || base === v) continue;
+      out.push(`${a.label}: ${formatUnit(base, a.unit)} → ${formatUnit(v, a.unit)}`);
+    }
+    const adj = sc.adjustments;
+    if (adj.hiringDelayMonths) out.push(`Planned hires ${adj.hiringDelayMonths > 0 ? 'delayed' : 'brought forward'} ${Math.abs(adj.hiringDelayMonths)} months`);
+    if (adj.extraCollectionDays) out.push(`Customers pay ${Math.abs(adj.extraCollectionDays)} days ${adj.extraCollectionDays > 0 ? 'later' : 'sooner'}`);
+    if (adj.compChangePct) out.push(`All pay ${adj.compChangePct > 0 ? 'up' : 'down'} ${Math.abs(adj.compChangePct)}%`);
+    return out;
+  };
+  const close = () => setAnchor(null);
+  return (
+    <>
+      <Tooltip title="What are these scenarios?">
+        <IconButton size="small" onClick={(e) => setAnchor(e.currentTarget)} aria-label="What are these scenarios?"><HelpOutline fontSize="small" /></IconButton>
+      </Tooltip>
+      <Popover open={!!anchor} anchorEl={anchor} onClose={close} anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        PaperProps={{ sx: { width: 440, maxWidth: 'calc(100vw - 32px)', p: 2.5, bgcolor: SURFACE.raised } }}>
+        <Typography variant="h3" sx={{ mb: 1 }}>Three versions of the same plan</Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+          These buttons choose which version the projection pages show. Your inputs are not changed. <b>{project.scenarios.base.label}</b> uses your assumptions exactly as entered. The other two change a few drivers to show what happens if things go worse or better than planned:
+        </Typography>
+        {(['downside', 'upside'] as const).map((id) => {
+          const list = changes(id);
+          return (
+            <Box key={id} sx={{ mb: 1.5 }}>
+              <Typography variant="subtitle1">{project.scenarios[id].label}</Typography>
+              {list.length === 0 ? (
+                <Typography variant="body2" color="text.secondary">No changes yet, so it matches the base case.</Typography>
+              ) : (
+                <Box component="ul" sx={{ m: 0, pl: 2.5, color: 'text.secondary', fontSize: '0.875rem' }}>
+                  {list.slice(0, 6).map((t) => <li key={t}>{t}</li>)}
+                  {list.length > 6 && <li>and {list.length - 6} more</li>}
+                </Box>
+              )}
+            </Box>
+          );
+        })}
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+          The starting changes are placeholders (each driver moved about 20%). You can change, add or remove any of them, and you should explain the situation each case represents.
+        </Typography>
+        <Stack direction="row" spacing={1} justifyContent="flex-end">
+          <Button onClick={() => { close(); go('guide', 'scenarios'); }}>Read more</Button>
+          <Button variant="contained" onClick={() => { close(); go('scenarios', 'edit'); }}>Change the scenarios</Button>
+        </Stack>
+      </Popover>
+    </>
   );
 }
 

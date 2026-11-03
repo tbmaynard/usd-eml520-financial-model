@@ -12,7 +12,7 @@ export const ecommerce: ModelModule = {
   options: [],
   fields: [
     { key: 'aov', label: 'Average order value', unit: 'usd', help: 'Average amount a customer pays per order, before returns.', group: 'Orders', min: 0, sensitivity: true, scenario: true, worseWhen: 'lower' },
-    { key: 'ordersStart', label: 'Orders in month 1', unit: 'count', help: 'Orders expected in the first month.', group: 'Orders', min: 0, sensitivity: true, scenario: true, worseWhen: 'lower' },
+    { key: 'ordersStart', label: 'Orders in the first month of sales', unit: 'count', help: 'Orders expected in the first month you sell.', group: 'Orders', min: 0, sensitivity: true, scenario: true, worseWhen: 'lower' },
     { key: 'orderGrowthPct', label: 'Monthly order growth', unit: 'pct', help: 'Month-over-month growth in orders.', group: 'Orders', min: -50, max: 100, sensitivity: true, scenario: true, worseWhen: 'lower' },
     { key: 'returnsPct', label: 'Returns and refunds', unit: 'pct', help: 'Share of sales refunded. Apparel often runs 20% or more; consumables far less.', group: 'Orders', min: 0, max: 100, sensitivity: true, scenario: true, worseWhen: 'higher' },
     { key: 'productCostPerOrder', label: 'Product cost per order', unit: 'usd', help: 'What the goods in an average order cost you.', group: 'Cost per order', min: 0, sensitivity: true, scenario: true, worseWhen: 'higher' },

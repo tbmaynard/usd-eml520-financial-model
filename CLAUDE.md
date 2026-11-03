@@ -30,6 +30,10 @@ npm run preview   # http://localhost:4280/usd-eml520-financial-model/
 - Dark mode only. USD brand colors and fonts (Sofia Sans for UI, Spectral for explanatory prose), no logos. Chart colors are USD hues stepped into a validated dark-mode palette; see the comment in `src/ui/theme.ts` before changing them.
 - Seven business models, including a combined Software model (subscriptions + licenses with support contracts + projects) and Enterprise/Government with stage delays. Enterprise and licensing deals count as **whole deals** by default.
 - Students may add more revenue streams; team, expenses, funding and taxes are shared.
+- A "Start Here" page (`src/ui/pages/GuidePage.tsx`) explains confidence levels, Example values, scenarios and key terms. It is first in the nav and not part of progress.
+- Every stream has a shared "First month of sales" driver (`src/engine/models/launch.ts`): the stream is computed as if it launched in month 1, then shifted later. Month-number inputs inside a stream stay calendar months.
+- Equity funding rows carry the share of the company sold (`equityPct`, `instrument`). The cap table derives those rounds from the funding list (`fundingRounds` in `exit.ts`); `exit.rounds` holds only later rounds after the projection.
+- Industry is a list (`setup.industries`); older files with a single `industry` are upgraded in `fileio.ts`.
 - A coarse income tax module is included (combined rate, losses carried forward, quarterly or annual payment, C corp or pass-through).
 - Every assumption has a value, a basis and a confidence (Evidence-based / Benchmark-based / Speculative). Template values are flagged "Example" until changed or confirmed.
 - Review prompts are questions, never verdicts. The tool never says whether a business is good.

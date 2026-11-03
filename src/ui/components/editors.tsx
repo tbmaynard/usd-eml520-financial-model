@@ -5,6 +5,7 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import { Box, Button, Collapse, FormControlLabel, IconButton, MenuItem, Stack, Switch, TextField, Tooltip, Typography } from '@mui/material';
 import { useState, type ReactNode } from 'react';
 import { uid } from '../../data/defaults';
+import { DEFAULT_EQUITY_PCT, valuationFromPct } from '../../engine/exit';
 import type { CapexItem, Expense, Funding, Justified, Project, Role } from '../../engine/types';
 import { OPEX_LABELS } from '../../engine/types';
 import { useStore } from '../../state/store';
@@ -176,7 +177,7 @@ export function CapexEditor() {
 }
 
 export function FundingEditor() {
-  const { project, update } = useStore();
+  const { project, update, go } = useStore();
   const n = project.setup.months;
   const patch = (id: string): Patch<Funding> => (p) => update((d) => { const f = d.funding.find((x) => x.id === id); if (f) Object.assign(f, p, 'basis' in p || 'conf' in p ? {} : { example: false }); });
   return (
@@ -190,7 +191,10 @@ export function FundingEditor() {
                 head={
                   <Stack direction="row" spacing={1.5} flexWrap="wrap" useFlexGap>
                     <TextField label="Source" value={f.name} onChange={(e) => pf({ name: e.target.value })} sx={{ width: 220 }} />
-                    <TextField select label="Type" value={f.kind} onChange={(e) => pf({ kind: e.target.value as Funding['kind'] })} sx={{ width: 170 }}>
+                    <TextField select label="Type" value={f.kind} onChange={(e) => {
+                      const kind = e.target.value as Funding['kind'];
+                      pf(kind === 'equity' && f.equityPct == null ? { kind, equityPct: DEFAULT_EQUITY_PCT, instrument: 'safe' } : { kind });
+                    }} sx={{ width: 170 }}>
                       <MenuItem value="equity">Investment (equity)</MenuItem>
                       <MenuItem value="grant">Grant</MenuItem>
                       <MenuItem value="loan">Loan</MenuItem>
@@ -199,14 +203,24 @@ export function FundingEditor() {
                     <NumberField label="Month received" value={f.month} onChange={(v) => pf({ month: v })} min={1} max={n} integer width={130} />
                     {f.kind === 'loan' && <NumberField label="Interest rate" value={f.annualRatePct} unit="pct" onChange={(v) => pf({ annualRatePct: v })} min={0} max={40} width={130} />}
                     {f.kind === 'loan' && <NumberField label="Repay over" value={f.termMonths} unit="months" onChange={(v) => pf({ termMonths: v })} min={1} max={360} integer width={140} />}
+                    {f.kind === 'equity' && <NumberField label="Share of company sold" value={f.equityPct ?? DEFAULT_EQUITY_PCT} unit="pct" onChange={(v) => pf({ equityPct: v })} min={0.1} max={95} width={170} />}
+                    {f.kind === 'equity' && (
+                      <Box sx={{ pt: 0.5, maxWidth: 300 }}>
+                        <Typography variant="body2" color="text.secondary">
+                          {f.amount > 0 ? `Values the company at ${money(valuationFromPct(f.amount, f.equityPct ?? DEFAULT_EQUITY_PCT, 'safe'), { compact: true })} after the investment. ` : ''}
+                          You can change this later in the{' '}
+                          <Box component="button" type="button" onClick={() => go('exit', 'captable')} sx={{ border: 'none', bgcolor: 'transparent', p: 0, color: USD.toreroBlue, cursor: 'pointer', font: 'inherit', textDecoration: 'underline' }}>cap table</Box>.
+                        </Typography>
+                      </Box>
+                    )}
                   </Stack>
                 } />
           </Box>
         );
       })}
-      <Button startIcon={<AddIcon />} sx={{ mt: 1.5 }} onClick={() => update((d) => { d.funding.push({ id: uid('fund'), name: 'Seed investment', kind: 'equity', amount: 100000, month: 6, annualRatePct: 8, termMonths: 36, basis: '', conf: 'unset', example: false }); })}>Add funding</Button>
+      <Button startIcon={<AddIcon />} sx={{ mt: 1.5 }} onClick={() => update((d) => { d.funding.push({ id: uid('fund'), name: 'Seed investment', kind: 'equity', amount: 100000, month: 6, annualRatePct: 8, termMonths: 36, equityPct: DEFAULT_EQUITY_PCT, instrument: 'safe', basis: '', conf: 'unset', example: false }); })}>Add funding</Button>
       <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 1 }}>
-        Loans are repaid in equal monthly payments starting the month after they arrive. Interest is shown below operating profit.
+        Loans are repaid in equal monthly payments starting the month after they arrive. Interest is shown below operating profit. Investment (equity) does not need to be repaid, but investors own the share of the company you sell them; the cap table on the Exit Strategy page shows how that adds up.
       </Typography>
     </Box>
   );

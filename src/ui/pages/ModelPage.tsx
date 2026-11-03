@@ -6,10 +6,12 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import { makeStream, suggestOverrides } from '../../data/defaults';
-import { getModule, MODEL_ORDER } from '../../engine/models';
+import { getModule, MODEL_ORDER, SALES_START_KEY } from '../../engine/models';
+import { SALES_START_FIELD } from '../../engine/models/launch';
 import type { ModelKind, Project } from '../../engine/types';
 import { useStore } from '../../state/store';
 import { Callout, Grid, PageHeader, Panel } from '../components/common';
+import { InfoTip, NumberField } from '../components/inputs';
 import { SURFACE, USD } from '../theme';
 
 function dropStreamOverrides(d: Project, streamId: string) {
@@ -65,7 +67,7 @@ export function ModelPage() {
         </Grid>
       </Panel>
 
-      <Panel title="Revenue streams in this model" subtitle="Each stream has its own revenue and direct-cost drivers. Team, operating expenses, funding and taxes are shared across all streams."
+      <Panel title="Revenue streams in this model" subtitle="Each stream has its own revenue and direct-cost drivers, which you enter on the Assumptions page. Team, operating expenses, funding and taxes are shared across all streams. If you need time for research and development before you can sell, set a later first month of sales."
         action={<Button startIcon={<AddIcon />} variant="outlined" onClick={() => { setAdding(true); setNewName(''); }}>Add a revenue stream</Button>}>
         <Stack spacing={1.5}>
           {project.streams.map((s, i) => (
@@ -73,7 +75,11 @@ export function ModelPage() {
               <Typography variant="overline" sx={{ width: 90, color: i === 0 ? USD.toreroBlue : 'text.secondary' }}>{i === 0 ? 'Primary' : 'Additional'}</Typography>
               <TextField label="Stream name" value={s.name} onChange={(e) => update((d) => { d.streams[i].name = e.target.value; })} sx={{ width: 260 }} />
               <Typography variant="body2" color="text.secondary" sx={{ flex: 1 }}>{getModule(s.kind).label}</Typography>
-              <Button onClick={() => go('assumptions', `revenue-${s.id}`)}>Edit drivers</Button>
+              <Stack direction="row" alignItems="center" spacing={0.5}>
+                <NumberField label="First month of sales" value={s.inputs[SALES_START_KEY]?.v ?? 1} min={1} max={project.setup.months} integer width={170}
+                  onChange={(v) => update((d) => { const a = d.streams[i].inputs[SALES_START_KEY]; if (a) Object.assign(a, { v, example: false }); })} />
+                <InfoTip text={SALES_START_FIELD.help} />
+              </Stack>
               {i > 0 && (
                 <Tooltip title="Remove this stream">
                   <IconButton aria-label={`Remove ${s.name}`} onClick={() => update((d) => { dropStreamOverrides(d, s.id); d.streams = d.streams.filter((x) => x.id !== s.id); })}><DeleteOutline /></IconButton>

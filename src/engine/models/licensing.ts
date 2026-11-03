@@ -15,7 +15,7 @@ export const licensing: ModelModule = {
   defaultOptions: {},
   options: [],
   fields: [
-    { key: 'initialLicensees', label: 'Licensees at start', unit: 'count', help: 'Licensees already under contract when the projection begins. Their contracts are treated as starting in month 1 with no upfront fee.', group: 'Deals', min: 0 },
+    { key: 'initialLicensees', label: 'Licensees at start', unit: 'count', help: 'Licensees already under contract when the projection begins. Their contracts are treated as starting in the first month of sales, with no upfront fee.', group: 'Deals', min: 0 },
     { key: 'newPerQuarter', label: 'New licensees per quarter', unit: 'count', help: 'Average new license deals signed each quarter. Fractions are allowed; the model counts whole deals.', group: 'Deals', min: 0, sensitivity: true, scenario: true, worseWhen: 'lower' },
     { key: 'firstDealMonth', label: 'Earliest month a new deal can sign', unit: 'month', help: 'Licensing deals take time to negotiate. No new deals sign before this month.', group: 'Deals', min: 1, sensitivity: true, scenario: true, worseWhen: 'higher' },
     { key: 'upfrontFee', label: 'Upfront license fee per deal', unit: 'usd', help: 'One-time fee paid when the license is signed.', group: 'Fees and royalties', min: 0, sensitivity: true, scenario: true, worseWhen: 'lower' },

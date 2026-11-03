@@ -26,8 +26,8 @@ export const software: ModelModule = {
   ],
   fields: [
     { key: 'subInitialCustomers', label: 'Paying subscribers at start', unit: 'count', help: 'Subscribers already paying when the projection begins.', group: 'Subscriptions', min: 0, showIf: sub },
-    { key: 'subNewPerMonth', label: 'New subscribers per month', unit: 'count', help: 'New paying subscribers in month 1.', group: 'Subscriptions', min: 0, showIf: sub, sensitivity: true, scenario: true, worseWhen: 'lower' },
-    { key: 'subNewGrowthPct', label: 'Monthly growth in new subscribers', unit: 'pct', help: 'How much faster you add subscribers each month. 5% means month 2 adds 5% more new subscribers than month 1.', group: 'Subscriptions', min: -50, max: 100, showIf: sub, sensitivity: true, scenario: true, worseWhen: 'lower' },
+    { key: 'subNewPerMonth', label: 'New subscribers per month', unit: 'count', help: 'New paying subscribers in the first month of sales.', group: 'Subscriptions', min: 0, showIf: sub, sensitivity: true, scenario: true, worseWhen: 'lower' },
+    { key: 'subNewGrowthPct', label: 'Monthly growth in new subscribers', unit: 'pct', help: 'How much faster you add subscribers each month. 5% means the second month of sales adds 5% more new subscribers than the first.', group: 'Subscriptions', min: -50, max: 100, showIf: sub, sensitivity: true, scenario: true, worseWhen: 'lower' },
     { key: 'subPrice', label: 'Monthly subscription price', unit: 'usd', help: 'Average price per subscriber per month.', group: 'Subscriptions', min: 0, showIf: sub, sensitivity: true, scenario: true, worseWhen: 'lower' },
     { key: 'subAnnualSharePct', label: 'Share of new subscribers choosing annual plans', unit: 'pct', help: 'Annual subscribers pay 12 months at once.', group: 'Subscriptions', min: 0, max: 100, showIf: subAnnual },
     { key: 'subAnnualDiscountPct', label: 'Annual plan discount', unit: 'pct', help: 'Discount off the monthly price for paying a year up front.', group: 'Subscriptions', min: 0, max: 90, showIf: subAnnual },

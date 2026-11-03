@@ -7,7 +7,7 @@ import {
 
 function settings(over: Partial<ExitSettings> = {}): ExitSettings {
   return {
-    ...defaultExit({ streams: [], funding: [] }),
+    ...defaultExit({ streams: [] }),
     founders: [{ id: 'a', name: 'A', pct: 50 }, { id: 'b', name: 'B', pct: 50 }],
     poolPct: 10,
     rounds: [],

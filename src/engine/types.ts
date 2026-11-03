@@ -95,6 +95,10 @@ export interface Funding extends Justified {
   month: number;
   annualRatePct: number;
   termMonths: number;
+  /** Equity only: percent of the company the investors own right after this money comes in. */
+  equityPct?: number;
+  /** Equity only: a SAFE converts at a later round; a priced round issues shares now. */
+  instrument?: 'safe' | 'priced';
 }
 
 export interface TaxSettings {
@@ -109,7 +113,8 @@ export interface TaxSettings {
 export interface Setup {
   name: string;
   description: string;
-  industry: string;
+  /** One or more industries the venture serves. */
+  industries: string[];
   /** 'YYYY-MM' */
   startMonth: string;
   months: number;

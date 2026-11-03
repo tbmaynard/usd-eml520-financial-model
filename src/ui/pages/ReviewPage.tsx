@@ -102,7 +102,7 @@ export function InstructorSummary() {
       <Panel>
         <Typography variant="overline" color="text.secondary">Venture financial model · {new Date().toLocaleDateString('en-US', { dateStyle: 'medium' })}</Typography>
         <Typography variant="h2">{project.setup.name || 'Untitled venture'}</Typography>
-        <Typography variant="body2" color="text.secondary">{project.setup.industry || 'Industry not given'} · {project.streams.map((x) => `${x.name} (${getModule(x.kind).label})`).join(' + ')}</Typography>
+        <Typography variant="body2" color="text.secondary">{project.setup.industries.join(', ') || 'Industry not given'} · {project.streams.map((x) => `${x.name} (${getModule(x.kind).label})`).join(' + ')}</Typography>
         <Typography sx={{ mt: 1.5 }}>{project.setup.description || <i style={{ color: SURFACE.textMuted }}>No description given.</i>}</Typography>
         <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
           {n}-month projection from {project.setup.startMonth} · starting cash {money(project.setup.startingCash.v)} · founder investment {money(project.setup.founderInvestment.v)} · outside funding {money(project.funding.reduce((x, f) => x + f.amount, 0))} · tax {project.tax.enabled ? `${project.tax.rate.v}% (${project.tax.entity === 'c_corp' ? 'C corporation' : 'pass-through'})` : 'not modeled'}

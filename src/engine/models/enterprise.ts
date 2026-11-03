@@ -63,8 +63,8 @@ export const enterprise: ModelModule = {
     // Pipeline
     { key: 'prospectsPerMonth', label: 'New prospects entering the pipeline per month', unit: 'count', help: 'Organizations you start talking to each month.', group: 'Sales pipeline', min: 0, sensitivity: true, scenario: true, worseWhen: 'lower' },
     { key: 'prospectGrowthPct', label: 'Monthly growth in new prospects', unit: 'pct', help: 'Growth in the monthly prospect flow as marketing and referrals build.', group: 'Sales pipeline', min: -50, max: 100 },
-    { key: 'openOppsAtStart', label: 'Qualified opportunities already open', unit: 'count', help: 'Real opportunities already in your pipeline at the start. They begin the evaluation stage in month 1.', group: 'Sales pipeline', min: 0 },
-    { key: 'pilotsAtStart', label: 'Pilots already underway', unit: 'count', help: 'Pilots running when the projection starts. They are treated as starting in month 1.', group: 'Sales pipeline', min: 0 },
+    { key: 'openOppsAtStart', label: 'Qualified opportunities already open', unit: 'count', help: 'Real opportunities already in your pipeline at the start. They begin the evaluation stage in the first month of sales.', group: 'Sales pipeline', min: 0 },
+    { key: 'pilotsAtStart', label: 'Pilots already underway', unit: 'count', help: 'Pilots running when the projection starts. They are treated as starting in the first month of sales.', group: 'Sales pipeline', min: 0 },
     { key: 'qualifyPct', label: 'Prospect to qualified opportunity', unit: 'pct', help: 'Share of prospects with a real need, budget and decision maker.', group: 'Sales pipeline', min: 0, max: 100, sensitivity: true, scenario: true, worseWhen: 'lower' },
     { key: 'monthsToQualify', label: 'Months to qualify a prospect', unit: 'months', help: 'Time from first contact to a qualified opportunity.', group: 'Sales pipeline', min: 0, max: 24 },
     { key: 'pilotPct', label: 'Qualified opportunity to pilot', unit: 'pct', help: 'Share of qualified opportunities that agree to a pilot.', group: 'Sales pipeline', min: 0, max: 100, sensitivity: true, scenario: true, worseWhen: 'lower' },

@@ -109,7 +109,7 @@ export function newProject(kind: ModelKind, name = 'My venture'): Project {
     setup: {
       name,
       description: '',
-      industry: '',
+      industries: [],
       startMonth: start,
       months: 24,
       startingCash: a(10000),
@@ -126,7 +126,7 @@ export function newProject(kind: ModelKind, name = 'My venture'): Project {
     scenarios: emptyScenarios(),
     reviewResponses: {},
     reflection: '',
-    exit: defaultExit({ streams: [], funding: [] }),
+    exit: defaultExit({ streams: [] }),
   };
   p.exit = defaultExit(p);
   p.scenarios.downside.overrides = suggestOverrides(p, 'downside');

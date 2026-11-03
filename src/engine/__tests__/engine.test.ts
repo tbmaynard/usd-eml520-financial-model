@@ -9,17 +9,18 @@ import { bare } from './helpers';
 
 const allKinds: ModelKind[] = MODEL_ORDER;
 
-function withEverything(kind: ModelKind): Project {
+function withEverything(kind: ModelKind, salesStart = 1): Project {
   const p = newProject(kind, 'Everything on');
   const s = p.streams[0];
+  s.inputs.salesStartMonth.v = salesStart;
   for (const k of Object.keys(s.options)) if (typeof s.options[k] === 'boolean') s.options[k] = true;
   p.funding.push({ id: uid(), name: 'Bank loan', kind: 'loan', amount: 50000, month: 3, annualRatePct: 9, termMonths: 36, basis: '', conf: 'unset', example: true });
   p.capex.push({ id: uid(), name: 'Computers', amount: 6000, month: 2, usefulLifeMonths: 36, basis: '', conf: 'unset', example: true });
   return p;
 }
 
-describe.each(allKinds)('accounting identities hold for %s', (kind) => {
-  const p = withEverything(kind);
+describe.each(allKinds.flatMap((k) => [[k, 1], [k, 7]] as [ModelKind, number][]))('accounting identities hold for %s with sales starting in month %i', (kind, salesStart) => {
+  const p = withEverything(kind, salesStart);
   const r = computeProject(p);
   const last = r.rows[r.rows.length - 1];
 

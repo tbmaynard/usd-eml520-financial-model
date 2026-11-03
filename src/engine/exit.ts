@@ -2,7 +2,7 @@
 // founders would take home under different kinds of exit. Illustrative only:
 // not financial, legal or tax advice.
 
-import type { ModelKind, Project, ProjectResult } from './types';
+import type { Funding, ModelKind, Project, ProjectResult } from './types';
 
 export interface CapFounder { id: string; name: string; pct: number }
 export interface CapRound {
@@ -20,6 +20,8 @@ export interface ExitSettings {
   founders: CapFounder[];
   /** Option pool as a percent of the company at founding. */
   poolPct: number;
+  /** Later rounds, after the projection. Equity funding inside the projection
+   *  comes from the project's funding list (see fundingRounds). */
   rounds: CapRound[];
   prefMultiple: number;
   participating: boolean;
@@ -75,7 +77,37 @@ export interface CapStep { label: string; founderPct: number; investorPct: numbe
 
 export interface CapTable { holders: Holder[]; steps: CapStep[]; totalShares: number }
 
-export function buildCapTable(s: ExitSettings): CapTable {
+export const DEFAULT_EQUITY_PCT = 12.5;
+
+/** The valuation implied by selling `pct` percent of the company for `amount`.
+ *  SAFE: the post-money cap. Priced round: the pre-money valuation. */
+export function valuationFromPct(amount: number, pct: number, kind: CapRound['kind']): number {
+  const f = Math.min(0.95, Math.max(0.001, pct / 100));
+  const post = amount / f;
+  return kind === 'safe' ? post : post - amount;
+}
+
+/** Percent of the company a round's investors own right after it closes. */
+export function pctFromValuation(amount: number, valuation: number, kind: CapRound['kind']): number {
+  const post = kind === 'safe' ? valuation : valuation + amount;
+  return post > 0 ? (amount / post) * 100 : 0;
+}
+
+/** Equity funding in the projection, as cap-table rounds in the order received. */
+export function fundingRounds(funding: Funding[]): CapRound[] {
+  return funding
+    .filter((f) => f.kind === 'equity' && f.amount > 0)
+    .slice()
+    .sort((a, b) => a.month - b.month)
+    .map((f) => {
+      const kind = f.instrument ?? 'safe';
+      return { id: `fund_${f.id}`, name: f.name, kind, amount: f.amount, valuation: valuationFromPct(f.amount, f.equityPct ?? DEFAULT_EQUITY_PCT, kind) };
+    });
+}
+
+/** `before` holds rounds that come ahead of the later rounds in `s.rounds`
+ *  (equity funding from the projection). */
+export function buildCapTable(s: ExitSettings, before: CapRound[] = []): CapTable {
   const totalPct = s.founders.reduce((a, f) => a + Math.max(0, f.pct), 0) || 1;
   const holders: Holder[] = s.founders.map((f) => ({ id: f.id, name: f.name || 'Founder', group: 'founder', shares: (FOUNDER_SHARES * Math.max(0, f.pct)) / totalPct, invested: 0, pref: 0 }));
   const pool = Math.min(0.9, Math.max(0, s.poolPct / 100));
@@ -104,7 +136,7 @@ export function buildCapTable(s: ExitSettings): CapTable {
     }
     pending = [];
   };
-  for (const r of s.rounds) {
+  for (const r of [...before, ...s.rounds]) {
     if (!(r.amount > 0)) continue;
     if (r.kind === 'safe') {
       pending.push(r);
@@ -404,7 +436,7 @@ export const EXIT_KINDS: ExitKind[] = ['strategic', 'pe', 'ipo', 'acquihire', 'l
 
 export function evaluateAll(p: Project, r: ProjectResult) {
   const s = p.exit;
-  const cap = buildCapTable(s);
+  const cap = buildCapTable(s, fundingRounds(p.funding));
   const base = exitBase(r, s);
   const cCorp = p.tax.entity === 'c_corp';
   return { cap, base, outcomes: EXIT_KINDS.map((k) => evaluateExit(k, s, cap, base, cCorp)) };
@@ -424,14 +456,13 @@ export function priceNeeded(target: number, s: ExitSettings, cap: CapTable, cCor
   return hi;
 }
 
-export function defaultExit(p: Pick<Project, 'streams' | 'funding'>): ExitSettings {
+export function defaultExit(p: Pick<Project, 'streams'>): ExitSettings {
   const kind = p.streams[0]?.kind ?? 'software';
   const mult = MULTIPLES[kind];
-  const rounds: CapRound[] = p.funding.filter((f) => f.kind === 'equity' && f.amount > 0).map((f) => ({ id: `r_${f.id}`, name: f.name, kind: 'safe', amount: f.amount, valuation: f.amount * 8 }));
   return {
     founders: [{ id: 'f1', name: 'Founder 1', pct: 50 }, { id: 'f2', name: 'Founder 2', pct: 50 }],
     poolPct: 10,
-    rounds,
+    rounds: [],
     prefMultiple: 1,
     participating: false,
     exitYear: 5,

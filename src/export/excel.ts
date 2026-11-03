@@ -1,5 +1,5 @@
 import type { Workbook, Worksheet } from 'exceljs';
-import { EXIT_KINDS, evaluateAll } from '../engine/exit';
+import { DEFAULT_EQUITY_PCT, EXIT_KINDS, evaluateAll } from '../engine/exit';
 import { getModule } from '../engine/models';
 import { getValue, listAssumptions } from '../engine/paths';
 import { reviewModel } from '../engine/review';
@@ -54,11 +54,11 @@ function summarySheet(wb: Workbook, p: Project, results: Record<ScenarioId, Proj
   r = section(ws, r, 'Venture');
   const info: [string, string][] = [
     ['Description', p.setup.description || '(none)'],
-    ['Industry', p.setup.industry || '(none)'],
+    [p.setup.industries.length > 1 ? 'Industries' : 'Industry', p.setup.industries.join('; ') || '(none)'],
     ['Business model', p.streams.map((s) => `${s.name}: ${getModule(s.kind).label}`).join('; ')],
     ['Projection', `${p.setup.months} months from ${p.setup.startMonth}`],
     ['Starting cash / founder investment', `${fmt(p.setup.startingCash.v)} / ${fmt(p.setup.founderInvestment.v)}`],
-    ['Outside funding', p.funding.length ? p.funding.map((f) => `${f.name} (${f.kind}) ${fmt(f.amount)} in month ${f.month}`).join('; ') : 'None'],
+    ['Outside funding', p.funding.length ? p.funding.map((f) => `${f.name} (${f.kind}) ${fmt(f.amount)} in month ${f.month}${f.kind === 'equity' ? ` for ${f.equityPct ?? DEFAULT_EQUITY_PCT}% of the company` : ''}`).join('; ') : 'None'],
     ['Minimum cash cushion', fmt(p.setup.minCashCushion.v)],
     ['Taxes', p.tax.enabled ? `${p.tax.rate.v}%, ${p.tax.entity === 'c_corp' ? 'C corporation' : 'pass-through'}, paid ${p.tax.payment}` : 'Not modeled'],
     ['Team', p.roles.map((x) => `${x.title} ×${x.count} from M${x.startMonth} at ${fmt(x.monthlyComp)}/mo`).join('; ') || 'None'],

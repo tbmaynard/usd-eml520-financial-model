@@ -15,7 +15,7 @@ export function bare(kind: ModelKind, inputs: Record<string, number>, options: S
     createdAt: '',
     updatedAt: '',
     setup: {
-      name: 'Test', description: '', industry: '', startMonth: '2027-01', months,
+      name: 'Test', description: '', industries: [], startMonth: '2027-01', months,
       startingCash: a(0), founderInvestment: a(0), minCashCushion: a(0), largestCustomerSharePct: a(0),
     },
     streams: [s],
@@ -27,7 +27,7 @@ export function bare(kind: ModelKind, inputs: Record<string, number>, options: S
     scenarios: emptyScenarios(),
     reviewResponses: {},
     reflection: '',
-    exit: defaultExit({ streams: [s], funding: [] }),
+    exit: defaultExit({ streams: [s] }),
   };
 }
 

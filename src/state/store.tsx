@@ -7,8 +7,9 @@ import type { ModelKind, Project, ProjectResult, ScenarioId } from '../engine/ty
 import { normalizeProject } from './fileio';
 import { deleteStored, loadCurrentId, loadIndex, loadProject, saveProject, storageAvailable, type IndexEntry } from './storage';
 
-export type Section = 'setup' | 'model' | 'assumptions' | 'projections' | 'scenarios' | 'review' | 'exit';
+export type Section = 'guide' | 'setup' | 'model' | 'assumptions' | 'projections' | 'scenarios' | 'review' | 'exit';
 export const SECTIONS: { id: Section; label: string; short: string }[] = [
+  { id: 'guide', label: 'Start Here', short: 'Start' },
   { id: 'setup', label: 'Venture Setup', short: 'Setup' },
   { id: 'model', label: 'Business Model', short: 'Model' },
   { id: 'assumptions', label: 'Assumptions', short: 'Assumptions' },
@@ -17,7 +18,7 @@ export const SECTIONS: { id: Section; label: string; short: string }[] = [
   { id: 'review', label: 'Model Review', short: 'Review' },
   { id: 'exit', label: 'Exit Strategy', short: 'Exit' },
 ];
-/** Sections that count toward model progress (Exit Strategy is an ungraded bonus). */
+/** Sections that count toward model progress (Start Here is reading and Exit Strategy is an ungraded bonus). */
 export const GRADED: Section[] = ['setup', 'model', 'assumptions', 'projections', 'scenarios', 'review'];
 
 interface Store {
@@ -131,7 +132,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   const createProject = useCallback((kind: ModelKind, name: string) => {
     replace(newProject(kind, name));
-    go('setup');
+    go('guide');
   }, [replace, go]);
 
   const loadExample = useCallback(() => {

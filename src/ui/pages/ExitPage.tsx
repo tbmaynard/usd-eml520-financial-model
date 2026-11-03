@@ -6,7 +6,7 @@ import {
 import { useMemo, useState } from 'react';
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip as RTooltip, XAxis, YAxis } from 'recharts';
 import { uid } from '../../data/defaults';
-import { buildCapTable, EXIT_KINDS, evaluateAll, MULTIPLES, priceNeeded, type ExitKind, type ExitOutcome, type ExitSettings } from '../../engine/exit';
+import { buildCapTable, DEFAULT_EQUITY_PCT, EXIT_KINDS, evaluateAll, fundingRounds, MULTIPLES, pctFromValuation, priceNeeded, valuationFromPct, type ExitKind, type ExitOutcome, type ExitSettings } from '../../engine/exit';
 import { getModule } from '../../engine/models';
 import { useStore } from '../../state/store';
 import { Callout, Grid, Kpi, PageHeader, Panel, SectionTabs, useTab } from '../components/common';
@@ -207,7 +207,13 @@ function OfferCard({ kind, o, modelKind }: { kind: ExitKind; o: ExitOutcome; mod
 }
 
 function CapTableTab() {
-  const { s, set, calc } = useExit();
+  const { s, set, calc, project } = useExit();
+  const { update, go } = useStore();
+  const equity = project.funding.filter((f) => f.kind === 'equity').slice().sort((a, b) => a.month - b.month);
+  const setFunding = (id: string, patch: { equityPct?: number; instrument?: 'safe' | 'priced' }) => update((d) => {
+    const f = d.funding.find((x) => x.id === id);
+    if (f) Object.assign(f, patch);
+  });
   const { cap } = calc;
   const foundersPct = s.founders.reduce((a, f) => a + f.pct, 0);
   return (
@@ -228,7 +234,31 @@ function CapTableTab() {
         </Stack>
       </Panel>
 
-      <Panel title="Funding rounds" subtitle="In order. A SAFE converts into shares at the next priced round (or at exit) at its valuation cap. A priced round sells new shares at a pre-money valuation.">
+      <Panel title="Investment in your projection" subtitle="Equity funding from your funding plan. The amount and month come from Venture Setup; set how much of the company each investor receives here or there. A SAFE converts into shares at the next priced round (or at exit) at its valuation cap. A priced round sells new shares now."
+        action={<Button onClick={() => go('setup')}>Edit funding</Button>}>
+        {equity.length === 0 && <Typography color="text.secondary">No equity investment in your projection. Add one under Starting cash and funding on the Venture Setup page, or add later rounds below.</Typography>}
+        {equity.map((f) => {
+          const kind = f.instrument ?? 'safe';
+          const share = f.equityPct ?? DEFAULT_EQUITY_PCT;
+          return (
+            <Stack key={f.id} direction="row" spacing={1.5} alignItems="center" flexWrap="wrap" useFlexGap sx={{ mb: 1.25 }}>
+              <Box sx={{ width: 220 }}>
+                <Typography variant="subtitle1">{f.name}</Typography>
+                <Typography variant="body2" color="text.secondary">{money(f.amount)} in month {f.month}</Typography>
+              </Box>
+              <TextField select label="Type" value={kind} onChange={(e) => setFunding(f.id, { instrument: e.target.value as 'safe' | 'priced' })} sx={{ width: 170 }}>
+                <MenuItem value="safe">SAFE (post-money cap)</MenuItem>
+                <MenuItem value="priced">Priced round</MenuItem>
+              </TextField>
+              <NumberField label="Share of company sold" unit="pct" value={share} min={0.1} max={95} width={180} onChange={(v) => setFunding(f.id, { equityPct: v })} />
+              <NumberField label={kind === 'safe' ? 'Valuation cap (post-money)' : 'Pre-money valuation'} unit="usd" value={Math.round(valuationFromPct(f.amount, share, kind))} min={1} width={220}
+                disabled={!(f.amount > 0)} onChange={(v) => v > 0 && f.amount > 0 && setFunding(f.id, { equityPct: Math.round(pctFromValuation(f.amount, v, kind) * 100) / 100 })} />
+            </Stack>
+          );
+        })}
+      </Panel>
+
+      <Panel title="Later rounds" subtitle="Rounds you expect after the projection ends, in order. They affect only the cap table and exit outcomes, not your cash projection.">
         {s.rounds.map((r, i) => (
           <Stack key={r.id} direction="row" spacing={1.5} alignItems="center" flexWrap="wrap" useFlexGap sx={{ mb: 1.25 }}>
             <TextField label="Round" value={r.name} onChange={(e) => set((x) => { x.rounds[i].name = e.target.value; })} sx={{ width: 220 }} />
@@ -290,7 +320,7 @@ function Target() {
   const { s, calc, project } = useExit();
   const [target, setTarget] = useState(5_000_000);
   const cCorp = project.tax.entity === 'c_corp';
-  const cap = useMemo(() => buildCapTable(s), [s]);
+  const cap = useMemo(() => buildCapTable(s, fundingRounds(project.funding)), [s, project.funding]);
   const price = useMemo(() => priceNeeded(target, s, cap, cCorp), [target, s, cap, cCorp]);
   const rev = calc.base.exitRevenue;
   const mult = MULTIPLES[project.streams[0].kind].revenue[1];

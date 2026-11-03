@@ -3,8 +3,8 @@
 
 import { a, emptyScenarios, makeStream, newProject } from '../data/defaults';
 import { getModule, MODULES } from '../engine/models';
-import { defaultExit, type ExitSettings } from '../engine/exit';
-import type { Assumption, ModelKind, Project, Stream } from '../engine/types';
+import { DEFAULT_EQUITY_PCT, defaultExit, pctFromValuation, type ExitSettings } from '../engine/exit';
+import type { Assumption, Funding, ModelKind, Project, Stream } from '../engine/types';
 
 export const FILE_FORMAT = 'venture-financial-model';
 export const FILE_EXT = '.vfm.json';
@@ -97,6 +97,9 @@ export function normalizeProject(raw: unknown): Project {
   }
   const tax = isObj(raw.tax) ? raw.tax : {};
   const arr = <T,>(x: unknown): T[] => (Array.isArray(x) ? (x as T[]) : []);
+  const funding = arr<Funding>(raw.funding).filter(isObj).map((f) => ({ ...f }));
+  const exit = normExit(raw.exit, defaultExit({ streams }));
+  linkEquity(funding, exit);
   return {
     schemaVersion: 1,
     id: typeof raw.id === 'string' ? raw.id : base.id,
@@ -105,7 +108,7 @@ export function normalizeProject(raw: unknown): Project {
     setup: {
       name: typeof setup.name === 'string' ? setup.name : base.setup.name,
       description: typeof setup.description === 'string' ? setup.description : '',
-      industry: typeof setup.industry === 'string' ? setup.industry : '',
+      industries: normIndustries(setup),
       startMonth: typeof setup.startMonth === 'string' && /^\d{4}-\d{2}$/.test(setup.startMonth) ? setup.startMonth : base.setup.startMonth,
       months: [12, 24, 36].includes(Number(setup.months)) ? Number(setup.months) : 24,
       startingCash: normA(setup.startingCash, base.setup.startingCash),
@@ -117,7 +120,7 @@ export function normalizeProject(raw: unknown): Project {
     roles: arr<Project['roles'][number]>(raw.roles).filter(isObj).map((r) => ({ ...base.roles[0], ...r })),
     expenses: arr<Project['expenses'][number]>(raw.expenses).filter(isObj).map((e) => ({ ...base.expenses[0], ...e })),
     capex: arr<Project['capex'][number]>(raw.capex).filter(isObj),
-    funding: arr<Project['funding'][number]>(raw.funding).filter(isObj),
+    funding,
     tax: {
       enabled: tax.enabled !== false,
       entity: tax.entity === 'pass_through' ? 'pass_through' : 'c_corp',
@@ -128,8 +131,34 @@ export function normalizeProject(raw: unknown): Project {
     scenarios,
     reviewResponses: isObj(raw.reviewResponses) ? (raw.reviewResponses as Record<string, string>) : {},
     reflection: typeof raw.reflection === 'string' ? raw.reflection : '',
-    exit: normExit(raw.exit, defaultExit({ streams, funding: [] })),
+    exit,
   };
+}
+
+function normIndustries(setup: Record<string, unknown>): string[] {
+  if (Array.isArray(setup.industries)) return setup.industries.filter((x): x is string => typeof x === 'string' && x.trim() !== '');
+  // Older files held a single industry.
+  return typeof setup.industry === 'string' && setup.industry.trim() ? [setup.industry.trim()] : [];
+}
+
+/**
+ * Equity funding carries the ownership investors receive. Older files kept
+ * that only on the Exit page, as a round copied from the funding row (id
+ * r_<fundingId>): move it onto the funding row and drop the copy.
+ */
+function linkEquity(funding: Funding[], exit: ExitSettings): void {
+  for (const f of funding) {
+    if (f.kind !== 'equity') continue;
+    // ts_r1 was the TimeScene demo's copy of its pre-seed funding.
+    const i = exit.rounds.findIndex((r) => r.id === `r_${f.id}` || (f.id === 'ts_preseed' && r.id === 'ts_r1'));
+    if (!Number.isFinite(f.equityPct)) {
+      const r = exit.rounds[i];
+      f.equityPct = r && r.amount > 0 && r.valuation > 0 ? Math.round(pctFromValuation(r.amount, r.valuation, r.kind) * 100) / 100 : DEFAULT_EQUITY_PCT;
+      if (r && !f.instrument) f.instrument = r.kind;
+    }
+    if (f.instrument !== 'priced') f.instrument = 'safe';
+    if (i >= 0) exit.rounds.splice(i, 1);
+  }
 }
 
 function normExit(x: unknown, d: ExitSettings): ExitSettings {

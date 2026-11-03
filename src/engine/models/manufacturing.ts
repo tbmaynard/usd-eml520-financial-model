@@ -15,7 +15,7 @@ export const manufacturing: ModelModule = {
   ],
   fields: [
     { key: 'price', label: 'Selling price per unit', unit: 'usd', help: 'Average price customers pay per unit, after discounts.', group: 'Sales', min: 0, sensitivity: true, scenario: true, worseWhen: 'lower' },
-    { key: 'unitsStart', label: 'Units demanded in month 1', unit: 'count', help: 'How many units customers will order in the first month.', group: 'Sales', min: 0, sensitivity: true, scenario: true, worseWhen: 'lower' },
+    { key: 'unitsStart', label: 'Units demanded in the first month of sales', unit: 'count', help: 'How many units customers will order in the first month you sell.', group: 'Sales', min: 0, sensitivity: true, scenario: true, worseWhen: 'lower' },
     { key: 'unitGrowthPct', label: 'Monthly growth in unit demand', unit: 'pct', help: 'Month-over-month growth in units demanded.', group: 'Sales', min: -50, max: 100, sensitivity: true, scenario: true, worseWhen: 'lower' },
     { key: 'marketingFixed', label: 'Marketing and sales spend per month', unit: 'usd', help: 'Advertising, trade shows, distributor support.', group: 'Sales', min: 0, sensitivity: true },
     { key: 'materialCost', label: 'Material cost per unit', unit: 'usd', help: 'Raw materials and components for one unit.', group: 'Unit costs', min: 0, sensitivity: true, scenario: true, worseWhen: 'higher' },

@@ -78,7 +78,7 @@ export function timesceneProject(): Project {
       name: 'TimeScene (demonstration)',
       description:
         'Early-stage enterprise software for complex incident reconstruction, after-action reviews, investigations and litigation support. Customers are public agencies and other organizations that must assemble, reconcile, analyze and preserve complex incident records. All values are illustrative and editable.',
-      industry: 'Government and public-safety software',
+      industries: ['Government and public-safety software'],
       startMonth: '2027-01',
       months: 24,
       startingCash: a(130000, true, NOTE),
@@ -110,7 +110,7 @@ export function timesceneProject(): Project {
     capex: [],
     funding: [
       {
-        id: 'ts_preseed', name: 'Pre-seed investment', kind: 'equity', amount: 750000, month: 5, annualRatePct: 0, termMonths: 0,
+        id: 'ts_preseed', name: 'Pre-seed investment', kind: 'equity', amount: 750000, month: 5, annualRatePct: 0, termMonths: 0, equityPct: 10, instrument: 'safe',
         basis: NOTE, conf: 'unset', example: true,
       },
     ],
@@ -120,7 +120,7 @@ export function timesceneProject(): Project {
     reflection: '',
     // Illustrative cap table and exit settings, invented for the demonstration.
     exit: {
-      ...defaultExit({ streams: [stream], funding: [] }),
+      ...defaultExit({ streams: [stream] }),
       founders: [
         { id: 'ts_ceo', name: 'Chief executive officer', pct: 40 },
         { id: 'ts_cto', name: 'Chief technology officer', pct: 40 },
@@ -129,7 +129,6 @@ export function timesceneProject(): Project {
       ],
       poolPct: 10,
       rounds: [
-        { id: 'ts_r1', name: 'Pre-seed SAFE', kind: 'safe', amount: 750000, valuation: 7500000 },
         { id: 'ts_r2', name: 'Seed round', kind: 'priced', amount: 3000000, valuation: 15000000 },
         { id: 'ts_r3', name: 'Series A', kind: 'priced', amount: 10000000, valuation: 40000000 },
       ],

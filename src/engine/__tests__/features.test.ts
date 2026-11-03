@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { describe, expect, it } from 'vitest';
 import { newProject } from '../../data/defaults';
 import { timesceneProject } from '../../data/timescene';
 import { buildWorkbook } from '../../export/excel';
 import { normalizeProject } from '../../state/fileio';
+import { evaluateAll } from '../exit';
 import { runScenario } from '../engine';
 import { listAssumptions } from '../paths';
 import { reviewModel } from '../review';
@@ -61,6 +63,33 @@ describe('project files', () => {
     const back = normalizeProject(p);
     expect(back.streams[0].inputs.price.v).toBeGreaterThan(0);
     expect(back.tax.enabled).toBe(true);
+  });
+  it('upgrades files saved before multiple industries, sales start months and linked equity', () => {
+    const p = newProject('software') as unknown as Record<string, any>;
+    delete p.setup.industries;
+    p.setup.industry = 'Education';
+    delete p.streams[0].inputs.salesStartMonth;
+    p.funding = [{ id: 'f1', name: 'Seed', kind: 'equity', amount: 500000, month: 3, annualRatePct: 0, termMonths: 0, basis: '', conf: 'unset', example: false }];
+    p.exit.rounds = [
+      { id: 'r_f1', name: 'Seed', kind: 'safe', amount: 500000, valuation: 4000000 },
+      { id: 'r9', name: 'Series A', kind: 'priced', amount: 2000000, valuation: 8000000 },
+    ];
+    const back = normalizeProject(p);
+    expect(back.setup.industries).toEqual(['Education']);
+    expect(back.streams[0].inputs.salesStartMonth.v).toBe(1);
+    expect(back.funding[0].equityPct).toBe(12.5);
+    expect(back.funding[0].instrument).toBe('safe');
+    expect(back.exit.rounds.map((r) => r.id)).toEqual(['r9']);
+  });
+  it('an equity investment sells the share of the company entered with it', () => {
+    const p = newProject('software');
+    p.exit.poolPct = 0;
+    p.exit.rounds = [];
+    p.funding = [{ id: 'f1', name: 'Seed', kind: 'equity', amount: 300000, month: 2, annualRatePct: 0, termMonths: 0, equityPct: 15, instrument: 'priced', basis: '', conf: 'unset', example: false }];
+    const cap = evaluateAll(p, runScenario(p, 'base')).cap;
+    const seed = cap.holders.find((h) => h.name === 'Seed')!;
+    expect(seed.shares / cap.totalShares).toBeCloseTo(0.15, 6);
+    expect(seed.invested).toBe(300000);
   });
   it('rejects files that are not projects', () => {
     expect(() => normalizeProject({ hello: 'world' })).toThrow(/does not look like/);
