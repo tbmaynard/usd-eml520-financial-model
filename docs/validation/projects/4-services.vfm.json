@@ -1,0 +1,287 @@
+{
+  "format": "venture-financial-model",
+  "version": 1,
+  "exportedAt": "2026-11-04T00:00:00.000Z",
+  "project": {
+    "schemaVersion": 1,
+    "id": "validation_4-services",
+    "createdAt": "2026-11-04T00:00:00.000Z",
+    "updatedAt": "2026-11-04T00:00:00.000Z",
+    "setup": {
+      "name": "4. Professional services: hourly billing with a capacity limit",
+      "description": "",
+      "industries": [],
+      "startMonth": "2027-01",
+      "months": 24,
+      "startingCash": {
+        "v": 200000,
+        "basis": "Validation test input",
+        "conf": "benchmark",
+        "example": false
+      },
+      "founderInvestment": {
+        "v": 0,
+        "basis": "Validation test input",
+        "conf": "benchmark",
+        "example": false
+      },
+      "minCashCushion": {
+        "v": 10000,
+        "basis": "Validation test input",
+        "conf": "benchmark",
+        "example": false
+      },
+      "largestCustomerSharePct": {
+        "v": 10,
+        "basis": "",
+        "conf": "unset",
+        "example": true
+      }
+    },
+    "streams": [
+      {
+        "id": "s0",
+        "kind": "services",
+        "name": "Services",
+        "inputs": {
+          "salesStartMonth": {
+            "v": 1,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "newClientsPerMonth": {
+            "v": 2,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "clientGrowthPct": {
+            "v": 0,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "projectDurationMonths": {
+            "v": 3,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "hoursPerClientMonth": {
+            "v": 100,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "billingRate": {
+            "v": 150,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "projectFee": {
+            "v": 45000,
+            "basis": "",
+            "conf": "unset",
+            "example": false
+          },
+          "marketingFixed": {
+            "v": 1000,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "consultantsStart": {
+            "v": 3,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "consultantsAdded": {
+            "v": 2,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "consultantsAddedMonth": {
+            "v": 7,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "hoursPerPerson": {
+            "v": 160,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "utilizationPct": {
+            "v": 75,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "consultantSalary": {
+            "v": 8000,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "burdenPct": {
+            "v": 25,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "contractorHoursMax": {
+            "v": 100,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "contractorCostPerHour": {
+            "v": 90,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "adminStaff": {
+            "v": 1,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "adminSalary": {
+            "v": 4000,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "collectionDays": {
+            "v": 30,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "supplierDays": {
+            "v": 0,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          }
+        },
+        "options": {
+          "pricing": "hourly"
+        }
+      }
+    ],
+    "roles": [],
+    "expenses": [],
+    "capex": [],
+    "funding": [],
+    "tax": {
+      "enabled": false,
+      "entity": "c_corp",
+      "rate": {
+        "v": 25,
+        "basis": "Validation test input",
+        "conf": "benchmark",
+        "example": false
+      },
+      "payment": "quarterly",
+      "includeOwnerDistributions": true
+    },
+    "scenarios": {
+      "base": {
+        "id": "base",
+        "label": "Base case",
+        "overrides": {},
+        "notes": "",
+        "adjustments": {
+          "hiringDelayMonths": 0,
+          "extraCollectionDays": 0,
+          "compChangePct": 0
+        }
+      },
+      "downside": {
+        "id": "downside",
+        "label": "Downside case",
+        "overrides": {},
+        "notes": "",
+        "adjustments": {
+          "hiringDelayMonths": 0,
+          "extraCollectionDays": 0,
+          "compChangePct": 0
+        }
+      },
+      "upside": {
+        "id": "upside",
+        "label": "Upside case",
+        "overrides": {},
+        "notes": "",
+        "adjustments": {
+          "hiringDelayMonths": 0,
+          "extraCollectionDays": 0,
+          "compChangePct": 0
+        }
+      }
+    },
+    "reviewResponses": {},
+    "reflection": "",
+    "exit": {
+      "founders": [
+        {
+          "id": "f1",
+          "name": "Founder 1",
+          "pct": 50
+        },
+        {
+          "id": "f2",
+          "name": "Founder 2",
+          "pct": 50
+        }
+      ],
+      "poolPct": 10,
+      "rounds": [],
+      "prefMultiple": 1,
+      "participating": false,
+      "exitYear": 5,
+      "growthPct": 40,
+      "exitMarginPct": 15,
+      "netCashAtExit": 0,
+      "feesPct": 3,
+      "capGainsFedPct": 23.8,
+      "capGainsStatePct": 13.3,
+      "ordinaryRatePct": 50.3,
+      "qsbs": true,
+      "strategic": {
+        "multiple": 1.2,
+        "cashPct": 70,
+        "escrowPct": 10,
+        "earnoutPct": 20,
+        "earnoutProbPct": 50
+      },
+      "pe": {
+        "multiple": 7,
+        "rolloverPct": 20,
+        "secondBiteMultiple": 2.5
+      },
+      "ipo": {
+        "multiple": 1.56,
+        "sellAtIpoPct": 10,
+        "underwritingPct": 7,
+        "afterLockupChangePct": -10
+      },
+      "acquihire": {
+        "price": 2000000,
+        "retentionPerFounder": 600000
+      },
+      "lifestyle": {
+        "payoutPct": 50,
+        "years": 5
+      },
+      "focus": "all"
+    }
+  }
+}

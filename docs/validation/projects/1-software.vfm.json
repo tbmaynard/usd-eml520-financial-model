@@ -1,0 +1,332 @@
+{
+  "format": "venture-financial-model",
+  "version": 1,
+  "exportedAt": "2026-11-04T00:00:00.000Z",
+  "project": {
+    "schemaVersion": 1,
+    "id": "validation_1-software",
+    "createdAt": "2026-11-04T00:00:00.000Z",
+    "updatedAt": "2026-11-04T00:00:00.000Z",
+    "setup": {
+      "name": "1. Software: subscriptions, annual plans, licenses with support, projects",
+      "description": "",
+      "industries": [],
+      "startMonth": "2027-01",
+      "months": 24,
+      "startingCash": {
+        "v": 300000,
+        "basis": "Validation test input",
+        "conf": "benchmark",
+        "example": false
+      },
+      "founderInvestment": {
+        "v": 0,
+        "basis": "Validation test input",
+        "conf": "benchmark",
+        "example": false
+      },
+      "minCashCushion": {
+        "v": 10000,
+        "basis": "Validation test input",
+        "conf": "benchmark",
+        "example": false
+      },
+      "largestCustomerSharePct": {
+        "v": 10,
+        "basis": "",
+        "conf": "unset",
+        "example": true
+      }
+    },
+    "streams": [
+      {
+        "id": "s0",
+        "kind": "software",
+        "name": "Software",
+        "inputs": {
+          "salesStartMonth": {
+            "v": 1,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "subInitialCustomers": {
+            "v": 200,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "subNewPerMonth": {
+            "v": 20,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "subNewGrowthPct": {
+            "v": 5,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "subPrice": {
+            "v": 50,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "subAnnualSharePct": {
+            "v": 25,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "subAnnualDiscountPct": {
+            "v": 20,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "subChurnPct": {
+            "v": 3,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "subOnboardingFee": {
+            "v": 100,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "subCac": {
+            "v": 300,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "subHostingPerCustomer": {
+            "v": 4,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "subSupportPerCustomer": {
+            "v": 6,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "licNewPerMonth": {
+            "v": 0.5,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "licGrowthPct": {
+            "v": 0,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "licPrice": {
+            "v": 6000,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "licMaintPct": {
+            "v": 20,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "licMaintRenewalPct": {
+            "v": 50,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "licDeliveryCost": {
+            "v": 400,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "licSupportCost": {
+            "v": 50,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "licCac": {
+            "v": 1000,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "projNewPerMonth": {
+            "v": 1,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "projValue": {
+            "v": 24000,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "projDurationMonths": {
+            "v": 4,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "projDeliveryCostPct": {
+            "v": 40,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "marketingFixed": {
+            "v": 1500,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "devCostMonthly": {
+            "v": 2000,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "collectionDays": {
+            "v": 45,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "supplierDays": {
+            "v": 0,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          }
+        },
+        "options": {
+          "subscription": true,
+          "annualPlans": true,
+          "perpetual": true,
+          "projects": true
+        }
+      }
+    ],
+    "roles": [],
+    "expenses": [],
+    "capex": [],
+    "funding": [],
+    "tax": {
+      "enabled": false,
+      "entity": "c_corp",
+      "rate": {
+        "v": 25,
+        "basis": "Validation test input",
+        "conf": "benchmark",
+        "example": false
+      },
+      "payment": "quarterly",
+      "includeOwnerDistributions": true
+    },
+    "scenarios": {
+      "base": {
+        "id": "base",
+        "label": "Base case",
+        "overrides": {},
+        "notes": "",
+        "adjustments": {
+          "hiringDelayMonths": 0,
+          "extraCollectionDays": 0,
+          "compChangePct": 0
+        }
+      },
+      "downside": {
+        "id": "downside",
+        "label": "Downside case",
+        "overrides": {},
+        "notes": "",
+        "adjustments": {
+          "hiringDelayMonths": 0,
+          "extraCollectionDays": 0,
+          "compChangePct": 0
+        }
+      },
+      "upside": {
+        "id": "upside",
+        "label": "Upside case",
+        "overrides": {},
+        "notes": "",
+        "adjustments": {
+          "hiringDelayMonths": 0,
+          "extraCollectionDays": 0,
+          "compChangePct": 0
+        }
+      }
+    },
+    "reviewResponses": {},
+    "reflection": "",
+    "exit": {
+      "founders": [
+        {
+          "id": "f1",
+          "name": "Founder 1",
+          "pct": 50
+        },
+        {
+          "id": "f2",
+          "name": "Founder 2",
+          "pct": 50
+        }
+      ],
+      "poolPct": 10,
+      "rounds": [],
+      "prefMultiple": 1,
+      "participating": false,
+      "exitYear": 5,
+      "growthPct": 40,
+      "exitMarginPct": 15,
+      "netCashAtExit": 0,
+      "feesPct": 3,
+      "capGainsFedPct": 23.8,
+      "capGainsStatePct": 13.3,
+      "ordinaryRatePct": 50.3,
+      "qsbs": true,
+      "strategic": {
+        "multiple": 6,
+        "cashPct": 70,
+        "escrowPct": 10,
+        "earnoutPct": 20,
+        "earnoutProbPct": 50
+      },
+      "pe": {
+        "multiple": 20,
+        "rolloverPct": 20,
+        "secondBiteMultiple": 2.5
+      },
+      "ipo": {
+        "multiple": 7.800000000000001,
+        "sellAtIpoPct": 10,
+        "underwritingPct": 7,
+        "afterLockupChangePct": -10
+      },
+      "acquihire": {
+        "price": 2000000,
+        "retentionPerFounder": 600000
+      },
+      "lifestyle": {
+        "payoutPct": 50,
+        "years": 5
+      },
+      "focus": "all"
+    }
+  }
+}

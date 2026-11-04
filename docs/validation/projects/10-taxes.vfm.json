@@ -1,0 +1,264 @@
+{
+  "format": "venture-financial-model",
+  "version": 1,
+  "exportedAt": "2026-11-04T00:00:00.000Z",
+  "project": {
+    "schemaVersion": 1,
+    "id": "validation_10-taxes",
+    "createdAt": "2026-11-04T00:00:00.000Z",
+    "updatedAt": "2026-11-04T00:00:00.000Z",
+    "setup": {
+      "name": "10. Income tax: loss carryforward, quarterly vs annual, pass-through",
+      "description": "",
+      "industries": [],
+      "startMonth": "2027-01",
+      "months": 24,
+      "startingCash": {
+        "v": 300000,
+        "basis": "Validation test input",
+        "conf": "benchmark",
+        "example": false
+      },
+      "founderInvestment": {
+        "v": 0,
+        "basis": "Validation test input",
+        "conf": "benchmark",
+        "example": false
+      },
+      "minCashCushion": {
+        "v": 10000,
+        "basis": "Validation test input",
+        "conf": "benchmark",
+        "example": false
+      },
+      "largestCustomerSharePct": {
+        "v": 10,
+        "basis": "",
+        "conf": "unset",
+        "example": true
+      }
+    },
+    "streams": [
+      {
+        "id": "s0",
+        "kind": "ecommerce",
+        "name": "E-commerce",
+        "inputs": {
+          "salesStartMonth": {
+            "v": 1,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "aov": {
+            "v": 100,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "ordersStart": {
+            "v": 150,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "orderGrowthPct": {
+            "v": 10,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "returnsPct": {
+            "v": 0,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "productCostPerOrder": {
+            "v": 40,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "fulfillmentPerOrder": {
+            "v": 0,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "shippingSubsidyPerOrder": {
+            "v": 0,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "processingPct": {
+            "v": 0,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "processingFixed": {
+            "v": 0,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "newCustomerSharePct": {
+            "v": 0,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "cac": {
+            "v": 0,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "marketingFixed": {
+            "v": 0,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "collectionDays": {
+            "v": 0,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "supplierDays": {
+            "v": 0,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          }
+        },
+        "options": {}
+      }
+    ],
+    "roles": [],
+    "expenses": [
+      {
+        "id": "e1",
+        "name": "Overhead",
+        "category": "ga",
+        "kind": "recurring",
+        "amount": 15000,
+        "startMonth": 1,
+        "endMonth": null,
+        "annualGrowthPct": 0,
+        "payDelayDays": 0,
+        "basis": "Validation test input",
+        "conf": "benchmark",
+        "example": false
+      }
+    ],
+    "capex": [],
+    "funding": [],
+    "tax": {
+      "enabled": true,
+      "entity": "c_corp",
+      "rate": {
+        "v": 25,
+        "basis": "Validation test input",
+        "conf": "benchmark",
+        "example": false
+      },
+      "payment": "quarterly",
+      "includeOwnerDistributions": true
+    },
+    "scenarios": {
+      "base": {
+        "id": "base",
+        "label": "Base case",
+        "overrides": {},
+        "notes": "",
+        "adjustments": {
+          "hiringDelayMonths": 0,
+          "extraCollectionDays": 0,
+          "compChangePct": 0
+        }
+      },
+      "downside": {
+        "id": "downside",
+        "label": "Downside case",
+        "overrides": {},
+        "notes": "",
+        "adjustments": {
+          "hiringDelayMonths": 0,
+          "extraCollectionDays": 0,
+          "compChangePct": 0
+        }
+      },
+      "upside": {
+        "id": "upside",
+        "label": "Upside case",
+        "overrides": {},
+        "notes": "",
+        "adjustments": {
+          "hiringDelayMonths": 0,
+          "extraCollectionDays": 0,
+          "compChangePct": 0
+        }
+      }
+    },
+    "reviewResponses": {},
+    "reflection": "",
+    "exit": {
+      "founders": [
+        {
+          "id": "f1",
+          "name": "Founder 1",
+          "pct": 50
+        },
+        {
+          "id": "f2",
+          "name": "Founder 2",
+          "pct": 50
+        }
+      ],
+      "poolPct": 10,
+      "rounds": [],
+      "prefMultiple": 1,
+      "participating": false,
+      "exitYear": 5,
+      "growthPct": 40,
+      "exitMarginPct": 15,
+      "netCashAtExit": 0,
+      "feesPct": 3,
+      "capGainsFedPct": 23.8,
+      "capGainsStatePct": 13.3,
+      "ordinaryRatePct": 50.3,
+      "qsbs": true,
+      "strategic": {
+        "multiple": 1.5,
+        "cashPct": 70,
+        "escrowPct": 10,
+        "earnoutPct": 20,
+        "earnoutProbPct": 50
+      },
+      "pe": {
+        "multiple": 10,
+        "rolloverPct": 20,
+        "secondBiteMultiple": 2.5
+      },
+      "ipo": {
+        "multiple": 1.9500000000000002,
+        "sellAtIpoPct": 10,
+        "underwritingPct": 7,
+        "afterLockupChangePct": -10
+      },
+      "acquihire": {
+        "price": 2000000,
+        "retentionPerFounder": 600000
+      },
+      "lifestyle": {
+        "payoutPct": 50,
+        "years": 5
+      },
+      "focus": "all"
+    }
+  }
+}

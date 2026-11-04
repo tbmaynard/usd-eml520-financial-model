@@ -1,0 +1,401 @@
+
+######## MODEL software: Software
+Sells software. Combine any of three revenue streams: subscriptions (SaaS), one-time licenses with annual support contracts, and custom development projects. Use this if you are not yet sure which software model fits.
+## OPTIONS
+- subscription [boolean] "Subscriptions (SaaS)": Customers pay a recurring fee to use the software.  default=true
+- annualPlans [boolean] "Offer annual prepaid plans": Some customers pay for a full year up front, usually at a discount. Cash arrives early; revenue is still earned month by month.  default=false showIf=(o) => o.subscription === true
+- perpetual [boolean] "One-time licenses with annual support contracts": Customers buy the software outright, then pay a yearly fee for updates and support.  default=false
+- projects [boolean] "Custom development projects": You are paid to build software for a client. Revenue is earned as the work is delivered.  default=false
+## FIELDS (key | label | unit | group | help | default | showIf)
+- salesStartMonth | First month of sales | month | Launch timing | The month this revenue stream starts selling. Use a later month if you first need time for research and development, approvals or building inventory. Everything in this stream, including its own costs and pipeline, starts in this month and its other drivers describe the months after launch. Put spending before launch (engineers, prototypes) in the team plan and operating expenses. | default=1
+- subInitialCustomers | Paying subscribers at start | count | Subscriptions | Subscribers already paying when the projection begins. | default=0 | showIf=(o) => o.subscription === true
+- subNewPerMonth | New subscribers per month | count | Subscriptions | New paying subscribers in the first month of sales. | default=8 | showIf=(o) => o.subscription === true
+- subNewGrowthPct | Monthly growth in new subscribers | pct | Subscriptions | How much faster you add subscribers each month. 5% means the second month of sales adds 5% more new subscribers than the first. | default=5 | showIf=(o) => o.subscription === true
+- subPrice | Monthly subscription price | usd | Subscriptions | Average price per subscriber per month. | default=99 | showIf=(o) => o.subscription === true
+- subAnnualSharePct | Share of new subscribers choosing annual plans | pct | Subscriptions | Annual subscribers pay 12 months at once. | default=25 | showIf=(o) => o.subscription === true && o.annualPlans === true
+- subAnnualDiscountPct | Annual plan discount | pct | Subscriptions | Discount off the monthly price for paying a year up front. | default=15 | showIf=(o) => o.subscription === true && o.annualPlans === true
+- subChurnPct | Monthly subscriber churn | pct | Subscriptions | Share of subscribers who cancel each month. Annual subscribers can only leave at renewal, so for them the model applies 12 months of churn at once on each anniversary. | default=3 | showIf=(o) => o.subscription === true
+- subOnboardingFee | Onboarding fee per new subscriber | usd | Subscriptions | One-time setup or implementation fee. Leave at 0 if you do not charge one. | default=0 | showIf=(o) => o.subscription === true
+- subCac | Acquisition cost per new subscriber | usd | Subscriptions | Variable sales and marketing cost to win one subscriber (ads, commissions, trials). Fixed marketing spend is entered separately below. | default=400 | showIf=(o) => o.subscription === true
+- subHostingPerCustomer | Hosting cost per subscriber per month | usd | Subscriptions | Cloud and infrastructure cost that grows with each subscriber. | default=6 | showIf=(o) => o.subscription === true
+- subSupportPerCustomer | Support cost per subscriber per month | usd | Subscriptions | Customer support cost that grows with each subscriber. | default=8 | showIf=(o) => o.subscription === true
+- licNewPerMonth | Licenses sold per month | count | Licenses and support contracts | Average licenses sold per month. Fractions are allowed (0.5 means one sale every two months); the model counts whole sales. | default=1 | showIf=(o) => o.perpetual === true
+- licGrowthPct | Monthly growth in license sales | pct | Licenses and support contracts | Growth in the monthly sales rate. | default=3 | showIf=(o) => o.perpetual === true
+- licPrice | License price | usd | Licenses and support contracts | One-time price per license. | default=5000 | showIf=(o) => o.perpetual === true
+- licMaintPct | Annual support contract (% of license price) | pct | Licenses and support contracts | Yearly maintenance and support fee as a percent of the license price. 20% is a common starting point. | default=20 | showIf=(o) => o.perpetual === true
+- licMaintRenewalPct | Support contract renewal rate | pct | Licenses and support contracts | Share of support contracts renewed each year. | default=80 | showIf=(o) => o.perpetual === true
+- licDeliveryCost | Delivery cost per license | usd | Licenses and support contracts | Direct cost to deliver and install one license. | default=300 | showIf=(o) => o.perpetual === true
+- licSupportCost | Support cost per contract per month | usd | Licenses and support contracts | Monthly cost to support one customer with an active support contract. | default=40 | showIf=(o) => o.perpetual === true
+- licCac | Acquisition cost per license sale | usd | Licenses and support contracts | Variable sales cost (commission, demos) per license sold. | default=750 | showIf=(o) => o.perpetual === true
+- projNewPerMonth | New projects started per month | count | Development projects | Average project starts per month. 0.5 means one new project every two months. | default=0.5 | showIf=(o) => o.projects === true
+- projValue | Average project value | usd | Development projects | Total contract price of one project. | default=40000 | showIf=(o) => o.projects === true
+- projDurationMonths | Average project length | months | Development projects | Months to deliver one project. Revenue and billing are spread evenly over this period. | default=4 | showIf=(o) => o.projects === true
+- projDeliveryCostPct | Delivery cost (% of project value) | pct | Development projects | Contractor or delivery labor cost as a share of project revenue. Leave salaried delivery staff in the team plan instead. | default=45 | showIf=(o) => o.projects === true
+- marketingFixed | Fixed marketing spend per month | usd | Sales, development and payment timing | Marketing that does not scale with each sale: website, content, events. | default=1500
+- devCostMonthly | Outside development cost per month | usd | Sales, development and payment timing | Product development paid to contractors or agencies. Put employees in the team plan. | default=0
+- collectionDays | Days to collect customer payments | days | Sales, development and payment timing | Average days between invoicing a customer and receiving the cash. Card subscriptions are near 0; business invoices are often 30 to 60. | default=5
+- supplierDays | Days to pay vendors | days | Sales, development and payment timing | Average days you take to pay hosting, contractors and other vendors for this business line. | default=15
+## FORMULAS
+- [sw.customers] Active subscribers: Paying subscribers at the end of each month.
+    EXPR: Ending subscribers = Beginning subscribers + New subscribers − Churned subscribers
+    LIMITS: Subscriber counts are averages and can be fractional. Monthly subscribers churn every month; annual subscribers churn only at renewal.
+- [sw.newCustomers] New subscribers: Subscribers added during the month.
+    EXPR: New subscribers (month t) = New subscribers per month × (1 + monthly growth)^(t − 1)
+- [sw.churn] Churned subscribers: Subscribers who cancel during the month.
+    EXPR: Churned = Beginning monthly-plan subscribers × Monthly churn (+ annual subscribers lost at renewal)
+- [sw.subRevenue] Subscription revenue: Subscription fees earned in the month. Revenue is earned as the service is provided, even if the customer paid for a year in advance.
+    EXPR: Subscription revenue = Monthly-plan subscribers × Price + Annual-plan subscribers × Price × (1 − Annual discount)
+- [sw.mrr] Monthly recurring revenue (MRR): The subscription revenue the business is earning per month at the end of the month.
+    EXPR: MRR = Subscription revenue earned in the month
+- [sw.arr] Annual recurring revenue (ARR): ARR is an annualized run rate: what a year would look like if this month repeated twelve times. It is not revenue actually earned during the year.
+    EXPR: ARR = MRR × 12
+    LIMITS: A growing business earns less than its ending ARR during the year; a shrinking one earns more.
+- [sw.onboarding] Onboarding revenue: One-time setup fees from new subscribers.
+    EXPR: Onboarding revenue = New subscribers × Onboarding fee
+    LIMITS: Recognized when the customer starts. Under formal revenue rules some setup fees must be spread over the contract.
+- [sw.costToServe] Cost to serve subscribers: Direct monthly cost of hosting and supporting active subscribers.
+    EXPR: Cost to serve = Active subscribers × (Hosting per subscriber + Support per subscriber)
+- [sw.acq] Customer acquisition spending: Variable sales and marketing spent to win new subscribers.
+    EXPR: Acquisition spending = New subscribers × Acquisition cost per subscriber
+- [sw.cac] Blended customer acquisition cost (CAC): Total sales and marketing spend of this business line divided by the new customers it won.
+    EXPR: Blended CAC = (Variable acquisition spend + Fixed marketing) ÷ New customers
+    LIMITS: Excludes salaried sales staff in the team plan. Include them for a fuller CAC.
+- [sw.ltv] Customer lifetime value (LTV): Gross profit one subscriber is expected to produce over their lifetime.
+    EXPR: LTV = (Average revenue per subscriber − Cost to serve per subscriber) ÷ Monthly churn
+    LIMITS: Assumes churn and price stay constant forever and ignores the time value of money. With 0% churn the formula has no meaningful answer, so none is shown. Treat LTV as a rough comparison against CAC, not a forecast.
+- [sw.license] License revenue: One-time license sales, earned when the software is delivered.
+    EXPR: License revenue = Licenses sold × License price
+    LIMITS: Fractional sales rates are converted into whole sales: a sale is counted in the month the expected total reaches the next whole sale.
+- [sw.maint] Support contract revenue: Annual support contracts are billed once a year and earned evenly over the 12 months.
+    EXPR: Monthly support revenue = Active support contracts × License price × Support % ÷ 12
+    LIMITS: Contracts renew each year at the renewal rate; non-renewing customers stop paying support.
+- [sw.projects] Development project revenue: Project fees earned evenly over the project length.
+    EXPR: Project revenue = Active projects × Project value ÷ Project length
+
+######## MODEL manufacturing: Manufacturing / physical products
+Makes and sells physical products. Each unit carries material, labor and shipping cost; production needs equipment and is limited by capacity; materials must be bought before products can be sold.
+## OPTIONS
+- capSales [boolean] "Limit sales to production capacity": When on, you cannot sell more units than you can make. Turn off to see unconstrained demand (the model will still warn you).  default=true
+## FIELDS (key | label | unit | group | help | default | showIf)
+- salesStartMonth | First month of sales | month | Launch timing | The month this revenue stream starts selling. Use a later month if you first need time for research and development, approvals or building inventory. Everything in this stream, including its own costs and pipeline, starts in this month and its other drivers describe the months after launch. Put spending before launch (engineers, prototypes) in the team plan and operating expenses. | default=1
+- price | Selling price per unit | usd | Sales | Average price customers pay per unit, after discounts. | default=180
+- unitsStart | Units demanded in the first month of sales | count | Sales | How many units customers will order in the first month you sell. | default=150
+- unitGrowthPct | Monthly growth in unit demand | pct | Sales | Month-over-month growth in units demanded. | default=8
+- marketingFixed | Marketing and sales spend per month | usd | Sales | Advertising, trade shows, distributor support. | default=4000
+- materialCost | Material cost per unit | usd | Unit costs | Raw materials and components for one unit. | default=48
+- laborCost | Direct labor cost per unit | usd | Unit costs | Assembly and production labor for one unit. Paid when the unit is made. | default=22
+- packShipCost | Packaging and shipping per unit | usd | Unit costs | Packaging and outbound freight for one unit. | default=12
+- overheadMonthly | Manufacturing overhead per month | usd | Production | Fixed production costs: factory utilities, maintenance, quality control. | default=6000
+- capacity | Production capacity (units per month) | count | Production | Most units you can make in a month with your starting equipment. | default=600
+- equipmentCost | Initial equipment and tooling | usd | Production | One-time investment in machines, molds and tooling. | default=85000
+- equipmentMonth | Month equipment is purchased | month | Production | Projection month of the equipment purchase. | default=1
+- equipmentLife | Equipment useful life | months | Production | Months over which the equipment is depreciated. | default=60
+- expansionMonth | Capacity expansion month | month | Production | Month added capacity comes online. Set extra capacity to 0 if you do not plan to expand. | default=13
+- expansionCapacity | Extra capacity from expansion | count | Production | Additional units per month after the expansion. | default=0
+- expansionCost | Expansion equipment cost | usd | Production | Capital cost of the expansion. | default=0
+- rndMonthly | Product research and development per month | usd | Production | Design, prototyping and testing that is not tied to individual units. | default=2500
+- inventoryLeadMonths | Months materials are bought ahead of sale | months | Payment timing | How far ahead you must buy materials. 2 means materials for a March sale are bought in January. | default=1
+- collectionDays | Days for customers to pay | days | Payment timing | Average days between shipping and getting paid. Retailers and distributors often take 30 to 60 days. | default=30
+- supplierDays | Days to pay suppliers | days | Payment timing | Average days you take to pay for materials, overhead and shipping. Labor is paid immediately. | default=30
+## FORMULAS
+- [mf.units] Units sold: Units shipped to customers in the month.
+    EXPR: Units sold = min(Units demanded, Production capacity)  (when sales are limited to capacity)
+    LIMITS: Assumes you make what you sell in the same month and keep no finished-goods stock.
+- [mf.demand] Units demanded: Units customers want to buy.
+    EXPR: Units demanded (month t) = Month-1 demand × (1 + monthly growth)^(t − 1)
+- [mf.revenue] Product revenue: Sales value of units shipped.
+    EXPR: Revenue = Units sold × Selling price
+- [mf.varcost] Variable cost per unit: Costs that are incurred for every unit made and shipped.
+    EXPR: Variable cost per unit = Material + Direct labor + Packaging and shipping
+- [mf.cogs] Cost of goods sold: Variable costs of the units sold plus fixed manufacturing overhead.
+    EXPR: COGS = Units sold × Variable cost per unit + Manufacturing overhead
+- [mf.gp] Product gross profit: Revenue left after the cost of making and shipping the products.
+    EXPR: Gross profit = Units sold × (Selling price − Variable cost per unit) − Manufacturing overhead
+- [mf.util] Capacity utilization: How much of your production capacity is used.
+    EXPR: Utilization = Units sold ÷ Production capacity
+- [mf.inventory] Cash tied up in inventory: Materials bought but not yet sold. This is cash that has left the business but has not yet become revenue.
+    EXPR: Inventory = Total materials purchased − Total material cost of units sold.  Purchases (month t) = Units sold in month (t + lead) × Material cost
+    LIMITS: Only materials are held as inventory. Month 1 purchases cover month 1 sales plus the lead period, as startup stock.
+
+######## MODEL services: Professional services / consulting
+Sells the time and expertise of people. Revenue is limited by how many billable hours your team can deliver, so hiring, utilization and billing rates drive everything.
+## OPTIONS
+- pricing [select] "How you price work": Hourly billing charges for every hour worked. Fixed-fee projects charge a set price per engagement, spread over its length. choices=hourly(Hourly billing), fixed(Fixed fee per engagement) default="hourly"
+## FIELDS (key | label | unit | group | help | default | showIf)
+- salesStartMonth | First month of sales | month | Launch timing | The month this revenue stream starts selling. Use a later month if you first need time for research and development, approvals or building inventory. Everything in this stream, including its own costs and pipeline, starts in this month and its other drivers describe the months after launch. Put spending before launch (engineers, prototypes) in the team plan and operating expenses. | default=1
+- newClientsPerMonth | New client engagements per month | count | Clients and pricing | Average new engagements started per month. Fractions are allowed; the model counts whole engagements. | default=1.5
+- clientGrowthPct | Monthly growth in new engagements | pct | Clients and pricing | Growth in the rate of new engagements as your reputation builds. | default=4
+- projectDurationMonths | Average engagement length | months | Clients and pricing | How many months a typical engagement lasts. | default=3
+- hoursPerClientMonth | Hours of work per engagement per month | hours | Clients and pricing | Billable hours one active engagement needs each month. | default=90
+- billingRate | Billing rate per hour | usd | Clients and pricing | Average hourly rate charged to clients. | default=165 | showIf=(o) => o.pricing !== "fixed"
+- projectFee | Fee per engagement | usd | Clients and pricing | Total fixed price of one engagement. | default=45000 | showIf=(o) => o.pricing === "fixed"
+- marketingFixed | Business development spend per month | usd | Clients and pricing | Networking, proposals, conferences and marketing. | default=2000
+- consultantsStart | Billable consultants at start | count | Delivery team | People whose time you bill to clients, including founders who bill. | default=2
+- consultantsAdded | Billable consultants added later | count | Delivery team | Additional billable hires. Set to 0 if you do not plan to grow the team. | default=2
+- consultantsAddedMonth | Month the added consultants start | month | Delivery team | Costs and capacity begin in this month. | default=9
+- hoursPerPerson | Working hours per consultant per month | hours | Delivery team | Total paid working hours. About 160 for a full-time person. | default=160
+- utilizationPct | Billable utilization target | pct | Delivery team | Share of working hours that can be billed. The rest goes to admin, sales, training and gaps between projects. 60% to 80% is common. | default=70
+- consultantSalary | Monthly salary per consultant | usd | Delivery team | Gross monthly pay for one billable consultant. | default=9500
+- burdenPct | Benefits and payroll taxes | pct | Delivery team | Employer payroll taxes, health insurance and benefits as a percent of salary. 20% to 30% is typical in the US. | default=25
+- contractorHoursMax | Contractor hours available per month | hours | Delivery team | Outside contractor hours you can call on when your own team is full. | default=80
+- contractorCostPerHour | Contractor cost per hour | usd | Delivery team | What you pay a contractor per hour. | default=95
+- adminStaff | Non-billable administrative staff | count | Delivery team | Office managers, coordinators and others whose time is not billed. | default=1
+- adminSalary | Monthly salary per admin staff member | usd | Delivery team | Gross monthly pay for one administrative person. | default=5000
+- collectionDays | Days for clients to pay | days | Payment timing | Average days from invoice to payment. Many organizations pay in 30 to 60 days. | default=45
+- supplierDays | Days to pay contractors and vendors | days | Payment timing | Salaries are paid immediately; this applies to contractors and other vendors. | default=30
+## FORMULAS
+- [ps.available] Available working hours: Paid working hours of the billable team.
+    EXPR: Available hours = Billable consultants × Working hours per consultant
+- [ps.capacity] Delivery capacity: Hours the team can bill once non-billable time is set aside, plus available contractor hours.
+    EXPR: Delivery capacity = Available hours × Utilization target + Contractor hours available
+- [ps.demand] Hours clients need: Hours of work required by active engagements.
+    EXPR: Hours needed = Active engagements × Hours per engagement per month
+    LIMITS: Active engagements are those started within the last engagement length.
+- [ps.billable] Billable hours: Hours actually delivered and billed: the smaller of what clients need and what you can deliver.
+    EXPR: Billable hours = min(Hours needed, Delivery capacity)
+- [ps.revenue] Service revenue: Fees billed for hours delivered.
+    EXPR: Revenue = Billable hours × Billing rate
+- [ps.revenueFixed] Service revenue (fixed fee): Engagement fees earned evenly over the engagement, reduced if you lack capacity to deliver.
+    EXPR: Revenue = Active engagements × Fee ÷ Engagement length × (Billable hours ÷ Hours needed)
+- [ps.personnel] Delivery personnel cost: Fully loaded cost of billable consultants. Paid whether or not their time is billed.
+    EXPR: Personnel cost = Consultants × Monthly salary × (1 + Benefits and payroll taxes)
+- [ps.util] Actual utilization: Share of the team’s available hours that were billed.
+    EXPR: Utilization = Hours billed by staff ÷ Available hours
+- [ps.revPerEmp] Revenue per billable employee: Monthly revenue divided by billable headcount.
+    EXPR: Revenue per employee = Service revenue ÷ Billable consultants
+
+######## MODEL ecommerce: E-commerce / direct-to-consumer
+Sells products online directly to consumers. Every order carries product, fulfillment, shipping and payment-processing costs, and growth usually depends on paid customer acquisition.
+## OPTIONS
+## FIELDS (key | label | unit | group | help | default | showIf)
+- salesStartMonth | First month of sales | month | Launch timing | The month this revenue stream starts selling. Use a later month if you first need time for research and development, approvals or building inventory. Everything in this stream, including its own costs and pipeline, starts in this month and its other drivers describe the months after launch. Put spending before launch (engineers, prototypes) in the team plan and operating expenses. | default=1
+- aov | Average order value | usd | Orders | Average amount a customer pays per order, before returns. | default=72
+- ordersStart | Orders in the first month of sales | count | Orders | Orders expected in the first month you sell. | default=400
+- orderGrowthPct | Monthly order growth | pct | Orders | Month-over-month growth in orders. | default=7
+- returnsPct | Returns and refunds | pct | Orders | Share of sales refunded. Apparel often runs 20% or more; consumables far less. | default=8
+- productCostPerOrder | Product cost per order | usd | Cost per order | What the goods in an average order cost you. | default=24
+- fulfillmentPerOrder | Packaging and fulfillment per order | usd | Cost per order | Picking, packing and packaging for one order. | default=6
+- shippingSubsidyPerOrder | Shipping you pay per order | usd | Cost per order | Shipping cost you absorb (free or discounted shipping). | default=5
+- processingPct | Payment processing fee (% of order) | pct | Cost per order | Card processing percentage, typically about 2.9%. | default=2.9
+- processingFixed | Payment processing fee per order | usd | Cost per order | Fixed per-transaction fee, typically about $0.30. | default=0.3
+- newCustomerSharePct | Orders from new customers | pct | Customer acquisition | Share of orders placed by first-time customers. The rest are repeat customers you do not pay to acquire again. | default=60
+- cac | Acquisition cost per new customer | usd | Customer acquisition | Paid marketing needed to win one new customer. | default=35
+- marketingFixed | Brand marketing per month | usd | Customer acquisition | Marketing not tied to individual customers: content, photography, sponsorships. | default=2500
+- collectionDays | Days for payment processor to pay you | days | Payment timing | Card payouts usually arrive in 2 to 7 days. | default=3
+- supplierDays | Days to pay product suppliers | days | Payment timing | Average days you take to pay for products and fulfillment. | default=30
+## FORMULAS
+- [ec.orders] Orders: Orders placed in the month.
+    EXPR: Orders (month t) = Month-1 orders × (1 + monthly growth)^(t − 1)
+- [ec.revenue] Net product revenue: Sales after refunds.
+    EXPR: Net revenue = Orders × Average order value × (1 − Returns rate)
+    LIMITS: Refunds are recorded in the month of sale. Returned products are assumed not resellable, so their product cost is still incurred.
+- [ec.processing] Payment processing fees: Fees charged by the card processor on every order.
+    EXPR: Processing fees = Orders × (Average order value × Processing % + Fee per order)
+- [ec.acq] Customer acquisition spending: Paid marketing to win new customers.
+    EXPR: Acquisition spending = Orders × New-customer share × Acquisition cost per new customer
+    LIMITS: Assumes each new customer places one order in the month acquired; repeat orders cost nothing to acquire.
+- [ec.contribution] Contribution margin per order: What one order leaves to cover fixed costs after its direct costs and acquisition spending.
+    EXPR: Contribution per order = (Net revenue − Direct costs − Acquisition spending) ÷ Orders
+
+######## MODEL marketplace: Marketplace / transaction platform
+Connects buyers and sellers and keeps a fee on each transaction. The platform does not own what is sold, so its revenue is only its cut of the transaction value, while some costs (like payment processing) scale with the full value.
+## OPTIONS
+## FIELDS (key | label | unit | group | help | default | showIf)
+- salesStartMonth | First month of sales | month | Launch timing | The month this revenue stream starts selling. Use a later month if you first need time for research and development, approvals or building inventory. Everything in this stream, including its own costs and pipeline, starts in this month and its other drivers describe the months after launch. Put spending before launch (engineers, prototypes) in the team plan and operating expenses. | default=1
+- buyersStart | Active buyers at start | count | Buyers and sellers | Buyers using the platform at the start of the projection. | default=300
+- buyerGrowthPct | Monthly buyer growth | pct | Buyers and sellers | Month-over-month growth in active buyers. | default=10
+- sellersStart | Active sellers or providers at start | count | Buyers and sellers | Sellers or service providers on the platform at the start. | default=40
+- sellerGrowthPct | Monthly seller growth | pct | Buyers and sellers | Month-over-month growth in active sellers. | default=8
+- maxTxPerSeller | Most transactions one seller can handle per month | count | Buyers and sellers | Limits transactions when there are too few sellers. Enter 0 for no limit. | default=25
+- txPerBuyer | Transactions per buyer per month | count | Transactions | Average purchases one active buyer makes each month. | default=1.2
+- avgTxValue | Average transaction value | usd | Transactions | Average amount the buyer pays per transaction (the full price, not your fee). | default=140
+- takeRatePct | Platform take rate | pct | Transactions | Your fee as a percent of each transaction. This is your revenue. | default=12
+- processingPctOfGmv | Payment processing (% of transaction value) | pct | Transaction costs | Processor fees charged on the full transaction value, which you pay out of your fee. | default=2.9
+- supportPerTx | Support cost per transaction | usd | Transaction costs | Customer support, trust and safety per transaction. | default=1.5
+- disputeRatePct | Transactions that end in a dispute | pct | Transaction costs | Share of transactions needing dispute resolution. | default=2
+- disputeCost | Cost to resolve one dispute | usd | Transaction costs | Staff time and refunds you absorb per dispute. | default=40
+- buyerCac | Acquisition cost per new buyer | usd | Customer acquisition | Marketing spend to win one new buyer. | default=30
+- sellerCac | Acquisition cost per new seller | usd | Customer acquisition | Cost to recruit and onboard one new seller. | default=120
+- marketingFixed | Brand marketing per month | usd | Customer acquisition | Marketing not tied to individual sign-ups. | default=3000
+- collectionDays | Days to receive your fees | days | Payment timing | Days between a transaction and your fee reaching your bank. | default=3
+- supplierDays | Days to pay vendors | days | Payment timing | Average days you take to pay support vendors and marketing. | default=15
+## FORMULAS
+- [mp.tx] Transactions: Completed purchases on the platform, limited by how many sellers can serve them.
+    EXPR: Transactions = min(Buyers × Transactions per buyer, Sellers × Most transactions per seller)
+- [mp.gmv] Gross merchandise value (GMV): The total value of everything bought on the platform. GMV is not your revenue: most of it belongs to the sellers.
+    EXPR: GMV = Transactions × Average transaction value
+- [mp.revenue] Platform revenue: The fees the platform keeps.
+    EXPR: Platform revenue = GMV × Take rate
+- [mp.revPerTx] Revenue per transaction: Average fee the platform keeps per transaction.
+    EXPR: Revenue per transaction = Average transaction value × Take rate
+- [mp.txCost] Transaction costs: Costs that scale with transactions. Processing is charged on the full GMV, not just your fee.
+    EXPR: Transaction costs = GMV × Processing % + Transactions × (Support per transaction + Dispute rate × Dispute cost)
+- [mp.contribution] Contribution margin: Platform revenue left after transaction costs and acquisition spending.
+    EXPR: Contribution margin = Platform revenue − Transaction costs − Buyer and seller acquisition
+
+######## MODEL licensing: Licensing / intellectual property
+Lets other companies use your technology, patent, brand or content in exchange for fees or royalties. Deals are few and large, revenue often depends on the licensee’s own sales, and payments can arrive months after the activity.
+## OPTIONS
+## FIELDS (key | label | unit | group | help | default | showIf)
+- salesStartMonth | First month of sales | month | Launch timing | The month this revenue stream starts selling. Use a later month if you first need time for research and development, approvals or building inventory. Everything in this stream, including its own costs and pipeline, starts in this month and its other drivers describe the months after launch. Put spending before launch (engineers, prototypes) in the team plan and operating expenses. | default=1
+- initialLicensees | Licensees at start | count | Deals | Licensees already under contract when the projection begins. Their contracts are treated as starting in the first month of sales, with no upfront fee. | default=0
+- newPerQuarter | New licensees per quarter | count | Deals | Average new license deals signed each quarter. Fractions are allowed; the model counts whole deals. | default=1
+- firstDealMonth | Earliest month a new deal can sign | month | Deals | Licensing deals take time to negotiate. No new deals sign before this month. | default=4
+- upfrontFee | Upfront license fee per deal | usd | Fees and royalties | One-time fee paid when the license is signed. | default=25000
+- annualFee | Annual license fee | usd | Fees and royalties | Recurring fee billed at the start of each contract year and earned evenly over it. | default=12000
+- royaltyPct | Royalty rate | pct | Fees and royalties | Percent of the licensee’s sales of licensed products paid to you. Enter 0 if you do not charge royalties. | default=4
+- licenseeUnits | Licensed units sold per licensee per month | count | Fees and royalties | How many licensed products a typical licensee sells each month once ramped. | default=500
+- licenseeUnitPrice | Licensee’s price per unit | usd | Fees and royalties | The price the licensee charges for one licensed product. Royalties are a share of this. | default=60
+- rampMonths | Months for a licensee to reach full sales | months | Fees and royalties | Licensees take time to launch products. Royalties ramp up evenly over this period. | default=6
+- termMonths | Contract term | months | Contracts | Length of one license contract. | default=24
+- renewalPct | Renewal rate at term end | pct | Contracts | Share of licensees who renew for another term. | default=70
+- commissionPct | Sales commission | pct | Costs | Commission or broker fee paid on upfront and annual fees of new deals. | default=8
+- supportPerLicensee | Support cost per licensee per month | usd | Costs | Technical support, quality audits and relationship management for one licensee. | default=600
+- ipCostMonthly | Patent and IP maintenance per month | usd | Costs | Patent fees, legal protection and enforcement. | default=1500
+- collectionDays | Days to collect license fees | days | Payment timing | Average days to collect upfront and annual fees. | default=30
+- royaltyDays | Days until royalties are paid | days | Payment timing | Royalties are usually reported and paid quarterly in arrears, often 45 to 90 days after the sales. | default=75
+- supplierDays | Days to pay vendors | days | Payment timing | Average days you take to pay support and legal vendors. | default=30
+## FORMULAS
+- [li.deals] New licensees: Whole license deals signed in the month.
+    EXPR: Expected deals per month = New licensees per quarter ÷ 3 (from the earliest deal month). A deal is counted when the running expected total reaches the next whole deal.
+    LIMITS: Real deals are lumpier and less predictable than an even rate.
+- [li.upfront] Upfront license revenue: One-time fees from newly signed licensees.
+    EXPR: Upfront revenue = New licensees × Upfront fee
+    LIMITS: Recognized at signing. Formal revenue rules sometimes require spreading upfront fees over the license term.
+- [li.recurring] Recurring license revenue: Annual fees from contracts in their first term, earned evenly across each contract year.
+    EXPR: Recurring revenue = Licensees in first term × Annual fee ÷ 12
+- [li.renewal] Renewal revenue: Annual fees from contracts that renewed after their first term.
+    EXPR: Renewal revenue = Renewed licensees × Annual fee ÷ 12;  Renewed licensees = Contracts reaching term end × Renewal rate
+- [li.royalty] Royalty revenue: A share of licensees’ sales of licensed products.
+    EXPR: Royalty revenue = Σ licensees × Units per licensee × Ramp factor × Licensee unit price × Royalty rate
+    LIMITS: Earned when the licensee sells; collected after the royalty payment delay. You depend on the licensee’s sales effort, which you do not control.
+- [li.commission] Sales commissions: Commission on the fees of newly signed deals.
+    EXPR: Commissions = New licensees × (Upfront fee + Annual fee) × Commission rate
+
+######## MODEL enterprise: Enterprise / government B2B software
+Sells software to organizations and public agencies through a long sales process: qualification, evaluation, pilots, security review, procurement and contract approval. Few customers, large annual contracts, and long delays between first contact and first payment.
+## OPTIONS
+- counting [select] "How deals are counted": Whole deals counts a pilot or contract only when the expected total reaches a full deal, which produces realistic lumpy results. Expected value shows the smooth probability-weighted average, including fractions of deals. choices=whole(Whole deals), expected(Expected value (fractional)) default="whole"
+- billing [select] "How contracts are billed": Annual billing brings a full year of cash at the start of each contract year. Revenue is earned monthly either way. choices=annual(Annually in advance), quarterly(Quarterly in advance), monthly(Monthly) default="annual"
+- implRecognition [select] "When implementation and training revenue is earned": Earning it at contract start is simpler. Spreading it over the first year is closer to how auditors often treat setup fees tied to a subscription. choices=start(At contract start), year(Evenly over the first 12 months) default="start"
+## FIELDS (key | label | unit | group | help | default | showIf)
+- salesStartMonth | First month of sales | month | Launch timing | The month this revenue stream starts selling. Use a later month if you first need time for research and development, approvals or building inventory. Everything in this stream, including its own costs and pipeline, starts in this month and its other drivers describe the months after launch. Put spending before launch (engineers, prototypes) in the team plan and operating expenses. | default=1
+- prospectsPerMonth | New prospects entering the pipeline per month | count | Sales pipeline | Organizations you start talking to each month. | default=6
+- prospectGrowthPct | Monthly growth in new prospects | pct | Sales pipeline | Growth in the monthly prospect flow as marketing and referrals build. | default=3
+- openOppsAtStart | Qualified opportunities already open | count | Sales pipeline | Real opportunities already in your pipeline at the start. They begin the evaluation stage in the first month of sales. | default=3
+- pilotsAtStart | Pilots already underway | count | Sales pipeline | Pilots running when the projection starts. They are treated as starting in the first month of sales. | default=0
+- qualifyPct | Prospect to qualified opportunity | pct | Sales pipeline | Share of prospects with a real need, budget and decision maker. | default=35
+- monthsToQualify | Months to qualify a prospect | months | Sales pipeline | Time from first contact to a qualified opportunity. | default=1
+- pilotPct | Qualified opportunity to pilot | pct | Sales pipeline | Share of qualified opportunities that agree to a pilot. | default=40
+- evalMonths | Evaluation months before a pilot | months | Sales pipeline | Demos, technical evaluation and security questionnaires before a pilot begins. | default=3
+- maxConcurrent | Opportunities your team can pursue at once | count | Sales pipeline | Open opportunities plus active pilots your team can handle. Qualified opportunities beyond this are not pursued. Enter 0 for no limit. | default=12
+- salesBdMonthly | Sales and business development spend per month | usd | Sales pipeline | Travel, conferences, proposal writing, CRM and similar costs. Put salaried sales staff in the team plan. | default=3000
+- costPerProspect | Marketing cost per new prospect | usd | Sales pipeline | Lead generation cost per prospect. | default=150
+- pilotMonths | Pilot length | months | Pilots and procurement | How long a typical pilot runs. | default=3
+- pilotCost | Cost to deliver one pilot | usd | Pilots and procurement | Total cost of running one pilot (setup, travel, support, cloud). Spread evenly over the pilot. | default=9000
+- paidPilotPct | Pilots that are paid | pct | Pilots and procurement | Share of pilots where the customer pays a fee. Unpaid pilots are a cost of selling. | default=50
+- pilotFee | Fee for a paid pilot | usd | Pilots and procurement | What a customer pays for a paid pilot. | default=15000
+- pilotConversionPct | Pilot to paid customer | pct | Pilots and procurement | Share of pilots that become contracts. | default=50
+- decisionMonths | Months from pilot end to contract decision | months | Pilots and procurement | Internal review and approval after the pilot ends. | default=1
+- procurementMonths | Procurement and approval delay | months | Pilots and procurement | Purchasing, legal review, budget authorization and council or board approval. | default=3
+- startLagMonths | Months from signature to contract start | months | Pilots and procurement | Delay between signing and the contract start date, for example waiting for a new fiscal year. | default=0
+- licensePrice | Annual price per license, user or workspace | usd | Contracts and revenue | Annual software price for one license unit. | default=1200
+- licensesPerCustomer | Licenses per customer | count | Contracts and revenue | Average license units one customer buys. | default=40
+- termMonths | Contract term | months | Contracts and revenue | Length of one contract. Government contracts are often 12 months with renewal options. | default=12
+- renewalPct | Renewal rate at term end | pct | Contracts and revenue | Share of customers who renew when the contract ends. | default=85
+- priceIncreasePct | Annual price increase | pct | Contracts and revenue | Price increase applied each contract year. | default=3
+- implementationFee | Implementation and onboarding fee | usd | Contracts and revenue | One-time fee charged to a new customer. | default=10000
+- trainingFee | Training fee per new customer | usd | Contracts and revenue | One-time training revenue from a new customer. | default=5000
+- proServicesMonthly | Professional services revenue per customer per month | usd | Contracts and revenue | Ongoing consulting, custom reports or analysis billed to active customers. | default=0
+- laborRate | Internal labor cost per hour | usd | Implementation and support | Loaded hourly cost of staff who onboard and support customers. If those people are already in your team plan, enter 0 here so they are not counted twice. | default=0
+- onboardingHours | Staff hours to onboard a customer | hours | Implementation and support | Implementation and configuration hours for one new customer. | default=80
+- trainingCost | Training delivery cost per new customer | usd | Implementation and support | Travel, materials and trainer time. | default=2500
+- configCost | Customer-specific configuration cost | usd | Implementation and support | Integrations, data migration or custom setup per new customer. | default=3000
+- supportHours | Support hours per customer per month | hours | Implementation and support | Ongoing support time one customer needs. | default=6
+- infraPerCustomer | Infrastructure cost per customer per month | usd | Implementation and support | Cloud hosting and data storage that grows with each customer. | default=450
+- csmPerCustomer | Customer success cost per customer per month | usd | Implementation and support | Account management and customer success effort per customer. Enter 0 if covered by the team plan. | default=0
+- hostingBase | Base hosting and data management per month | usd | Enterprise operating costs | Platform hosting you pay regardless of customer count (environments, backups, monitoring). Counted as a direct cost. | default=1500
+- securityMonthly | Security and compliance per month | usd | Enterprise operating costs | Security tools, compliance platforms, penetration testing. | default=1200
+- certificationCost | Certification and audit cost per year | usd | Enterprise operating costs | Annual audits such as SOC 2, or government security authorizations. | default=30000
+- certificationMonth | Month of the first certification audit | month | Enterprise operating costs | The audit repeats every 12 months after this. | default=9
+- legalMonthly | Legal and procurement support per month | usd | Enterprise operating costs | Contract review, bid responses and procurement consultants. | default=1000
+- insuranceMonthly | Enterprise insurance per month | usd | Enterprise operating costs | Cyber liability and professional liability coverage customers require. | default=600
+- collectionDays | Days for customers to pay | days | Payment timing | Average days from invoice to payment. Public agencies often take 45 to 90 days. | default=60
+- supplierDays | Days to pay vendors | days | Payment timing | Average days you take to pay vendors for this business line. | default=30
+## FORMULAS
+- [en.qualified] Qualified opportunities: Expected prospects who become real opportunities, arriving after the qualification delay.
+    EXPR: Qualified (month t) = Prospects entering in month (t − months to qualify) × Qualification rate
+    LIMITS: These are expected values, not actual organizations. Opportunities beyond your team’s capacity are dropped.
+- [en.pilots] Pilots started: Qualified opportunities that start a pilot after evaluation.
+    EXPR: Pilots (month t) = Qualified opportunities pursued in month (t − evaluation months) × Pilot rate
+    LIMITS: In whole-deals mode a pilot is counted when the running expected total reaches the next whole pilot.
+- [en.wins] Contracts signed: Pilots that convert to paying customers, after the decision and procurement delays.
+    EXPR: Contracts signed (month t) = Pilots started in month (t − pilot length − decision months − procurement delay) × Pilot conversion
+    LIMITS: Modeled deals are not real customers. Treat them as what must happen for the plan to work.
+- [en.cycle] Average sales cycle: Months from first contact with a prospect to the contract start.
+    EXPR: Sales cycle = Months to qualify + Evaluation + Pilot length + Decision + Procurement + Start delay
+- [en.acv] Annual contract value (ACV): Annual software value of one first-year contract.
+    EXPR: ACV = Licenses per customer × Annual price per license
+- [en.contractedArr] Contracted ARR: Annual value of all signed contracts, including ones signed but not yet started. Contracted is not the same as earned: revenue is earned month by month after the contract starts.
+    EXPR: Contracted ARR = Σ (signed, unexpired contracts × their current ACV)
+- [en.recurring] Recurring software revenue (recognized): Software subscription revenue earned in the month.
+    EXPR: Recognized software revenue = Σ active customers × Current ACV ÷ 12
+- [en.implementation] Implementation and training revenue: One-time fees from new customers.
+    EXPR: Implementation revenue = New customers × (Implementation fee + Training fee)  (at start, or spread over 12 months)
+- [en.pilotCosts] Pilot delivery costs: Cost of running pilots. Paid pilots are a direct cost of the pilot revenue; unpaid pilots are a cost of selling.
+    EXPR: Pilot cost (month) = Active pilots × Pilot cost ÷ Pilot length
+- [en.onboarding] Customer onboarding costs: One-time costs to bring a new customer live.
+    EXPR: Onboarding cost = New customers × (Onboarding hours × Labor rate + Training cost + Configuration cost)
+- [en.pipeline] Sales pipeline value: First-year contract value of opportunities still being pursued. Pipeline is not revenue: the weighted value applies the remaining conversion rates.
+    EXPR: Weighted pipeline = Open opportunities × Pilot rate × Conversion × ACV + Active pilots × Conversion × ACV
+- [en.cac] Customer acquisition cost (CAC): Selling spend of this business line divided by contracts won, to date.
+    EXPR: CAC = Cumulative (Sales spend + Prospect marketing + Unpaid pilot cost) ÷ Cumulative contracts signed
+    LIMITS: Excludes salaried sales staff in the team plan.
+- [en.concentration] Revenue concentration: Share of software revenue that comes from the single largest customer.
+    EXPR: Concentration = Largest customer’s current ACV ÷ Total ACV of active customers
+    LIMITS: All customers are modeled as the same size, so concentration is about 1 ÷ number of customers. Real customers vary.
+
+######## COMMON
+- [c.revenue] Total revenue: Revenue earned in the month from every business line. Earned means the product or service was delivered, whether or not the customer has paid.
+    EXPR: Total revenue = Σ revenue from each source
+- [c.gross] Gross profit and gross margin: What is left of revenue after the direct costs of delivering it. Gross margin is gross profit as a share of revenue.
+    EXPR: Gross profit = Revenue − Direct costs;  Gross margin = Gross profit ÷ Revenue
+    LIMITS: Delivery staff in the team plan count as direct costs; everyone else is an operating expense.
+- [c.opex] Operating expenses: Costs of running the business that are not direct costs of delivery.
+    EXPR: Operating expenses = Personnel + Sales and marketing + Research and development + General and administrative + Other
+- [c.personnel] Personnel cost: Pay plus benefits and payroll taxes for each role, starting in its hiring month.
+    EXPR: Personnel (role, month) = Headcount × Monthly pay × (1 + Annual raise)^(years since hire) × (1 + Benefits and payroll taxes %), only from the start month
+    LIMITS: Raises apply on each hiring anniversary. Salaries are paid in the month they are earned.
+- [c.ebitda] EBITDA (simplified): Earnings before interest, taxes, depreciation and amortization: a simplified measure of operating performance before financing and equipment costs are spread over time.
+    EXPR: EBITDA = Gross profit − Operating expenses
+    LIMITS: EBITDA is not cash flow and not profit. It ignores equipment purchases, debt payments, taxes and payment timing.
+- [c.operating] Operating profit (loss): Profit from operations after spreading the cost of equipment over its useful life.
+    EXPR: Operating profit = EBITDA − Depreciation;  Depreciation = Equipment cost ÷ Useful life, each month
+- [c.net] Net income: Profit after interest and income tax.
+    EXPR: Net income = Operating profit − Interest − Income tax
+- [c.tax] Income tax (coarse estimate): A rough estimate of income tax on profit, after using up earlier losses.
+    EXPR: Tax (month) = max(0, Pretax profit − Losses carried forward) × Combined tax rate
+    LIMITS: Not tax advice. Uses one combined rate, applies losses in full with no annual limit, ignores credits, deductions and state differences. Pass-through entities owe no entity tax; owners pay instead, shown as an optional cash distribution.
+- [c.collections] Cash collected from customers: Cash received from customers. Invoices are collected after the payment delay, so cash usually trails revenue.
+    EXPR: Cash collected (month t) = Invoices due in month t after the delay;  a d-day delay lands (1 − f) of an invoice m months later and f of it m + 1 months later, where m = floor(d ÷ 30), f = (d mod 30) ÷ 30
+    LIMITS: Assumes every customer pays eventually and on the average schedule. Uses 30-day months.
+- [c.receivables] Money customers still owe (receivables): Invoices issued but not yet paid.
+    EXPR: Receivables = Total invoices to date − Total cash collected to date
+- [c.deferred] Deferred revenue: Money customers have been invoiced for service you have not yet delivered, such as the rest of a prepaid annual contract.
+    EXPR: Deferred revenue = Total invoices to date − Total revenue earned to date
+- [c.paid] Cash paid for costs: Cash leaving the business for direct costs, operating expenses and salaries. Vendor bills are paid after your payment delay; salaries are paid immediately.
+    EXPR: Cash paid = Costs due in the month after each cost’s payment delay;  Payables = Costs incurred to date − Cash paid to date
+- [c.cash] Ending cash balance: Cash in the bank at the end of the month.
+    EXPR: Ending cash = Beginning cash + Cash collected + Founder and investor funding + Loans − Cash paid for costs − Equipment − Interest − Loan repayments − Taxes paid
+- [c.burn] Monthly burn rate: Net cash the business uses each month from operations and equipment purchases, before any funding comes in.
+    EXPR: Burn = −(Operating cash flow − Equipment purchases);  positive means cash is being used
+    LIMITS: The dashboard shows the average of the last three months.
+- [c.runway] Runway: How long the cash lasts. If cash goes below zero during the projection, runway is the month it runs out. Otherwise it is the ending cash divided by the current burn.
+    EXPR: Runway (months beyond the projection) = Ending cash ÷ Average burn of the last three months
+    LIMITS: Assumes the current burn continues unchanged.
+- [c.breakeven] Break-even month: The first month after which operating profit stays at or above zero for the rest of the projection. A single good month followed by losses does not count.
+    EXPR: Break-even month = first month m where Operating profit ≥ 0 in every month from m to the end
+- [c.funding] Additional funding required: Extra cash needed so the balance never falls below the minimum cash you want to keep on hand.
+    EXPR: Funding required = max(0, Minimum cash cushion − Lowest projected cash balance)
+    LIMITS: Assumes the money arrives before the low point. Raising money takes months in practice.
+

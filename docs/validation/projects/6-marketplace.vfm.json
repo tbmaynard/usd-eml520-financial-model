@@ -1,0 +1,267 @@
+{
+  "format": "venture-financial-model",
+  "version": 1,
+  "exportedAt": "2026-11-04T00:00:00.000Z",
+  "project": {
+    "schemaVersion": 1,
+    "id": "validation_6-marketplace",
+    "createdAt": "2026-11-04T00:00:00.000Z",
+    "updatedAt": "2026-11-04T00:00:00.000Z",
+    "setup": {
+      "name": "6. Marketplace: take rate on GMV, seller-supply limit",
+      "description": "",
+      "industries": [],
+      "startMonth": "2027-01",
+      "months": 24,
+      "startingCash": {
+        "v": 50000,
+        "basis": "Validation test input",
+        "conf": "benchmark",
+        "example": false
+      },
+      "founderInvestment": {
+        "v": 0,
+        "basis": "Validation test input",
+        "conf": "benchmark",
+        "example": false
+      },
+      "minCashCushion": {
+        "v": 10000,
+        "basis": "Validation test input",
+        "conf": "benchmark",
+        "example": false
+      },
+      "largestCustomerSharePct": {
+        "v": 10,
+        "basis": "",
+        "conf": "unset",
+        "example": true
+      }
+    },
+    "streams": [
+      {
+        "id": "s0",
+        "kind": "marketplace",
+        "name": "Marketplace",
+        "inputs": {
+          "salesStartMonth": {
+            "v": 1,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "buyersStart": {
+            "v": 1000,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "buyerGrowthPct": {
+            "v": 10,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "sellersStart": {
+            "v": 30,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "sellerGrowthPct": {
+            "v": 5,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "maxTxPerSeller": {
+            "v": 60,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "txPerBuyer": {
+            "v": 1.5,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "avgTxValue": {
+            "v": 50,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "takeRatePct": {
+            "v": 15,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "processingPctOfGmv": {
+            "v": 3,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "supportPerTx": {
+            "v": 0.5,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "disputeRatePct": {
+            "v": 2,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "disputeCost": {
+            "v": 25,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "buyerCac": {
+            "v": 20,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "sellerCac": {
+            "v": 100,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "marketingFixed": {
+            "v": 1500,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "collectionDays": {
+            "v": 0,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "supplierDays": {
+            "v": 0,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          }
+        },
+        "options": {}
+      }
+    ],
+    "roles": [],
+    "expenses": [],
+    "capex": [],
+    "funding": [],
+    "tax": {
+      "enabled": false,
+      "entity": "c_corp",
+      "rate": {
+        "v": 25,
+        "basis": "Validation test input",
+        "conf": "benchmark",
+        "example": false
+      },
+      "payment": "quarterly",
+      "includeOwnerDistributions": true
+    },
+    "scenarios": {
+      "base": {
+        "id": "base",
+        "label": "Base case",
+        "overrides": {},
+        "notes": "",
+        "adjustments": {
+          "hiringDelayMonths": 0,
+          "extraCollectionDays": 0,
+          "compChangePct": 0
+        }
+      },
+      "downside": {
+        "id": "downside",
+        "label": "Downside case",
+        "overrides": {},
+        "notes": "",
+        "adjustments": {
+          "hiringDelayMonths": 0,
+          "extraCollectionDays": 0,
+          "compChangePct": 0
+        }
+      },
+      "upside": {
+        "id": "upside",
+        "label": "Upside case",
+        "overrides": {},
+        "notes": "",
+        "adjustments": {
+          "hiringDelayMonths": 0,
+          "extraCollectionDays": 0,
+          "compChangePct": 0
+        }
+      }
+    },
+    "reviewResponses": {},
+    "reflection": "",
+    "exit": {
+      "founders": [
+        {
+          "id": "f1",
+          "name": "Founder 1",
+          "pct": 50
+        },
+        {
+          "id": "f2",
+          "name": "Founder 2",
+          "pct": 50
+        }
+      ],
+      "poolPct": 10,
+      "rounds": [],
+      "prefMultiple": 1,
+      "participating": false,
+      "exitYear": 5,
+      "growthPct": 40,
+      "exitMarginPct": 15,
+      "netCashAtExit": 0,
+      "feesPct": 3,
+      "capGainsFedPct": 23.8,
+      "capGainsStatePct": 13.3,
+      "ordinaryRatePct": 50.3,
+      "qsbs": true,
+      "strategic": {
+        "multiple": 3,
+        "cashPct": 70,
+        "escrowPct": 10,
+        "earnoutPct": 20,
+        "earnoutProbPct": 50
+      },
+      "pe": {
+        "multiple": 15,
+        "rolloverPct": 20,
+        "secondBiteMultiple": 2.5
+      },
+      "ipo": {
+        "multiple": 3.9000000000000004,
+        "sellAtIpoPct": 10,
+        "underwritingPct": 7,
+        "afterLockupChangePct": -10
+      },
+      "acquihire": {
+        "price": 2000000,
+        "retentionPerFounder": 600000
+      },
+      "lifestyle": {
+        "payoutPct": 50,
+        "years": 5
+      },
+      "focus": "all"
+    }
+  }
+}

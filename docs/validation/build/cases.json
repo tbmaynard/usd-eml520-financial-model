@@ -1,0 +1,5031 @@
+[
+  {
+    "sheet": "1 Software",
+    "file": "1-software.vfm.json",
+    "project": {
+      "name": "1. Software: subscriptions, annual plans, licenses with support, projects",
+      "setup": {
+        "startMonth": "2027-01",
+        "months": 24,
+        "startingCash": 300000,
+        "founderInvestment": 0,
+        "minCashCushion": 10000
+      },
+      "streams": [
+        {
+          "kind": "software",
+          "name": "Software",
+          "options": {
+            "subscription": true,
+            "annualPlans": true,
+            "perpetual": true,
+            "projects": true
+          },
+          "inputs": {
+            "salesStartMonth": 1,
+            "subInitialCustomers": 200,
+            "subNewPerMonth": 20,
+            "subNewGrowthPct": 5,
+            "subPrice": 50,
+            "subAnnualSharePct": 25,
+            "subAnnualDiscountPct": 20,
+            "subChurnPct": 3,
+            "subOnboardingFee": 100,
+            "subCac": 300,
+            "subHostingPerCustomer": 4,
+            "subSupportPerCustomer": 6,
+            "licNewPerMonth": 0.5,
+            "licGrowthPct": 0,
+            "licPrice": 6000,
+            "licMaintPct": 20,
+            "licMaintRenewalPct": 50,
+            "licDeliveryCost": 400,
+            "licSupportCost": 50,
+            "licCac": 1000,
+            "projNewPerMonth": 1,
+            "projValue": 24000,
+            "projDurationMonths": 4,
+            "projDeliveryCostPct": 40,
+            "marketingFixed": 1500,
+            "devCostMonthly": 2000,
+            "collectionDays": 45,
+            "supplierDays": 0
+          }
+        }
+      ],
+      "roles": [],
+      "expenses": [],
+      "capex": [],
+      "funding": [],
+      "tax": {
+        "enabled": false,
+        "entity": "c_corp",
+        "rate": 25,
+        "payment": "quarterly",
+        "includeOwnerDistributions": true
+      },
+      "scenarios": {},
+      "exit": {}
+    },
+    "checks": [
+      {
+        "row": 60,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "New subscribers",
+        "month": 12,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "table",
+          "New subscribers"
+        ]
+      },
+      {
+        "row": 61,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Ending subscribers",
+        "month": 1,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "table",
+          "Ending subscribers"
+        ]
+      },
+      {
+        "row": 62,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Ending subscribers",
+        "month": 12,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "table",
+          "Ending subscribers"
+        ]
+      },
+      {
+        "row": 63,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Annual-plan subscribers",
+        "month": 12,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "table",
+          "Annual-plan subscribers"
+        ]
+      },
+      {
+        "row": 64,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Annual-plan subscribers",
+        "month": 13,
+        "unit": "count",
+        "conv": "C1",
+        "src": [
+          "table",
+          "Annual-plan subscribers"
+        ]
+      },
+      {
+        "row": 65,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Subscription revenue",
+        "month": 1,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "  Subscription revenue"
+        ]
+      },
+      {
+        "row": 66,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Subscription revenue",
+        "month": 12,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "  Subscription revenue"
+        ]
+      },
+      {
+        "row": 67,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Onboarding fees",
+        "month": 3,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "  Onboarding fees"
+        ]
+      },
+      {
+        "row": 68,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "License sales",
+        "month": 1,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "  License sales"
+        ]
+      },
+      {
+        "row": 69,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "License sales",
+        "month": 2,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "  License sales"
+        ]
+      },
+      {
+        "row": 70,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Support contracts",
+        "month": 6,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "  Support contracts"
+        ]
+      },
+      {
+        "row": 71,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Support contracts",
+        "month": 14,
+        "unit": "usd",
+        "conv": "C2",
+        "src": [
+          "table",
+          "  Support contracts"
+        ]
+      },
+      {
+        "row": 72,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Development projects",
+        "month": 2,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "  Development projects"
+        ]
+      },
+      {
+        "row": 73,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Development projects",
+        "month": 12,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "  Development projects"
+        ]
+      },
+      {
+        "row": 74,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Total direct costs",
+        "month": 4,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Total direct costs"
+        ]
+      },
+      {
+        "row": 75,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Sales and marketing",
+        "month": 2,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Sales and marketing"
+        ]
+      },
+      {
+        "row": 76,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "MRR",
+        "month": 12,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "MRR"
+        ]
+      },
+      {
+        "row": 77,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "ARR (annualized run rate)",
+        "month": 12,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "ARR (annualized run rate)"
+        ]
+      },
+      {
+        "row": 78,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Lifetime value per subscriber",
+        "month": 12,
+        "unit": "usd",
+        "conv": "C3",
+        "src": [
+          "table",
+          "Lifetime value per subscriber"
+        ]
+      },
+      {
+        "row": 79,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Blended acquisition cost per new customer",
+        "month": 2,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Blended acquisition cost per new customer"
+        ]
+      },
+      {
+        "row": 80,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Cash collected from customers",
+        "month": 1,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Cash collected from customers"
+        ]
+      },
+      {
+        "row": 81,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Cash collected from customers",
+        "month": 2,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Cash collected from customers"
+        ]
+      },
+      {
+        "row": 82,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Cash collected from customers",
+        "month": 3,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Cash collected from customers"
+        ]
+      },
+      {
+        "row": 83,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Deferred revenue",
+        "month": 1,
+        "unit": "usd",
+        "conv": "C2",
+        "src": [
+          "table",
+          "Deferred revenue"
+        ]
+      },
+      {
+        "row": 84,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Money customers still owe",
+        "month": 12,
+        "unit": "usd",
+        "conv": "C2",
+        "src": [
+          "table",
+          "Money customers still owe"
+        ]
+      },
+      {
+        "row": 85,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Total revenue",
+        "month": "Total",
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Total revenue"
+        ]
+      },
+      {
+        "row": 86,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "EBITDA (simplified)",
+        "month": "Total",
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "EBITDA (simplified)"
+        ]
+      },
+      {
+        "row": 87,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 1,
+        "unit": "usd",
+        "conv": "C1, C2",
+        "src": [
+          "table",
+          "Ending cash"
+        ]
+      },
+      {
+        "row": 88,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 12,
+        "unit": "usd",
+        "conv": "C1, C2",
+        "src": [
+          "table",
+          "Ending cash"
+        ]
+      },
+      {
+        "row": 89,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 24,
+        "unit": "usd",
+        "conv": "C1, C2",
+        "src": [
+          "table",
+          "Ending cash"
+        ]
+      }
+    ]
+  },
+  {
+    "sheet": "2 Enterprise",
+    "file": "2-enterprise.vfm.json",
+    "project": {
+      "name": "2. Enterprise / government: pipeline, whole deals, annual billing",
+      "setup": {
+        "startMonth": "2027-01",
+        "months": 24,
+        "startingCash": 300000,
+        "founderInvestment": 0,
+        "minCashCushion": 10000
+      },
+      "streams": [
+        {
+          "kind": "enterprise",
+          "name": "Enterprise",
+          "options": {
+            "counting": "whole",
+            "billing": "annual",
+            "implRecognition": "start"
+          },
+          "inputs": {
+            "salesStartMonth": 1,
+            "prospectsPerMonth": 10,
+            "prospectGrowthPct": 0,
+            "openOppsAtStart": 0,
+            "pilotsAtStart": 0,
+            "qualifyPct": 50,
+            "monthsToQualify": 1,
+            "pilotPct": 20,
+            "evalMonths": 1,
+            "maxConcurrent": 0,
+            "salesBdMonthly": 2000,
+            "costPerProspect": 100,
+            "pilotMonths": 2,
+            "pilotCost": 6000,
+            "paidPilotPct": 0,
+            "pilotFee": 0,
+            "pilotConversionPct": 50,
+            "decisionMonths": 1,
+            "procurementMonths": 2,
+            "startLagMonths": 1,
+            "licensePrice": 1000,
+            "licensesPerCustomer": 20,
+            "termMonths": 12,
+            "renewalPct": 100,
+            "priceIncreasePct": 5,
+            "implementationFee": 10000,
+            "trainingFee": 2000,
+            "proServicesMonthly": 500,
+            "laborRate": 50,
+            "onboardingHours": 40,
+            "trainingCost": 1000,
+            "configCost": 1500,
+            "supportHours": 5,
+            "infraPerCustomer": 300,
+            "csmPerCustomer": 200,
+            "hostingBase": 1000,
+            "securityMonthly": 500,
+            "certificationCost": 12000,
+            "certificationMonth": 6,
+            "legalMonthly": 400,
+            "insuranceMonthly": 300,
+            "collectionDays": 30,
+            "supplierDays": 0
+          }
+        }
+      ],
+      "roles": [],
+      "expenses": [],
+      "capex": [],
+      "funding": [],
+      "tax": {
+        "enabled": false,
+        "entity": "c_corp",
+        "rate": 25,
+        "payment": "quarterly",
+        "includeOwnerDistributions": true
+      },
+      "scenarios": {},
+      "exit": {}
+    },
+    "checks": [
+      {
+        "row": 74,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Qualified opportunities (expected)",
+        "month": 2,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "table",
+          "Qualified opportunities (expected)"
+        ]
+      },
+      {
+        "row": 75,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Paid pilots started / Active pilots",
+        "month": 4,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "table",
+          "Active pilots"
+        ]
+      },
+      {
+        "row": 76,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Contracts starting",
+        "month": 9,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "table",
+          "Contracts starting"
+        ]
+      },
+      {
+        "row": 77,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Contracts starting",
+        "month": 10,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "table",
+          "Contracts starting"
+        ]
+      },
+      {
+        "row": 78,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Signed, not yet started",
+        "month": 9,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "table",
+          "Signed, not yet started"
+        ]
+      },
+      {
+        "row": 79,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Active paying customers",
+        "month": 12,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "table",
+          "Active paying customers"
+        ]
+      },
+      {
+        "row": 80,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Active paying customers",
+        "month": 24,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "table",
+          "Active paying customers"
+        ]
+      },
+      {
+        "row": 81,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Recurring software",
+        "month": 10,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "  Recurring software"
+        ]
+      },
+      {
+        "row": 82,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Recurring software",
+        "month": 22,
+        "unit": "usd",
+        "conv": "C4",
+        "src": [
+          "table",
+          "  Recurring software"
+        ]
+      },
+      {
+        "row": 83,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Implementation and training",
+        "month": 10,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "  Implementation and training"
+        ]
+      },
+      {
+        "row": 84,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Professional services",
+        "month": 12,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "  Professional services"
+        ]
+      },
+      {
+        "row": 85,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Total revenue",
+        "month": 12,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Total revenue"
+        ]
+      },
+      {
+        "row": 86,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Total direct costs",
+        "month": 10,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Total direct costs"
+        ]
+      },
+      {
+        "row": 87,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Sales and marketing",
+        "month": 3,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Sales and marketing"
+        ]
+      },
+      {
+        "row": 88,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Sales and marketing",
+        "month": 4,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Sales and marketing"
+        ]
+      },
+      {
+        "row": 89,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "General and administrative",
+        "month": 6,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "General and administrative"
+        ]
+      },
+      {
+        "row": 90,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "General and administrative",
+        "month": 7,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "General and administrative"
+        ]
+      },
+      {
+        "row": 91,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Cash collected from customers",
+        "month": 11,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Cash collected from customers"
+        ]
+      },
+      {
+        "row": 92,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Deferred revenue",
+        "month": 10,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Deferred revenue"
+        ]
+      },
+      {
+        "row": 93,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Contracted ARR",
+        "month": 9,
+        "unit": "usd",
+        "conv": "C4",
+        "src": [
+          "table",
+          "Contracted ARR"
+        ]
+      },
+      {
+        "row": 94,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Pipeline value (weighted)",
+        "month": 6,
+        "unit": "usd",
+        "conv": "C5",
+        "src": [
+          "table",
+          "Pipeline value (weighted)"
+        ]
+      },
+      {
+        "row": 95,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Acquisition cost per contract (to date)",
+        "month": 24,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Acquisition cost per contract (to date)"
+        ]
+      },
+      {
+        "row": 96,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Largest customer share of software revenue",
+        "month": 12,
+        "unit": "pct",
+        "conv": "",
+        "src": [
+          "table",
+          "Largest customer share of software revenue %"
+        ]
+      },
+      {
+        "row": 97,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Average sales cycle",
+        "month": null,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "metric_last",
+          "Average sales cycle"
+        ]
+      },
+      {
+        "row": 98,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Total revenue",
+        "month": "Total",
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Total revenue"
+        ]
+      },
+      {
+        "row": 99,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "EBITDA (simplified)",
+        "month": "Total",
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "EBITDA (simplified)"
+        ]
+      },
+      {
+        "row": 100,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 1,
+        "unit": "usd",
+        "conv": "C4",
+        "src": [
+          "table",
+          "Ending cash"
+        ]
+      },
+      {
+        "row": 101,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 12,
+        "unit": "usd",
+        "conv": "C4",
+        "src": [
+          "table",
+          "Ending cash"
+        ]
+      },
+      {
+        "row": 102,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 24,
+        "unit": "usd",
+        "conv": "C4",
+        "src": [
+          "table",
+          "Ending cash"
+        ]
+      }
+    ]
+  },
+  {
+    "sheet": "3 Manufacturing",
+    "file": "3-manufacturing.vfm.json",
+    "project": {
+      "name": "3. Manufacturing: capacity limit, expansion, inventory bought ahead",
+      "setup": {
+        "startMonth": "2027-01",
+        "months": 24,
+        "startingCash": 200000,
+        "founderInvestment": 0,
+        "minCashCushion": 10000
+      },
+      "streams": [
+        {
+          "kind": "manufacturing",
+          "name": "Manufacturing",
+          "options": {
+            "capSales": true
+          },
+          "inputs": {
+            "salesStartMonth": 1,
+            "price": 100,
+            "unitsStart": 400,
+            "unitGrowthPct": 10,
+            "marketingFixed": 2000,
+            "materialCost": 30,
+            "laborCost": 15,
+            "packShipCost": 5,
+            "overheadMonthly": 3000,
+            "capacity": 600,
+            "equipmentCost": 60000,
+            "equipmentMonth": 1,
+            "equipmentLife": 60,
+            "expansionMonth": 10,
+            "expansionCapacity": 400,
+            "expansionCost": 24000,
+            "rndMonthly": 1000,
+            "inventoryLeadMonths": 1,
+            "collectionDays": 30,
+            "supplierDays": 30
+          }
+        }
+      ],
+      "roles": [],
+      "expenses": [],
+      "capex": [],
+      "funding": [],
+      "tax": {
+        "enabled": false,
+        "entity": "c_corp",
+        "rate": 25,
+        "payment": "quarterly",
+        "includeOwnerDistributions": true
+      },
+      "scenarios": {},
+      "exit": {}
+    },
+    "checks": [
+      {
+        "row": 49,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Units demanded",
+        "month": 6,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "table",
+          "Units demanded"
+        ]
+      },
+      {
+        "row": 50,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Units sold",
+        "month": 6,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "table",
+          "Units sold"
+        ]
+      },
+      {
+        "row": 51,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Unserved demand (units)",
+        "month": 6,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "table",
+          "Unserved demand (units)"
+        ]
+      },
+      {
+        "row": 52,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Production capacity",
+        "month": 10,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "table",
+          "Production capacity"
+        ]
+      },
+      {
+        "row": 53,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Units sold",
+        "month": 11,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "table",
+          "Units sold"
+        ]
+      },
+      {
+        "row": 54,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Capacity utilization",
+        "month": 3,
+        "unit": "pct",
+        "conv": "",
+        "src": [
+          "table",
+          "Capacity utilization %"
+        ]
+      },
+      {
+        "row": 55,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Product sales",
+        "month": 1,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "  Product sales"
+        ]
+      },
+      {
+        "row": 56,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Product sales",
+        "month": 6,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "  Product sales"
+        ]
+      },
+      {
+        "row": 57,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Total direct costs",
+        "month": 1,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Total direct costs"
+        ]
+      },
+      {
+        "row": 58,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Gross profit",
+        "month": 6,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Gross profit"
+        ]
+      },
+      {
+        "row": 59,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Depreciation",
+        "month": 1,
+        "unit": "usd",
+        "conv": "C6",
+        "src": [
+          "table",
+          "Depreciation"
+        ]
+      },
+      {
+        "row": 60,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Depreciation",
+        "month": 10,
+        "unit": "usd",
+        "conv": "C6",
+        "src": [
+          "table",
+          "Depreciation"
+        ]
+      },
+      {
+        "row": 61,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Operating profit (loss)",
+        "month": 6,
+        "unit": "usd",
+        "conv": "C6",
+        "src": [
+          "table",
+          "Operating profit (loss)"
+        ]
+      },
+      {
+        "row": 62,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Material purchases",
+        "month": 1,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Material purchases"
+        ]
+      },
+      {
+        "row": 63,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Material purchases",
+        "month": 2,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Material purchases"
+        ]
+      },
+      {
+        "row": 64,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Inventory on hand (materials)",
+        "month": 1,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Inventory on hand (materials)"
+        ]
+      },
+      {
+        "row": 65,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Inventory on hand (materials)",
+        "month": 12,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Inventory on hand (materials)"
+        ]
+      },
+      {
+        "row": 66,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Cash collected from customers",
+        "month": 1,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Cash collected from customers"
+        ]
+      },
+      {
+        "row": 67,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Cash collected from customers",
+        "month": 2,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Cash collected from customers"
+        ]
+      },
+      {
+        "row": 68,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Cash paid for direct costs",
+        "month": 1,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Cash paid for direct costs"
+        ]
+      },
+      {
+        "row": 69,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Cash paid for direct costs",
+        "month": 2,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Cash paid for direct costs"
+        ]
+      },
+      {
+        "row": 70,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Equipment purchases",
+        "month": 10,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Equipment purchases"
+        ]
+      },
+      {
+        "row": 71,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Total revenue",
+        "month": "Total",
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Total revenue"
+        ]
+      },
+      {
+        "row": 72,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "EBITDA (simplified)",
+        "month": "Total",
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "EBITDA (simplified)"
+        ]
+      },
+      {
+        "row": 73,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 1,
+        "unit": "usd",
+        "conv": "C7",
+        "src": [
+          "table",
+          "Ending cash"
+        ]
+      },
+      {
+        "row": 74,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 12,
+        "unit": "usd",
+        "conv": "C7",
+        "src": [
+          "table",
+          "Ending cash"
+        ]
+      },
+      {
+        "row": 75,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 24,
+        "unit": "usd",
+        "conv": "C7",
+        "src": [
+          "table",
+          "Ending cash"
+        ]
+      }
+    ]
+  },
+  {
+    "sheet": "4 Services",
+    "file": "4-services.vfm.json",
+    "project": {
+      "name": "4. Professional services: hourly billing with a capacity limit",
+      "setup": {
+        "startMonth": "2027-01",
+        "months": 24,
+        "startingCash": 200000,
+        "founderInvestment": 0,
+        "minCashCushion": 10000
+      },
+      "streams": [
+        {
+          "kind": "services",
+          "name": "Services",
+          "options": {
+            "pricing": "hourly"
+          },
+          "inputs": {
+            "salesStartMonth": 1,
+            "newClientsPerMonth": 2,
+            "clientGrowthPct": 0,
+            "projectDurationMonths": 3,
+            "hoursPerClientMonth": 100,
+            "billingRate": 150,
+            "marketingFixed": 1000,
+            "consultantsStart": 3,
+            "consultantsAdded": 2,
+            "consultantsAddedMonth": 7,
+            "hoursPerPerson": 160,
+            "utilizationPct": 75,
+            "consultantSalary": 8000,
+            "burdenPct": 25,
+            "contractorHoursMax": 100,
+            "contractorCostPerHour": 90,
+            "adminStaff": 1,
+            "adminSalary": 4000,
+            "collectionDays": 30,
+            "supplierDays": 0
+          }
+        }
+      ],
+      "roles": [],
+      "expenses": [],
+      "capex": [],
+      "funding": [],
+      "tax": {
+        "enabled": false,
+        "entity": "c_corp",
+        "rate": 25,
+        "payment": "quarterly",
+        "includeOwnerDistributions": true
+      },
+      "scenarios": {},
+      "exit": {}
+    },
+    "checks": [
+      {
+        "row": 49,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Active engagements",
+        "month": 1,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "table",
+          "Active engagements"
+        ]
+      },
+      {
+        "row": 50,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Active engagements",
+        "month": 3,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "table",
+          "Active engagements"
+        ]
+      },
+      {
+        "row": 51,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Hours clients need",
+        "month": 3,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "table",
+          "Hours clients need"
+        ]
+      },
+      {
+        "row": 52,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Delivery capacity (hours)",
+        "month": 3,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "table",
+          "Delivery capacity (hours)"
+        ]
+      },
+      {
+        "row": 53,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Hours billed by staff",
+        "month": 3,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "table",
+          "Hours billed by staff"
+        ]
+      },
+      {
+        "row": 54,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Hours billed by contractors",
+        "month": 3,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "table",
+          "Hours billed by contractors"
+        ]
+      },
+      {
+        "row": 55,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Work you could not deliver (hours)",
+        "month": 3,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "table",
+          "Work you could not deliver (hours)"
+        ]
+      },
+      {
+        "row": 56,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Billable consultants",
+        "month": 7,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "table",
+          "Billable consultants"
+        ]
+      },
+      {
+        "row": 57,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Service fees",
+        "month": 2,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "  Service fees"
+        ]
+      },
+      {
+        "row": 58,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Service fees",
+        "month": 3,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "  Service fees"
+        ]
+      },
+      {
+        "row": 59,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Service fees",
+        "month": 7,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "  Service fees"
+        ]
+      },
+      {
+        "row": 60,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Billable consultants (salary and benefits)",
+        "month": 1,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "  Billable consultants (salary and benefits)"
+        ]
+      },
+      {
+        "row": 61,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Billable consultants (salary and benefits)",
+        "month": 7,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "  Billable consultants (salary and benefits)"
+        ]
+      },
+      {
+        "row": 62,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Contractors",
+        "month": 3,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "  Contractors"
+        ]
+      },
+      {
+        "row": 63,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "General and administrative",
+        "month": 1,
+        "unit": "usd",
+        "conv": "C8",
+        "src": [
+          "table",
+          "General and administrative"
+        ]
+      },
+      {
+        "row": 64,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Gross profit",
+        "month": 3,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Gross profit"
+        ]
+      },
+      {
+        "row": 65,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Actual utilization",
+        "month": 1,
+        "unit": "pct",
+        "conv": "",
+        "src": [
+          "table",
+          "Actual utilization %"
+        ]
+      },
+      {
+        "row": 66,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Actual utilization",
+        "month": 7,
+        "unit": "pct",
+        "conv": "",
+        "src": [
+          "table",
+          "Actual utilization %"
+        ]
+      },
+      {
+        "row": 67,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Revenue per billable employee",
+        "month": 7,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Revenue per billable employee"
+        ]
+      },
+      {
+        "row": 68,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Cash collected from customers",
+        "month": 1,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Cash collected from customers"
+        ]
+      },
+      {
+        "row": 69,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Cash collected from customers",
+        "month": 2,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Cash collected from customers"
+        ]
+      },
+      {
+        "row": 70,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Total revenue",
+        "month": "Total",
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Total revenue"
+        ]
+      },
+      {
+        "row": 71,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "EBITDA (simplified)",
+        "month": "Total",
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "EBITDA (simplified)"
+        ]
+      },
+      {
+        "row": 72,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 1,
+        "unit": "usd",
+        "conv": "C8",
+        "src": [
+          "table",
+          "Ending cash"
+        ]
+      },
+      {
+        "row": 73,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 12,
+        "unit": "usd",
+        "conv": "C8",
+        "src": [
+          "table",
+          "Ending cash"
+        ]
+      },
+      {
+        "row": 74,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 24,
+        "unit": "usd",
+        "conv": "C8",
+        "src": [
+          "table",
+          "Ending cash"
+        ]
+      }
+    ]
+  },
+  {
+    "sheet": "5 E-commerce",
+    "file": "5-e-commerce.vfm.json",
+    "project": {
+      "name": "5. E-commerce: orders, refunds, per-order costs, acquisition",
+      "setup": {
+        "startMonth": "2027-01",
+        "months": 24,
+        "startingCash": 100000,
+        "founderInvestment": 0,
+        "minCashCushion": 10000
+      },
+      "streams": [
+        {
+          "kind": "ecommerce",
+          "name": "E-commerce",
+          "options": {},
+          "inputs": {
+            "salesStartMonth": 1,
+            "aov": 80,
+            "ordersStart": 500,
+            "orderGrowthPct": 5,
+            "returnsPct": 10,
+            "productCostPerOrder": 25,
+            "fulfillmentPerOrder": 5,
+            "shippingSubsidyPerOrder": 4,
+            "processingPct": 3,
+            "processingFixed": 0.3,
+            "newCustomerSharePct": 40,
+            "cac": 30,
+            "marketingFixed": 2000,
+            "collectionDays": 3,
+            "supplierDays": 30
+          }
+        }
+      ],
+      "roles": [],
+      "expenses": [],
+      "capex": [],
+      "funding": [],
+      "tax": {
+        "enabled": false,
+        "entity": "c_corp",
+        "rate": 25,
+        "payment": "quarterly",
+        "includeOwnerDistributions": true
+      },
+      "scenarios": {},
+      "exit": {}
+    },
+    "checks": [
+      {
+        "row": 43,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Orders",
+        "month": 1,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "table",
+          "Orders"
+        ]
+      },
+      {
+        "row": 44,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Orders",
+        "month": 12,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "table",
+          "Orders"
+        ]
+      },
+      {
+        "row": 45,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "New customers",
+        "month": 1,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "table",
+          "New customers"
+        ]
+      },
+      {
+        "row": 46,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Total revenue",
+        "month": 1,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Total revenue"
+        ]
+      },
+      {
+        "row": 47,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Total revenue",
+        "month": 12,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Total revenue"
+        ]
+      },
+      {
+        "row": 48,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Payment processing",
+        "month": 1,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "  Payment processing"
+        ]
+      },
+      {
+        "row": 49,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Product cost",
+        "month": 1,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "  Product cost"
+        ]
+      },
+      {
+        "row": 50,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Total direct costs",
+        "month": 1,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Total direct costs"
+        ]
+      },
+      {
+        "row": 51,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Total direct costs",
+        "month": 12,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Total direct costs"
+        ]
+      },
+      {
+        "row": 52,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Sales and marketing",
+        "month": 1,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Sales and marketing"
+        ]
+      },
+      {
+        "row": 53,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Gross profit",
+        "month": 12,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Gross profit"
+        ]
+      },
+      {
+        "row": 54,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Contribution margin per order",
+        "month": 1,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Contribution margin per order"
+        ]
+      },
+      {
+        "row": 55,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Net revenue",
+        "month": 6,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Net revenue"
+        ]
+      },
+      {
+        "row": 56,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Cash collected from customers",
+        "month": 1,
+        "unit": "usd",
+        "conv": "C9",
+        "src": [
+          "table",
+          "Cash collected from customers"
+        ]
+      },
+      {
+        "row": 57,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Cash collected from customers",
+        "month": 2,
+        "unit": "usd",
+        "conv": "C9",
+        "src": [
+          "table",
+          "Cash collected from customers"
+        ]
+      },
+      {
+        "row": 58,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Cash paid for direct costs",
+        "month": 1,
+        "unit": "usd",
+        "conv": "C7, C9",
+        "src": [
+          "table",
+          "Cash paid for direct costs"
+        ]
+      },
+      {
+        "row": 59,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Cash paid for direct costs",
+        "month": 2,
+        "unit": "usd",
+        "conv": "C7, C9",
+        "src": [
+          "table",
+          "Cash paid for direct costs"
+        ]
+      },
+      {
+        "row": 60,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Total revenue",
+        "month": "Total",
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Total revenue"
+        ]
+      },
+      {
+        "row": 61,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "EBITDA (simplified)",
+        "month": "Total",
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "EBITDA (simplified)"
+        ]
+      },
+      {
+        "row": 62,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 1,
+        "unit": "usd",
+        "conv": "C7",
+        "src": [
+          "table",
+          "Ending cash"
+        ]
+      },
+      {
+        "row": 63,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 2,
+        "unit": "usd",
+        "conv": "C7",
+        "src": [
+          "table",
+          "Ending cash"
+        ]
+      },
+      {
+        "row": 64,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 12,
+        "unit": "usd",
+        "conv": "C7",
+        "src": [
+          "table",
+          "Ending cash"
+        ]
+      },
+      {
+        "row": 65,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 24,
+        "unit": "usd",
+        "conv": "C7",
+        "src": [
+          "table",
+          "Ending cash"
+        ]
+      }
+    ]
+  },
+  {
+    "sheet": "6 Marketplace",
+    "file": "6-marketplace.vfm.json",
+    "project": {
+      "name": "6. Marketplace: take rate on GMV, seller-supply limit",
+      "setup": {
+        "startMonth": "2027-01",
+        "months": 24,
+        "startingCash": 50000,
+        "founderInvestment": 0,
+        "minCashCushion": 10000
+      },
+      "streams": [
+        {
+          "kind": "marketplace",
+          "name": "Marketplace",
+          "options": {},
+          "inputs": {
+            "salesStartMonth": 1,
+            "buyersStart": 1000,
+            "buyerGrowthPct": 10,
+            "sellersStart": 30,
+            "sellerGrowthPct": 5,
+            "maxTxPerSeller": 60,
+            "txPerBuyer": 1.5,
+            "avgTxValue": 50,
+            "takeRatePct": 15,
+            "processingPctOfGmv": 3,
+            "supportPerTx": 0.5,
+            "disputeRatePct": 2,
+            "disputeCost": 25,
+            "buyerCac": 20,
+            "sellerCac": 100,
+            "marketingFixed": 1500,
+            "collectionDays": 0,
+            "supplierDays": 0
+          }
+        }
+      ],
+      "roles": [],
+      "expenses": [],
+      "capex": [],
+      "funding": [],
+      "tax": {
+        "enabled": false,
+        "entity": "c_corp",
+        "rate": 25,
+        "payment": "quarterly",
+        "includeOwnerDistributions": true
+      },
+      "scenarios": {},
+      "exit": {}
+    },
+    "checks": [
+      {
+        "row": 46,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Active buyers",
+        "month": 1,
+        "unit": "count",
+        "conv": "C10",
+        "src": [
+          "table",
+          "Active buyers"
+        ]
+      },
+      {
+        "row": 47,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Active buyers",
+        "month": 12,
+        "unit": "count",
+        "conv": "C10",
+        "src": [
+          "table",
+          "Active buyers"
+        ]
+      },
+      {
+        "row": 48,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Transactions",
+        "month": 1,
+        "unit": "count",
+        "conv": "C10",
+        "src": [
+          "table",
+          "Transactions"
+        ]
+      },
+      {
+        "row": 49,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Transactions",
+        "month": 4,
+        "unit": "count",
+        "conv": "C10",
+        "src": [
+          "table",
+          "Transactions"
+        ]
+      },
+      {
+        "row": 50,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Transactions",
+        "month": 5,
+        "unit": "count",
+        "conv": "C10",
+        "src": [
+          "table",
+          "Transactions"
+        ]
+      },
+      {
+        "row": 51,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Gross merchandise value (not revenue)",
+        "month": 6,
+        "unit": "usd",
+        "conv": "C10",
+        "src": [
+          "table",
+          "Gross merchandise value (not revenue)"
+        ]
+      },
+      {
+        "row": 52,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Platform fees",
+        "month": 1,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "  Platform fees"
+        ]
+      },
+      {
+        "row": 53,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Platform fees",
+        "month": 12,
+        "unit": "usd",
+        "conv": "C10",
+        "src": [
+          "table",
+          "  Platform fees"
+        ]
+      },
+      {
+        "row": 54,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Payment processing",
+        "month": 1,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "  Payment processing"
+        ]
+      },
+      {
+        "row": 55,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Support and disputes",
+        "month": 1,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "  Support and disputes"
+        ]
+      },
+      {
+        "row": 56,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Total direct costs",
+        "month": 1,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Total direct costs"
+        ]
+      },
+      {
+        "row": 57,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Sales and marketing",
+        "month": 1,
+        "unit": "usd",
+        "conv": "C10",
+        "src": [
+          "table",
+          "Sales and marketing"
+        ]
+      },
+      {
+        "row": 58,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Sales and marketing",
+        "month": 2,
+        "unit": "usd",
+        "conv": "C10",
+        "src": [
+          "table",
+          "Sales and marketing"
+        ]
+      },
+      {
+        "row": 59,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Revenue per transaction",
+        "month": 1,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Revenue per transaction"
+        ]
+      },
+      {
+        "row": 60,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Contribution margin",
+        "month": 2,
+        "unit": "usd",
+        "conv": "C10",
+        "src": [
+          "table",
+          "Contribution margin"
+        ]
+      },
+      {
+        "row": 61,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Total revenue",
+        "month": "Total",
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Total revenue"
+        ]
+      },
+      {
+        "row": 62,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "EBITDA (simplified)",
+        "month": "Total",
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "EBITDA (simplified)"
+        ]
+      },
+      {
+        "row": 63,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 1,
+        "unit": "usd",
+        "conv": "C10",
+        "src": [
+          "table",
+          "Ending cash"
+        ]
+      },
+      {
+        "row": 64,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 12,
+        "unit": "usd",
+        "conv": "C10",
+        "src": [
+          "table",
+          "Ending cash"
+        ]
+      },
+      {
+        "row": 65,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 24,
+        "unit": "usd",
+        "conv": "C10",
+        "src": [
+          "table",
+          "Ending cash"
+        ]
+      }
+    ]
+  },
+  {
+    "sheet": "7 Licensing",
+    "file": "7-licensing.vfm.json",
+    "project": {
+      "name": "7. Licensing: whole deals, annual fees, royalties with ramp and delay",
+      "setup": {
+        "startMonth": "2027-01",
+        "months": 24,
+        "startingCash": 100000,
+        "founderInvestment": 0,
+        "minCashCushion": 10000
+      },
+      "streams": [
+        {
+          "kind": "licensing",
+          "name": "Licensing",
+          "options": {},
+          "inputs": {
+            "salesStartMonth": 1,
+            "initialLicensees": 1,
+            "newPerQuarter": 1.5,
+            "firstDealMonth": 3,
+            "upfrontFee": 20000,
+            "annualFee": 12000,
+            "royaltyPct": 5,
+            "licenseeUnits": 1000,
+            "licenseeUnitPrice": 20,
+            "rampMonths": 4,
+            "termMonths": 12,
+            "renewalPct": 50,
+            "commissionPct": 10,
+            "supportPerLicensee": 500,
+            "ipCostMonthly": 1000,
+            "collectionDays": 30,
+            "royaltyDays": 60,
+            "supplierDays": 0
+          }
+        }
+      ],
+      "roles": [],
+      "expenses": [],
+      "capex": [],
+      "funding": [],
+      "tax": {
+        "enabled": false,
+        "entity": "c_corp",
+        "rate": 25,
+        "payment": "quarterly",
+        "includeOwnerDistributions": true
+      },
+      "scenarios": {},
+      "exit": {}
+    },
+    "checks": [
+      {
+        "row": 46,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "New licensees signed",
+        "month": 3,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "table",
+          "New licensees signed"
+        ]
+      },
+      {
+        "row": 47,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "New licensees signed",
+        "month": 4,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "table",
+          "New licensees signed"
+        ]
+      },
+      {
+        "row": 48,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "New licensees signed",
+        "month": "Total",
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "table",
+          "New licensees signed"
+        ]
+      },
+      {
+        "row": 49,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Active licensees",
+        "month": 4,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "table",
+          "Active licensees"
+        ]
+      },
+      {
+        "row": 50,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Active licensees",
+        "month": 13,
+        "unit": "count",
+        "conv": "C11",
+        "src": [
+          "table",
+          "Active licensees"
+        ]
+      },
+      {
+        "row": 51,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Upfront license fees",
+        "month": 4,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "  Upfront license fees"
+        ]
+      },
+      {
+        "row": 52,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Recurring license fees",
+        "month": 1,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "  Recurring license fees"
+        ]
+      },
+      {
+        "row": 53,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Recurring license fees",
+        "month": 4,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "  Recurring license fees"
+        ]
+      },
+      {
+        "row": 54,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Royalties",
+        "month": 1,
+        "unit": "usd",
+        "conv": "C11",
+        "src": [
+          "table",
+          "  Royalties"
+        ]
+      },
+      {
+        "row": 55,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Royalties",
+        "month": 4,
+        "unit": "usd",
+        "conv": "C11",
+        "src": [
+          "table",
+          "  Royalties"
+        ]
+      },
+      {
+        "row": 56,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Royalties",
+        "month": 8,
+        "unit": "usd",
+        "conv": "C11",
+        "src": [
+          "table",
+          "  Royalties"
+        ]
+      },
+      {
+        "row": 57,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Renewal fees",
+        "month": 13,
+        "unit": "usd",
+        "conv": "C11",
+        "src": [
+          "table",
+          "  Renewal fees"
+        ]
+      },
+      {
+        "row": 58,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Total revenue",
+        "month": 12,
+        "unit": "usd",
+        "conv": "C11",
+        "src": [
+          "table",
+          "Total revenue"
+        ]
+      },
+      {
+        "row": 59,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Sales and marketing",
+        "month": 4,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Sales and marketing"
+        ]
+      },
+      {
+        "row": 60,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Total direct costs",
+        "month": 4,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Total direct costs"
+        ]
+      },
+      {
+        "row": 61,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Cash collected from customers",
+        "month": 2,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Cash collected from customers"
+        ]
+      },
+      {
+        "row": 62,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Cash collected from customers",
+        "month": 3,
+        "unit": "usd",
+        "conv": "C11",
+        "src": [
+          "table",
+          "Cash collected from customers"
+        ]
+      },
+      {
+        "row": 63,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Cash collected from customers",
+        "month": 5,
+        "unit": "usd",
+        "conv": "C11",
+        "src": [
+          "table",
+          "Cash collected from customers"
+        ]
+      },
+      {
+        "row": 64,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Deferred revenue",
+        "month": 1,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Deferred revenue"
+        ]
+      },
+      {
+        "row": 65,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Total revenue",
+        "month": "Total",
+        "unit": "usd",
+        "conv": "C11",
+        "src": [
+          "table",
+          "Total revenue"
+        ]
+      },
+      {
+        "row": 66,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "EBITDA (simplified)",
+        "month": "Total",
+        "unit": "usd",
+        "conv": "C11",
+        "src": [
+          "table",
+          "EBITDA (simplified)"
+        ]
+      },
+      {
+        "row": 67,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 1,
+        "unit": "usd",
+        "conv": "C11",
+        "src": [
+          "table",
+          "Ending cash"
+        ]
+      },
+      {
+        "row": 68,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 12,
+        "unit": "usd",
+        "conv": "C11",
+        "src": [
+          "table",
+          "Ending cash"
+        ]
+      },
+      {
+        "row": 69,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 24,
+        "unit": "usd",
+        "conv": "C11",
+        "src": [
+          "table",
+          "Ending cash"
+        ]
+      }
+    ]
+  },
+  {
+    "sheet": "8 Mixed",
+    "file": "8-mixed.vfm.json",
+    "project": {
+      "name": "8. Mixed: three revenue streams, one launching in month 4, plus shared costs",
+      "setup": {
+        "startMonth": "2027-01",
+        "months": 24,
+        "startingCash": 100000,
+        "founderInvestment": 0,
+        "minCashCushion": 10000
+      },
+      "streams": [
+        {
+          "kind": "software",
+          "name": "Subscriptions",
+          "options": {
+            "subscription": true,
+            "annualPlans": false,
+            "perpetual": false,
+            "projects": false
+          },
+          "inputs": {
+            "salesStartMonth": 1,
+            "subInitialCustomers": 50,
+            "subNewPerMonth": 10,
+            "subNewGrowthPct": 0,
+            "subPrice": 60,
+            "subChurnPct": 4,
+            "subOnboardingFee": 0,
+            "subCac": 100,
+            "subHostingPerCustomer": 3,
+            "subSupportPerCustomer": 2,
+            "marketingFixed": 0,
+            "devCostMonthly": 0,
+            "collectionDays": 0,
+            "supplierDays": 0
+          }
+        },
+        {
+          "kind": "ecommerce",
+          "name": "Online store",
+          "options": {},
+          "inputs": {
+            "salesStartMonth": 4,
+            "aov": 50,
+            "ordersStart": 200,
+            "orderGrowthPct": 10,
+            "returnsPct": 5,
+            "productCostPerOrder": 15,
+            "fulfillmentPerOrder": 3,
+            "shippingSubsidyPerOrder": 2,
+            "processingPct": 2.9,
+            "processingFixed": 0.3,
+            "newCustomerSharePct": 50,
+            "cac": 20,
+            "marketingFixed": 500,
+            "collectionDays": 0,
+            "supplierDays": 0
+          }
+        },
+        {
+          "kind": "services",
+          "name": "Consulting",
+          "options": {
+            "pricing": "fixed"
+          },
+          "inputs": {
+            "salesStartMonth": 1,
+            "newClientsPerMonth": 1,
+            "clientGrowthPct": 0,
+            "projectDurationMonths": 4,
+            "hoursPerClientMonth": 50,
+            "projectFee": 20000,
+            "marketingFixed": 0,
+            "consultantsStart": 2,
+            "consultantsAdded": 0,
+            "consultantsAddedMonth": 13,
+            "hoursPerPerson": 160,
+            "utilizationPct": 50,
+            "consultantSalary": 7000,
+            "burdenPct": 20,
+            "contractorHoursMax": 0,
+            "contractorCostPerHour": 0,
+            "adminStaff": 0,
+            "adminSalary": 0,
+            "collectionDays": 30,
+            "supplierDays": 0
+          }
+        }
+      ],
+      "roles": [
+        {
+          "id": "r1",
+          "title": "Founder",
+          "count": 1,
+          "monthlyComp": 6000,
+          "burdenPct": 0,
+          "startMonth": 1,
+          "endMonth": null,
+          "annualRaisePct": 0,
+          "dept": "admin"
+        }
+      ],
+      "expenses": [
+        {
+          "id": "e1",
+          "name": "Rent and facilities",
+          "category": "ga",
+          "kind": "recurring",
+          "amount": 2000,
+          "startMonth": 1,
+          "endMonth": null,
+          "annualGrowthPct": 0,
+          "payDelayDays": 0
+        }
+      ],
+      "capex": [],
+      "funding": [],
+      "tax": {
+        "enabled": false,
+        "entity": "c_corp",
+        "rate": 25,
+        "payment": "quarterly",
+        "includeOwnerDistributions": true
+      },
+      "scenarios": {},
+      "exit": {}
+    },
+    "checks": [
+      {
+        "row": 94,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Subscription revenue (Subscriptions)",
+        "month": 1,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "  Subscription revenue (Subscriptions)"
+        ]
+      },
+      {
+        "row": 95,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Subscription revenue (Subscriptions)",
+        "month": 12,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "  Subscription revenue (Subscriptions)"
+        ]
+      },
+      {
+        "row": 96,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Product sales (Online store)",
+        "month": 3,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "  Product sales (Online store)"
+        ]
+      },
+      {
+        "row": 97,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Product sales (Online store)",
+        "month": 4,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "  Product sales (Online store)"
+        ]
+      },
+      {
+        "row": 98,
+        "where": "Financial Projections \u203a Business metrics",
+        "line": "Online store \u203a Orders",
+        "month": 5,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "stream_metric",
+          "Online store",
+          "Orders"
+        ]
+      },
+      {
+        "row": 99,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Service fees (Consulting)",
+        "month": 3,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "  Service fees (Consulting)"
+        ]
+      },
+      {
+        "row": 100,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Service fees (Consulting)",
+        "month": 4,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "  Service fees (Consulting)"
+        ]
+      },
+      {
+        "row": 101,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Total revenue",
+        "month": 1,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Total revenue"
+        ]
+      },
+      {
+        "row": 102,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Total revenue",
+        "month": 4,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Total revenue"
+        ]
+      },
+      {
+        "row": 103,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Total revenue",
+        "month": 12,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Total revenue"
+        ]
+      },
+      {
+        "row": 104,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Total direct costs",
+        "month": 4,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Total direct costs"
+        ]
+      },
+      {
+        "row": 105,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Personnel",
+        "month": 1,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Personnel"
+        ]
+      },
+      {
+        "row": 106,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Sales and marketing",
+        "month": 3,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Sales and marketing"
+        ]
+      },
+      {
+        "row": 107,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Sales and marketing",
+        "month": 4,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Sales and marketing"
+        ]
+      },
+      {
+        "row": 108,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "General and administrative",
+        "month": 1,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "General and administrative"
+        ]
+      },
+      {
+        "row": 109,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "EBITDA (simplified)",
+        "month": 4,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "EBITDA (simplified)"
+        ]
+      },
+      {
+        "row": 110,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Cash collected from customers",
+        "month": 2,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Cash collected from customers"
+        ]
+      },
+      {
+        "row": 111,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Total revenue",
+        "month": "Total",
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Total revenue"
+        ]
+      },
+      {
+        "row": 112,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "EBITDA (simplified)",
+        "month": "Total",
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "EBITDA (simplified)"
+        ]
+      },
+      {
+        "row": 113,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 1,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Ending cash"
+        ]
+      },
+      {
+        "row": 114,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 12,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Ending cash"
+        ]
+      },
+      {
+        "row": 115,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 24,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Ending cash"
+        ]
+      }
+    ]
+  },
+  {
+    "sheet": "9 Shared costs",
+    "file": "9-shared-costs.vfm.json",
+    "project": {
+      "name": "9. Team, expenses, equipment, equity, grant and loan",
+      "setup": {
+        "startMonth": "2027-01",
+        "months": 24,
+        "startingCash": 20000,
+        "founderInvestment": 30000,
+        "minCashCushion": 25000
+      },
+      "streams": [
+        {
+          "kind": "ecommerce",
+          "name": "E-commerce",
+          "options": {},
+          "inputs": {
+            "salesStartMonth": 1,
+            "aov": 100,
+            "ordersStart": 300,
+            "orderGrowthPct": 0,
+            "returnsPct": 0,
+            "productCostPerOrder": 40,
+            "fulfillmentPerOrder": 0,
+            "shippingSubsidyPerOrder": 0,
+            "processingPct": 0,
+            "processingFixed": 0,
+            "newCustomerSharePct": 0,
+            "cac": 0,
+            "marketingFixed": 0,
+            "collectionDays": 0,
+            "supplierDays": 0
+          }
+        }
+      ],
+      "roles": [
+        {
+          "id": "r1",
+          "title": "CEO",
+          "count": 1,
+          "monthlyComp": 8000,
+          "burdenPct": 10,
+          "startMonth": 1,
+          "endMonth": null,
+          "annualRaisePct": 5,
+          "dept": "admin"
+        },
+        {
+          "id": "r2",
+          "title": "Engineers",
+          "count": 2,
+          "monthlyComp": 9000,
+          "burdenPct": 20,
+          "startMonth": 4,
+          "endMonth": null,
+          "annualRaisePct": 10,
+          "dept": "product"
+        },
+        {
+          "id": "r3",
+          "title": "Support technician",
+          "count": 1,
+          "monthlyComp": 4000,
+          "burdenPct": 15,
+          "startMonth": 2,
+          "endMonth": 9,
+          "annualRaisePct": 0,
+          "dept": "delivery"
+        },
+        {
+          "id": "r4",
+          "title": "Account executive",
+          "count": 1,
+          "monthlyComp": 5000,
+          "burdenPct": 20,
+          "startMonth": 6,
+          "endMonth": null,
+          "annualRaisePct": 0,
+          "dept": "sales"
+        }
+      ],
+      "expenses": [
+        {
+          "id": "e1",
+          "name": "Rent",
+          "category": "ga",
+          "kind": "recurring",
+          "amount": 3000,
+          "startMonth": 1,
+          "endMonth": null,
+          "annualGrowthPct": 6,
+          "payDelayDays": 0
+        },
+        {
+          "id": "e2",
+          "name": "Online ads",
+          "category": "sm",
+          "kind": "recurring",
+          "amount": 1500,
+          "startMonth": 3,
+          "endMonth": 20,
+          "annualGrowthPct": 0,
+          "payDelayDays": 30
+        },
+        {
+          "id": "e3",
+          "name": "Prototype",
+          "category": "rd",
+          "kind": "one-time",
+          "amount": 12000,
+          "startMonth": 2,
+          "endMonth": null,
+          "annualGrowthPct": 0,
+          "payDelayDays": 45
+        },
+        {
+          "id": "e4",
+          "name": "Miscellaneous",
+          "category": "other",
+          "kind": "recurring",
+          "amount": 500,
+          "startMonth": 1,
+          "endMonth": null,
+          "annualGrowthPct": 0,
+          "payDelayDays": 15
+        }
+      ],
+      "capex": [
+        {
+          "id": "c1",
+          "name": "Laptops",
+          "amount": 9000,
+          "month": 1,
+          "usefulLifeMonths": 36
+        },
+        {
+          "id": "c2",
+          "name": "Lab equipment",
+          "amount": 24000,
+          "month": 6,
+          "usefulLifeMonths": 48
+        }
+      ],
+      "funding": [
+        {
+          "id": "f1",
+          "name": "Seed SAFE",
+          "kind": "equity",
+          "amount": 150000,
+          "month": 3,
+          "annualRatePct": 8,
+          "termMonths": 36,
+          "equityPct": 10,
+          "instrument": "safe"
+        },
+        {
+          "id": "f2",
+          "name": "State innovation grant",
+          "kind": "grant",
+          "amount": 50000,
+          "month": 5,
+          "annualRatePct": 8,
+          "termMonths": 36
+        },
+        {
+          "id": "f3",
+          "name": "Bank loan",
+          "kind": "loan",
+          "amount": 60000,
+          "month": 2,
+          "annualRatePct": 12,
+          "termMonths": 24
+        }
+      ],
+      "tax": {
+        "enabled": false,
+        "entity": "c_corp",
+        "rate": 25,
+        "payment": "quarterly",
+        "includeOwnerDistributions": true
+      },
+      "scenarios": {},
+      "exit": {}
+    },
+    "checks": [
+      {
+        "row": 112,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Personnel",
+        "month": 1,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Personnel"
+        ]
+      },
+      {
+        "row": 113,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Personnel",
+        "month": 4,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Personnel"
+        ]
+      },
+      {
+        "row": 114,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Personnel",
+        "month": 5,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Personnel"
+        ]
+      },
+      {
+        "row": 115,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Personnel",
+        "month": 6,
+        "unit": "usd",
+        "conv": "C21",
+        "src": [
+          "table",
+          "Personnel"
+        ]
+      },
+      {
+        "row": 116,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Sales and marketing",
+        "month": 6,
+        "unit": "usd",
+        "conv": "C21",
+        "src": [
+          "table",
+          "Sales and marketing"
+        ]
+      },
+      {
+        "row": 117,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Personnel",
+        "month": 13,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Personnel"
+        ]
+      },
+      {
+        "row": 118,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Personnel",
+        "month": 16,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Personnel"
+        ]
+      },
+      {
+        "row": 119,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Total direct costs",
+        "month": 2,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Total direct costs"
+        ]
+      },
+      {
+        "row": 120,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Total direct costs",
+        "month": 10,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Total direct costs"
+        ]
+      },
+      {
+        "row": 121,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Sales and marketing",
+        "month": 3,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Sales and marketing"
+        ]
+      },
+      {
+        "row": 122,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Sales and marketing",
+        "month": 21,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Sales and marketing"
+        ]
+      },
+      {
+        "row": 123,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Research and development",
+        "month": 2,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Research and development"
+        ]
+      },
+      {
+        "row": 124,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "General and administrative",
+        "month": 13,
+        "unit": "usd",
+        "conv": "C12",
+        "src": [
+          "table",
+          "General and administrative"
+        ]
+      },
+      {
+        "row": 125,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Depreciation",
+        "month": 1,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Depreciation"
+        ]
+      },
+      {
+        "row": 126,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Depreciation",
+        "month": 6,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Depreciation"
+        ]
+      },
+      {
+        "row": 127,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Interest",
+        "month": 3,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Interest"
+        ]
+      },
+      {
+        "row": 128,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Interest",
+        "month": 24,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Interest"
+        ]
+      },
+      {
+        "row": 129,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Net income",
+        "month": 3,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Net income"
+        ]
+      },
+      {
+        "row": 130,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Founder investment",
+        "month": 1,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Founder investment"
+        ]
+      },
+      {
+        "row": 131,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Investment and grants",
+        "month": 3,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Investment and grants"
+        ]
+      },
+      {
+        "row": 132,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Investment and grants",
+        "month": 5,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Investment and grants"
+        ]
+      },
+      {
+        "row": 133,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Loan proceeds",
+        "month": 2,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Loan proceeds"
+        ]
+      },
+      {
+        "row": 134,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Loan repayments",
+        "month": 3,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Loan repayments"
+        ]
+      },
+      {
+        "row": 135,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Cash paid for operating expenses",
+        "month": 2,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Cash paid for operating expenses"
+        ]
+      },
+      {
+        "row": 136,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Cash paid for operating expenses",
+        "month": 3,
+        "unit": "usd",
+        "conv": "C12",
+        "src": [
+          "table",
+          "Cash paid for operating expenses"
+        ]
+      },
+      {
+        "row": 137,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Cash paid for operating expenses",
+        "month": 4,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Cash paid for operating expenses"
+        ]
+      },
+      {
+        "row": 138,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Cash paid for salaries",
+        "month": 4,
+        "unit": "usd",
+        "conv": "C13",
+        "src": [
+          "table",
+          "Cash paid for salaries"
+        ]
+      },
+      {
+        "row": 139,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Equipment purchases",
+        "month": 6,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Equipment purchases"
+        ]
+      },
+      {
+        "row": 140,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Bills not yet paid",
+        "month": 2,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Bills not yet paid"
+        ]
+      },
+      {
+        "row": 141,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Loan balance",
+        "month": 24,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Loan balance"
+        ]
+      },
+      {
+        "row": 142,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 1,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Ending cash"
+        ]
+      },
+      {
+        "row": 143,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 12,
+        "unit": "usd",
+        "conv": "C12",
+        "src": [
+          "table",
+          "Ending cash"
+        ]
+      },
+      {
+        "row": 144,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 24,
+        "unit": "usd",
+        "conv": "C12",
+        "src": [
+          "table",
+          "Ending cash"
+        ]
+      },
+      {
+        "row": 145,
+        "where": "Financial Projections \u203a Dashboard",
+        "line": "Additional funding required",
+        "month": null,
+        "unit": "usd",
+        "conv": "C12",
+        "src": [
+          "summary",
+          "fundingRequired"
+        ]
+      },
+      {
+        "row": 146,
+        "where": "Financial Projections \u203a Dashboard",
+        "line": "Break-even month (0 = \"Not reached\")",
+        "month": null,
+        "unit": "count",
+        "conv": "C12",
+        "src": [
+          "summary",
+          "operatingBreakEvenMonth"
+        ]
+      },
+      {
+        "row": 147,
+        "where": "Financial Projections \u203a Dashboard",
+        "line": "Monthly burn",
+        "month": null,
+        "unit": "usd",
+        "conv": "C12, C14",
+        "src": [
+          "summary",
+          "currentBurn"
+        ]
+      }
+    ]
+  },
+  {
+    "sheet": "10 Taxes",
+    "file": "10-taxes.vfm.json",
+    "project": {
+      "name": "10. Income tax: loss carryforward, quarterly vs annual, pass-through",
+      "setup": {
+        "startMonth": "2027-01",
+        "months": 24,
+        "startingCash": 300000,
+        "founderInvestment": 0,
+        "minCashCushion": 10000
+      },
+      "streams": [
+        {
+          "kind": "ecommerce",
+          "name": "E-commerce",
+          "options": {},
+          "inputs": {
+            "salesStartMonth": 1,
+            "aov": 100,
+            "ordersStart": 150,
+            "orderGrowthPct": 10,
+            "returnsPct": 0,
+            "productCostPerOrder": 40,
+            "fulfillmentPerOrder": 0,
+            "shippingSubsidyPerOrder": 0,
+            "processingPct": 0,
+            "processingFixed": 0,
+            "newCustomerSharePct": 0,
+            "cac": 0,
+            "marketingFixed": 0,
+            "collectionDays": 0,
+            "supplierDays": 0
+          }
+        }
+      ],
+      "roles": [],
+      "expenses": [
+        {
+          "id": "e1",
+          "name": "Overhead",
+          "category": "ga",
+          "kind": "recurring",
+          "amount": 15000,
+          "startMonth": 1,
+          "endMonth": null,
+          "annualGrowthPct": 0,
+          "payDelayDays": 0
+        }
+      ],
+      "capex": [],
+      "funding": [],
+      "tax": {
+        "enabled": true,
+        "entity": "c_corp",
+        "rate": 25,
+        "payment": "quarterly",
+        "includeOwnerDistributions": true
+      },
+      "scenarios": {},
+      "exit": {}
+    },
+    "checks": [
+      {
+        "row": 48,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Operating profit (loss)",
+        "month": 6,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Operating profit (loss)"
+        ]
+      },
+      {
+        "row": 49,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Income tax (estimate)",
+        "month": 10,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Income tax (estimate)"
+        ]
+      },
+      {
+        "row": 50,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Income tax (estimate)",
+        "month": 11,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Income tax (estimate)"
+        ]
+      },
+      {
+        "row": 51,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Income tax (estimate)",
+        "month": 12,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Income tax (estimate)"
+        ]
+      },
+      {
+        "row": 52,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Income tax (estimate)",
+        "month": "Total",
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Income tax (estimate)"
+        ]
+      },
+      {
+        "row": 53,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Net income",
+        "month": 12,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Net income"
+        ]
+      },
+      {
+        "row": 54,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Income taxes paid",
+        "month": 13,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Income taxes paid"
+        ]
+      },
+      {
+        "row": 55,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Income taxes paid",
+        "month": 16,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Income taxes paid"
+        ]
+      },
+      {
+        "row": 56,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 24,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Ending cash"
+        ]
+      },
+      {
+        "row": 58,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Income taxes paid",
+        "month": 13,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "variant",
+          "B",
+          "Income taxes paid"
+        ]
+      },
+      {
+        "row": 59,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Income taxes paid",
+        "month": 15,
+        "unit": "usd",
+        "conv": "C20",
+        "src": [
+          "variant",
+          "B",
+          "Income taxes paid"
+        ]
+      },
+      {
+        "row": 60,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Income taxes paid",
+        "month": 16,
+        "unit": "usd",
+        "conv": "C20",
+        "src": [
+          "variant",
+          "B",
+          "Income taxes paid"
+        ]
+      },
+      {
+        "row": 61,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Income tax (estimate)",
+        "month": 12,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "variant",
+          "B",
+          "Income tax (estimate)"
+        ]
+      },
+      {
+        "row": 62,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 24,
+        "unit": "usd",
+        "conv": "C20",
+        "src": [
+          "variant",
+          "B",
+          "Ending cash"
+        ]
+      },
+      {
+        "row": 64,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Income tax (estimate)",
+        "month": 12,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "variant",
+          "C",
+          "Income tax (estimate)"
+        ]
+      },
+      {
+        "row": 65,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Net income",
+        "month": 12,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "variant",
+          "C",
+          "Net income"
+        ]
+      },
+      {
+        "row": 66,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Owner tax distributions",
+        "month": 13,
+        "unit": "usd",
+        "conv": "C15",
+        "src": [
+          "variant",
+          "C",
+          "Owner tax distributions"
+        ]
+      },
+      {
+        "row": 67,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Income taxes paid",
+        "month": 13,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "variant",
+          "C",
+          "Income taxes paid"
+        ]
+      },
+      {
+        "row": 68,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 24,
+        "unit": "usd",
+        "conv": "C15",
+        "src": [
+          "variant",
+          "C",
+          "Ending cash"
+        ]
+      }
+    ]
+  },
+  {
+    "sheet": "11 Scenarios",
+    "file": "11-scenarios.vfm.json",
+    "project": {
+      "name": "11. Scenarios: driver overrides and the three adjustments",
+      "setup": {
+        "startMonth": "2027-01",
+        "months": 24,
+        "startingCash": 50000,
+        "founderInvestment": 0,
+        "minCashCushion": 10000
+      },
+      "streams": [
+        {
+          "kind": "software",
+          "name": "Software",
+          "options": {
+            "subscription": true,
+            "annualPlans": false,
+            "perpetual": false,
+            "projects": false
+          },
+          "inputs": {
+            "salesStartMonth": 1,
+            "subInitialCustomers": 100,
+            "subNewPerMonth": 10,
+            "subNewGrowthPct": 0,
+            "subPrice": 50,
+            "subChurnPct": 5,
+            "subOnboardingFee": 0,
+            "subCac": 100,
+            "subHostingPerCustomer": 2,
+            "subSupportPerCustomer": 3,
+            "marketingFixed": 500,
+            "devCostMonthly": 0,
+            "collectionDays": 0,
+            "supplierDays": 0
+          }
+        }
+      ],
+      "roles": [
+        {
+          "id": "r1",
+          "title": "Founder",
+          "count": 1,
+          "monthlyComp": 3000,
+          "burdenPct": 0,
+          "startMonth": 1,
+          "endMonth": null,
+          "annualRaisePct": 0,
+          "dept": "admin"
+        },
+        {
+          "id": "r2",
+          "title": "Developer",
+          "count": 1,
+          "monthlyComp": 6000,
+          "burdenPct": 0,
+          "startMonth": 4,
+          "endMonth": null,
+          "annualRaisePct": 0,
+          "dept": "product"
+        }
+      ],
+      "expenses": [],
+      "capex": [],
+      "funding": [],
+      "tax": {
+        "enabled": false,
+        "entity": "c_corp",
+        "rate": 25,
+        "payment": "quarterly",
+        "includeOwnerDistributions": true
+      },
+      "scenarios": {
+        "downside": {
+          "overrides": {
+            "subPrice": 40,
+            "subChurnPct": 8
+          },
+          "adjustments": {
+            "hiringDelayMonths": 2,
+            "extraCollectionDays": 30,
+            "compChangePct": 10
+          }
+        },
+        "upside": {
+          "overrides": {
+            "subNewPerMonth": 15
+          },
+          "adjustments": {
+            "hiringDelayMonths": 0,
+            "extraCollectionDays": 0,
+            "compChangePct": 0
+          }
+        }
+      },
+      "exit": {}
+    },
+    "checks": [
+      {
+        "row": 65,
+        "where": "Scenarios \u203a Compare",
+        "line": "Base \u203a Total revenue",
+        "month": null,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "compare",
+          "base",
+          "totalRevenue"
+        ]
+      },
+      {
+        "row": 66,
+        "where": "Scenarios \u203a Compare",
+        "line": "Base \u203a Gross margin (%)",
+        "month": null,
+        "unit": "pct",
+        "conv": "",
+        "src": [
+          "compare",
+          "base",
+          "grossMargin"
+        ]
+      },
+      {
+        "row": 67,
+        "where": "Scenarios \u203a Compare",
+        "line": "Base \u203a EBITDA (simplified)",
+        "month": null,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "compare",
+          "base",
+          "totalEbitda"
+        ]
+      },
+      {
+        "row": 68,
+        "where": "Scenarios \u203a Compare",
+        "line": "Base \u203a Ending cash",
+        "month": null,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "compare",
+          "base",
+          "endingCash"
+        ]
+      },
+      {
+        "row": 69,
+        "where": "Scenarios \u203a Compare",
+        "line": "Base \u203a Lowest cash balance",
+        "month": null,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "compare",
+          "base",
+          "minCash"
+        ]
+      },
+      {
+        "row": 70,
+        "where": "Scenarios \u203a Compare",
+        "line": "Base \u203a Break-even month (0 = \"Not reached\")",
+        "month": null,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "compare",
+          "base",
+          "operatingBreakEvenMonth"
+        ]
+      },
+      {
+        "row": 71,
+        "where": "Scenarios \u203a Compare",
+        "line": "Base \u203a Additional funding required",
+        "month": null,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "compare",
+          "base",
+          "fundingRequired"
+        ]
+      },
+      {
+        "row": 72,
+        "where": "Scenarios \u203a Compare",
+        "line": "Downside \u203a Total revenue",
+        "month": null,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "compare",
+          "downside",
+          "totalRevenue"
+        ]
+      },
+      {
+        "row": 73,
+        "where": "Scenarios \u203a Compare",
+        "line": "Downside \u203a Gross margin (%)",
+        "month": null,
+        "unit": "pct",
+        "conv": "",
+        "src": [
+          "compare",
+          "downside",
+          "grossMargin"
+        ]
+      },
+      {
+        "row": 74,
+        "where": "Scenarios \u203a Compare",
+        "line": "Downside \u203a EBITDA (simplified)",
+        "month": null,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "compare",
+          "downside",
+          "totalEbitda"
+        ]
+      },
+      {
+        "row": 75,
+        "where": "Scenarios \u203a Compare",
+        "line": "Downside \u203a Ending cash",
+        "month": null,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "compare",
+          "downside",
+          "endingCash"
+        ]
+      },
+      {
+        "row": 76,
+        "where": "Scenarios \u203a Compare",
+        "line": "Downside \u203a Lowest cash balance",
+        "month": null,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "compare",
+          "downside",
+          "minCash"
+        ]
+      },
+      {
+        "row": 77,
+        "where": "Scenarios \u203a Compare",
+        "line": "Downside \u203a Break-even month (0 = \"Not reached\")",
+        "month": null,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "compare",
+          "downside",
+          "operatingBreakEvenMonth"
+        ]
+      },
+      {
+        "row": 78,
+        "where": "Scenarios \u203a Compare",
+        "line": "Downside \u203a Additional funding required",
+        "month": null,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "compare",
+          "downside",
+          "fundingRequired"
+        ]
+      },
+      {
+        "row": 79,
+        "where": "Scenarios \u203a Compare",
+        "line": "Upside \u203a Total revenue",
+        "month": null,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "compare",
+          "upside",
+          "totalRevenue"
+        ]
+      },
+      {
+        "row": 80,
+        "where": "Scenarios \u203a Compare",
+        "line": "Upside \u203a Gross margin (%)",
+        "month": null,
+        "unit": "pct",
+        "conv": "",
+        "src": [
+          "compare",
+          "upside",
+          "grossMargin"
+        ]
+      },
+      {
+        "row": 81,
+        "where": "Scenarios \u203a Compare",
+        "line": "Upside \u203a EBITDA (simplified)",
+        "month": null,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "compare",
+          "upside",
+          "totalEbitda"
+        ]
+      },
+      {
+        "row": 82,
+        "where": "Scenarios \u203a Compare",
+        "line": "Upside \u203a Ending cash",
+        "month": null,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "compare",
+          "upside",
+          "endingCash"
+        ]
+      },
+      {
+        "row": 83,
+        "where": "Scenarios \u203a Compare",
+        "line": "Upside \u203a Lowest cash balance",
+        "month": null,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "compare",
+          "upside",
+          "minCash"
+        ]
+      },
+      {
+        "row": 84,
+        "where": "Scenarios \u203a Compare",
+        "line": "Upside \u203a Break-even month (0 = \"Not reached\")",
+        "month": null,
+        "unit": "count",
+        "conv": "",
+        "src": [
+          "compare",
+          "upside",
+          "operatingBreakEvenMonth"
+        ]
+      },
+      {
+        "row": 85,
+        "where": "Scenarios \u203a Compare",
+        "line": "Upside \u203a Additional funding required",
+        "month": null,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "compare",
+          "upside",
+          "fundingRequired"
+        ]
+      },
+      {
+        "row": 86,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash (Base case selected): same as the Base column",
+        "month": 24,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "table",
+          "Ending cash"
+        ]
+      }
+    ]
+  },
+  {
+    "sheet": "12 Starting defaults",
+    "file": "12-starting-defaults.vfm.json",
+    "project": {
+      "name": "12. Starting defaults: a new project with the example team, expenses and tax left in",
+      "setup": {
+        "startMonth": "2027-01",
+        "months": 24,
+        "startingCash": 10000,
+        "founderInvestment": 25000,
+        "minCashCushion": 10000
+      },
+      "streams": [
+        {
+          "kind": "ecommerce",
+          "name": "E-commerce",
+          "options": {},
+          "inputs": {
+            "salesStartMonth": 1,
+            "aov": 100,
+            "ordersStart": 200,
+            "orderGrowthPct": 0,
+            "returnsPct": 0,
+            "productCostPerOrder": 40,
+            "fulfillmentPerOrder": 0,
+            "shippingSubsidyPerOrder": 0,
+            "processingPct": 0,
+            "processingFixed": 0,
+            "newCustomerSharePct": 0,
+            "cac": 0,
+            "marketingFixed": 0,
+            "collectionDays": 0,
+            "supplierDays": 0
+          }
+        }
+      ],
+      "roles": [
+        {
+          "id": "r1",
+          "title": "Founder",
+          "count": 1,
+          "monthlyComp": 5000,
+          "burdenPct": 20,
+          "startMonth": 1,
+          "endMonth": null,
+          "annualRaisePct": 0,
+          "dept": "admin"
+        },
+        {
+          "id": "r2",
+          "title": "First employee",
+          "count": 1,
+          "monthlyComp": 7000,
+          "burdenPct": 22,
+          "startMonth": 7,
+          "endMonth": null,
+          "annualRaisePct": 3,
+          "dept": "product"
+        }
+      ],
+      "expenses": [
+        {
+          "id": "e1",
+          "name": "Rent and facilities",
+          "category": "ga",
+          "kind": "recurring",
+          "amount": 1500,
+          "startMonth": 1,
+          "endMonth": null,
+          "annualGrowthPct": 0,
+          "payDelayDays": 0
+        },
+        {
+          "id": "e2",
+          "name": "Software and technology",
+          "category": "ga",
+          "kind": "recurring",
+          "amount": 600,
+          "startMonth": 1,
+          "endMonth": null,
+          "annualGrowthPct": 0,
+          "payDelayDays": 0
+        },
+        {
+          "id": "e3",
+          "name": "Insurance",
+          "category": "ga",
+          "kind": "recurring",
+          "amount": 300,
+          "startMonth": 1,
+          "endMonth": null,
+          "annualGrowthPct": 0,
+          "payDelayDays": 0
+        },
+        {
+          "id": "e4",
+          "name": "Legal and professional services",
+          "category": "ga",
+          "kind": "recurring",
+          "amount": 800,
+          "startMonth": 1,
+          "endMonth": null,
+          "annualGrowthPct": 0,
+          "payDelayDays": 0
+        },
+        {
+          "id": "e5",
+          "name": "Accounting and bookkeeping",
+          "category": "ga",
+          "kind": "recurring",
+          "amount": 400,
+          "startMonth": 1,
+          "endMonth": null,
+          "annualGrowthPct": 0,
+          "payDelayDays": 0
+        },
+        {
+          "id": "e6",
+          "name": "Marketing and advertising",
+          "category": "sm",
+          "kind": "recurring",
+          "amount": 1000,
+          "startMonth": 1,
+          "endMonth": null,
+          "annualGrowthPct": 0,
+          "payDelayDays": 0
+        },
+        {
+          "id": "e7",
+          "name": "Travel and entertainment",
+          "category": "other",
+          "kind": "recurring",
+          "amount": 400,
+          "startMonth": 1,
+          "endMonth": null,
+          "annualGrowthPct": 0,
+          "payDelayDays": 0
+        },
+        {
+          "id": "e8",
+          "name": "Office and administrative expenses",
+          "category": "ga",
+          "kind": "recurring",
+          "amount": 250,
+          "startMonth": 1,
+          "endMonth": null,
+          "annualGrowthPct": 0,
+          "payDelayDays": 0
+        },
+        {
+          "id": "e9",
+          "name": "Research and development",
+          "category": "rd",
+          "kind": "recurring",
+          "amount": 0,
+          "startMonth": 1,
+          "endMonth": null,
+          "annualGrowthPct": 0,
+          "payDelayDays": 0
+        },
+        {
+          "id": "e10",
+          "name": "Other expenses",
+          "category": "other",
+          "kind": "recurring",
+          "amount": 200,
+          "startMonth": 1,
+          "endMonth": null,
+          "annualGrowthPct": 0,
+          "payDelayDays": 0
+        },
+        {
+          "id": "e11",
+          "name": "Company formation and legal setup",
+          "category": "ga",
+          "kind": "one-time",
+          "amount": 3000,
+          "startMonth": 1,
+          "endMonth": null,
+          "annualGrowthPct": 0,
+          "payDelayDays": 0
+        }
+      ],
+      "capex": [],
+      "funding": [],
+      "tax": {
+        "enabled": true,
+        "entity": "c_corp",
+        "rate": 25,
+        "payment": "quarterly",
+        "includeOwnerDistributions": true
+      },
+      "scenarios": {},
+      "exit": {}
+    },
+    "checks": [
+      {
+        "row": 120,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Personnel",
+        "month": 1,
+        "unit": "usd",
+        "conv": "C22",
+        "src": [
+          "table",
+          "Personnel"
+        ]
+      },
+      {
+        "row": 121,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Personnel",
+        "month": 7,
+        "unit": "usd",
+        "conv": "C22",
+        "src": [
+          "table",
+          "Personnel"
+        ]
+      },
+      {
+        "row": 122,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Personnel",
+        "month": 19,
+        "unit": "usd",
+        "conv": "C22",
+        "src": [
+          "table",
+          "Personnel"
+        ]
+      },
+      {
+        "row": 123,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Sales and marketing",
+        "month": 1,
+        "unit": "usd",
+        "conv": "C22",
+        "src": [
+          "table",
+          "Sales and marketing"
+        ]
+      },
+      {
+        "row": 124,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "General and administrative",
+        "month": 1,
+        "unit": "usd",
+        "conv": "C22",
+        "src": [
+          "table",
+          "General and administrative"
+        ]
+      },
+      {
+        "row": 125,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "General and administrative",
+        "month": 2,
+        "unit": "usd",
+        "conv": "C22",
+        "src": [
+          "table",
+          "General and administrative"
+        ]
+      },
+      {
+        "row": 126,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Other operating expenses",
+        "month": 1,
+        "unit": "usd",
+        "conv": "C22",
+        "src": [
+          "table",
+          "Other operating expenses"
+        ]
+      },
+      {
+        "row": 127,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Total operating expenses",
+        "month": "Total",
+        "unit": "usd",
+        "conv": "C22",
+        "src": [
+          "table",
+          "Total operating expenses"
+        ]
+      },
+      {
+        "row": 128,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Operating profit (loss)",
+        "month": 1,
+        "unit": "usd",
+        "conv": "C22",
+        "src": [
+          "table",
+          "Operating profit (loss)"
+        ]
+      },
+      {
+        "row": 129,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Operating profit (loss)",
+        "month": 2,
+        "unit": "usd",
+        "conv": "C22",
+        "src": [
+          "table",
+          "Operating profit (loss)"
+        ]
+      },
+      {
+        "row": 130,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Income tax (estimate)",
+        "month": 5,
+        "unit": "usd",
+        "conv": "C22",
+        "src": [
+          "table",
+          "Income tax (estimate)"
+        ]
+      },
+      {
+        "row": 131,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Income tax (estimate)",
+        "month": 6,
+        "unit": "usd",
+        "conv": "C22",
+        "src": [
+          "table",
+          "Income tax (estimate)"
+        ]
+      },
+      {
+        "row": 132,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Income tax (estimate)",
+        "month": "Total",
+        "unit": "usd",
+        "conv": "C22",
+        "src": [
+          "table",
+          "Income tax (estimate)"
+        ]
+      },
+      {
+        "row": 133,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Income taxes paid",
+        "month": 7,
+        "unit": "usd",
+        "conv": "C22",
+        "src": [
+          "table",
+          "Income taxes paid"
+        ]
+      },
+      {
+        "row": 134,
+        "where": "Financial Projections \u203a Income statement",
+        "line": "Net income",
+        "month": "Total",
+        "unit": "usd",
+        "conv": "C22",
+        "src": [
+          "table",
+          "Net income"
+        ]
+      },
+      {
+        "row": 135,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 1,
+        "unit": "usd",
+        "conv": "C22",
+        "src": [
+          "table",
+          "Ending cash"
+        ]
+      },
+      {
+        "row": 136,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 12,
+        "unit": "usd",
+        "conv": "C22",
+        "src": [
+          "table",
+          "Ending cash"
+        ]
+      },
+      {
+        "row": 137,
+        "where": "Financial Projections \u203a Cash flow",
+        "line": "Ending cash",
+        "month": 24,
+        "unit": "usd",
+        "conv": "C22",
+        "src": [
+          "table",
+          "Ending cash"
+        ]
+      },
+      {
+        "row": 138,
+        "where": "Financial Projections \u203a Dashboard",
+        "line": "Additional funding required",
+        "month": null,
+        "unit": "usd",
+        "conv": "C22",
+        "src": [
+          "summary",
+          "fundingRequired"
+        ]
+      },
+      {
+        "row": 139,
+        "where": "Financial Projections \u203a Dashboard",
+        "line": "Runway: month cash runs out (0 = does not)",
+        "month": null,
+        "unit": "count",
+        "conv": "C22",
+        "src": [
+          "summary",
+          "firstNegativeCashMonth"
+        ]
+      }
+    ]
+  },
+  {
+    "sheet": "13 Exit (bonus)",
+    "file": "13-exit.vfm.json",
+    "project": {
+      "name": "13. Exit Strategy: cap table, preferences, taxes",
+      "setup": {
+        "startMonth": "2027-01",
+        "months": 24,
+        "startingCash": 100000,
+        "founderInvestment": 0,
+        "minCashCushion": 10000
+      },
+      "streams": [
+        {
+          "kind": "ecommerce",
+          "name": "E-commerce",
+          "options": {},
+          "inputs": {
+            "salesStartMonth": 1,
+            "aov": 100,
+            "ordersStart": 1000,
+            "orderGrowthPct": 0,
+            "returnsPct": 0,
+            "productCostPerOrder": 0,
+            "fulfillmentPerOrder": 0,
+            "shippingSubsidyPerOrder": 0,
+            "processingPct": 0,
+            "processingFixed": 0,
+            "newCustomerSharePct": 0,
+            "cac": 0,
+            "marketingFixed": 0,
+            "collectionDays": 0,
+            "supplierDays": 0
+          }
+        }
+      ],
+      "roles": [],
+      "expenses": [],
+      "capex": [],
+      "funding": [
+        {
+          "id": "f1",
+          "name": "Seed SAFE",
+          "kind": "equity",
+          "amount": 500000,
+          "month": 3,
+          "annualRatePct": 8,
+          "termMonths": 36,
+          "equityPct": 10,
+          "instrument": "safe"
+        },
+        {
+          "id": "f2",
+          "name": "Series A",
+          "kind": "equity",
+          "amount": 2000000,
+          "month": 12,
+          "annualRatePct": 8,
+          "termMonths": 36,
+          "equityPct": 20,
+          "instrument": "priced"
+        }
+      ],
+      "tax": {
+        "enabled": true,
+        "entity": "c_corp",
+        "rate": 25,
+        "payment": "quarterly",
+        "includeOwnerDistributions": true
+      },
+      "scenarios": {},
+      "exit": {
+        "founders": [
+          {
+            "id": "f1",
+            "name": "Founder 1",
+            "pct": 50
+          },
+          {
+            "id": "f2",
+            "name": "Founder 2",
+            "pct": 50
+          }
+        ],
+        "poolPct": 10,
+        "prefMultiple": 1,
+        "participating": false,
+        "exitYear": 5,
+        "growthPct": 0,
+        "exitMarginPct": 15,
+        "netCashAtExit": 0,
+        "feesPct": 3,
+        "capGainsFedPct": 23.8,
+        "capGainsStatePct": 13.3,
+        "ordinaryRatePct": 50.3,
+        "qsbs": true,
+        "strategic": {
+          "multiple": 10,
+          "cashPct": 100,
+          "escrowPct": 0,
+          "earnoutPct": 0,
+          "earnoutProbPct": 0
+        },
+        "acquihire": {
+          "price": 3000000,
+          "retentionPerFounder": 100000
+        },
+        "focus": "all"
+      }
+    },
+    "checks": [
+      {
+        "row": 73,
+        "where": "Exit Strategy \u203a Cap table \u203a Ownership after each round",
+        "line": "Founding: founders",
+        "month": null,
+        "unit": "pct",
+        "conv": "",
+        "src": [
+          "cap",
+          0,
+          "founderPct"
+        ]
+      },
+      {
+        "row": 74,
+        "where": "Exit Strategy \u203a Cap table \u203a Ownership after each round",
+        "line": "Founding: option pool",
+        "month": null,
+        "unit": "pct",
+        "conv": "",
+        "src": [
+          "cap",
+          0,
+          "poolPct"
+        ]
+      },
+      {
+        "row": 75,
+        "where": "Exit Strategy \u203a Cap table \u203a Ownership after each round",
+        "line": "Series A row: founders",
+        "month": null,
+        "unit": "pct",
+        "conv": "C16",
+        "src": [
+          "cap",
+          1,
+          "founderPct"
+        ]
+      },
+      {
+        "row": 76,
+        "where": "Exit Strategy \u203a Cap table \u203a Ownership after each round",
+        "line": "Series A row: investors",
+        "month": null,
+        "unit": "pct",
+        "conv": "C16",
+        "src": [
+          "cap",
+          1,
+          "investorPct"
+        ]
+      },
+      {
+        "row": 77,
+        "where": "Exit Strategy \u203a Cap table \u203a Ownership after each round",
+        "line": "Series A row: option pool",
+        "month": null,
+        "unit": "pct",
+        "conv": "C16",
+        "src": [
+          "cap",
+          1,
+          "poolPct"
+        ]
+      },
+      {
+        "row": 78,
+        "where": "Exit Strategy \u203a Strategic acquisition",
+        "line": "Headline price",
+        "month": null,
+        "unit": "usd",
+        "conv": "C19",
+        "src": [
+          "exit",
+          "strategic",
+          "enterpriseValue"
+        ]
+      },
+      {
+        "row": 79,
+        "where": "Exit Strategy \u203a Strategic acquisition",
+        "line": "Founder share at the headline price (gross)",
+        "month": null,
+        "unit": "usd",
+        "conv": "C16, C17",
+        "src": [
+          "exit",
+          "strategic",
+          "gross"
+        ]
+      },
+      {
+        "row": 80,
+        "where": "Exit Strategy \u203a Strategic acquisition",
+        "line": "Taxes (shown as a negative)",
+        "month": null,
+        "unit": "usd",
+        "conv": "C16",
+        "src": [
+          "exit",
+          "strategic",
+          "negtax"
+        ]
+      },
+      {
+        "row": 81,
+        "where": "Exit Strategy \u203a Strategic acquisition",
+        "line": "Expected take-home",
+        "month": null,
+        "unit": "usd",
+        "conv": "C16",
+        "src": [
+          "exit",
+          "strategic",
+          "net"
+        ]
+      },
+      {
+        "row": 82,
+        "where": "Exit Strategy \u203a Acqui-hire",
+        "line": "Founder share at the headline price (gross)",
+        "month": null,
+        "unit": "usd",
+        "conv": "C16, C17, C18",
+        "src": [
+          "exit",
+          "acquihire",
+          "gross"
+        ]
+      },
+      {
+        "row": 83,
+        "where": "Exit Strategy \u203a Acqui-hire",
+        "line": "Retention pay",
+        "month": null,
+        "unit": "usd",
+        "conv": "",
+        "src": [
+          "exit",
+          "acquihire",
+          "retention"
+        ]
+      },
+      {
+        "row": 84,
+        "where": "Exit Strategy \u203a Acqui-hire",
+        "line": "Expected take-home",
+        "month": null,
+        "unit": "usd",
+        "conv": "C16, C18",
+        "src": [
+          "exit",
+          "acquihire",
+          "net"
+        ]
+      },
+      {
+        "row": 86,
+        "where": "Exit Strategy \u203a Strategic acquisition",
+        "line": "Taxes (shown as a negative)",
+        "month": null,
+        "unit": "usd",
+        "conv": "C16",
+        "src": [
+          "exit3",
+          "strategic",
+          "negtax"
+        ]
+      },
+      {
+        "row": 87,
+        "where": "Exit Strategy \u203a Strategic acquisition",
+        "line": "Expected take-home",
+        "month": null,
+        "unit": "usd",
+        "conv": "C16",
+        "src": [
+          "exit3",
+          "strategic",
+          "net"
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,421 @@
+{
+  "format": "venture-financial-model",
+  "version": 1,
+  "exportedAt": "2026-11-04T00:00:00.000Z",
+  "project": {
+    "schemaVersion": 1,
+    "id": "validation_2-enterprise",
+    "createdAt": "2026-11-04T00:00:00.000Z",
+    "updatedAt": "2026-11-04T00:00:00.000Z",
+    "setup": {
+      "name": "2. Enterprise / government: pipeline, whole deals, annual billing",
+      "description": "",
+      "industries": [],
+      "startMonth": "2027-01",
+      "months": 24,
+      "startingCash": {
+        "v": 300000,
+        "basis": "Validation test input",
+        "conf": "benchmark",
+        "example": false
+      },
+      "founderInvestment": {
+        "v": 0,
+        "basis": "Validation test input",
+        "conf": "benchmark",
+        "example": false
+      },
+      "minCashCushion": {
+        "v": 10000,
+        "basis": "Validation test input",
+        "conf": "benchmark",
+        "example": false
+      },
+      "largestCustomerSharePct": {
+        "v": 10,
+        "basis": "",
+        "conf": "unset",
+        "example": true
+      }
+    },
+    "streams": [
+      {
+        "id": "s0",
+        "kind": "enterprise",
+        "name": "Enterprise",
+        "inputs": {
+          "salesStartMonth": {
+            "v": 1,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "prospectsPerMonth": {
+            "v": 10,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "prospectGrowthPct": {
+            "v": 0,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "openOppsAtStart": {
+            "v": 0,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "pilotsAtStart": {
+            "v": 0,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "qualifyPct": {
+            "v": 50,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "monthsToQualify": {
+            "v": 1,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "pilotPct": {
+            "v": 20,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "evalMonths": {
+            "v": 1,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "maxConcurrent": {
+            "v": 0,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "salesBdMonthly": {
+            "v": 2000,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "costPerProspect": {
+            "v": 100,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "pilotMonths": {
+            "v": 2,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "pilotCost": {
+            "v": 6000,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "paidPilotPct": {
+            "v": 0,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "pilotFee": {
+            "v": 0,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "pilotConversionPct": {
+            "v": 50,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "decisionMonths": {
+            "v": 1,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "procurementMonths": {
+            "v": 2,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "startLagMonths": {
+            "v": 1,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "licensePrice": {
+            "v": 1000,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "licensesPerCustomer": {
+            "v": 20,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "termMonths": {
+            "v": 12,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "renewalPct": {
+            "v": 100,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "priceIncreasePct": {
+            "v": 5,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "implementationFee": {
+            "v": 10000,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "trainingFee": {
+            "v": 2000,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "proServicesMonthly": {
+            "v": 500,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "laborRate": {
+            "v": 50,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "onboardingHours": {
+            "v": 40,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "trainingCost": {
+            "v": 1000,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "configCost": {
+            "v": 1500,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "supportHours": {
+            "v": 5,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "infraPerCustomer": {
+            "v": 300,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "csmPerCustomer": {
+            "v": 200,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "hostingBase": {
+            "v": 1000,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "securityMonthly": {
+            "v": 500,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "certificationCost": {
+            "v": 12000,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "certificationMonth": {
+            "v": 6,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "legalMonthly": {
+            "v": 400,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "insuranceMonthly": {
+            "v": 300,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "collectionDays": {
+            "v": 30,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          },
+          "supplierDays": {
+            "v": 0,
+            "basis": "Validation test input",
+            "conf": "benchmark",
+            "example": false
+          }
+        },
+        "options": {
+          "counting": "whole",
+          "billing": "annual",
+          "implRecognition": "start"
+        }
+      }
+    ],
+    "roles": [],
+    "expenses": [],
+    "capex": [],
+    "funding": [],
+    "tax": {
+      "enabled": false,
+      "entity": "c_corp",
+      "rate": {
+        "v": 25,
+        "basis": "Validation test input",
+        "conf": "benchmark",
+        "example": false
+      },
+      "payment": "quarterly",
+      "includeOwnerDistributions": true
+    },
+    "scenarios": {
+      "base": {
+        "id": "base",
+        "label": "Base case",
+        "overrides": {},
+        "notes": "",
+        "adjustments": {
+          "hiringDelayMonths": 0,
+          "extraCollectionDays": 0,
+          "compChangePct": 0
+        }
+      },
+      "downside": {
+        "id": "downside",
+        "label": "Downside case",
+        "overrides": {},
+        "notes": "",
+        "adjustments": {
+          "hiringDelayMonths": 0,
+          "extraCollectionDays": 0,
+          "compChangePct": 0
+        }
+      },
+      "upside": {
+        "id": "upside",
+        "label": "Upside case",
+        "overrides": {},
+        "notes": "",
+        "adjustments": {
+          "hiringDelayMonths": 0,
+          "extraCollectionDays": 0,
+          "compChangePct": 0
+        }
+      }
+    },
+    "reviewResponses": {},
+    "reflection": "",
+    "exit": {
+      "founders": [
+        {
+          "id": "f1",
+          "name": "Founder 1",
+          "pct": 50
+        },
+        {
+          "id": "f2",
+          "name": "Founder 2",
+          "pct": 50
+        }
+      ],
+      "poolPct": 10,
+      "rounds": [],
+      "prefMultiple": 1,
+      "participating": false,
+      "exitYear": 5,
+      "growthPct": 40,
+      "exitMarginPct": 15,
+      "netCashAtExit": 0,
+      "feesPct": 3,
+      "capGainsFedPct": 23.8,
+      "capGainsStatePct": 13.3,
+      "ordinaryRatePct": 50.3,
+      "qsbs": true,
+      "strategic": {
+        "multiple": 5,
+        "cashPct": 70,
+        "escrowPct": 10,
+        "earnoutPct": 20,
+        "earnoutProbPct": 50
+      },
+      "pe": {
+        "multiple": 18,
+        "rolloverPct": 20,
+        "secondBiteMultiple": 2.5
+      },
+      "ipo": {
+        "multiple": 6.5,
+        "sellAtIpoPct": 10,
+        "underwritingPct": 7,
+        "afterLockupChangePct": -10
+      },
+      "acquihire": {
+        "price": 2000000,
+        "retentionPerFounder": 600000
+      },
+      "lifestyle": {
+        "payoutPct": 50,
+        "years": 5
+      },
+      "focus": "all"
+    }
+  }
+}

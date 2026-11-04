@@ -1,0 +1,182 @@
+[
+ {
+  "sheet": "1 Software",
+  "line": "Financial Projections › Business metrics  ›  New subscribers",
+  "month": 12,
+  "value": 34
+ },
+ {
+  "sheet": "1 Software",
+  "line": "Financial Projections › Business metrics  ›  Ending subscribers",
+  "month": 1,
+  "value": 214
+ },
+ {
+  "sheet": "1 Software",
+  "line": "Financial Projections › Business metrics  ›  Ending subscribers",
+  "month": 12,
+  "value": 425
+ },
+ {
+  "sheet": "1 Software",
+  "line": "Financial Projections › Business metrics  ›  Annual-plan subscribers",
+  "month": 12,
+  "value": 80
+ },
+ {
+  "sheet": "1 Software",
+  "line": "Financial Projections › Business metrics  ›  Annual-plan subscribers",
+  "month": 13,
+  "value": 87
+ },
+ {
+  "sheet": "1 Software",
+  "line": "Financial Projections › Income statement  ›  Subscription revenue",
+  "month": 1,
+  "value": 10650
+ },
+ {
+  "sheet": "1 Software",
+  "line": "Financial Projections › Income statement  ›  Subscription revenue",
+  "month": 12,
+  "value": 20453
+ },
+ {
+  "sheet": "1 Software",
+  "line": "Financial Projections › Income statement  ›  Onboarding fees",
+  "month": 3,
+  "value": 2205
+ },
+ {
+  "sheet": "1 Software",
+  "line": "Financial Projections › Income statement  ›  License sales",
+  "month": 1,
+  "value": 0
+ },
+ {
+  "sheet": "1 Software",
+  "line": "Financial Projections › Income statement  ›  License sales",
+  "month": 2,
+  "value": 6000
+ },
+ {
+  "sheet": "1 Software",
+  "line": "Financial Projections › Income statement  ›  Support contracts",
+  "month": 6,
+  "value": 300
+ },
+ {
+  "sheet": "1 Software",
+  "line": "Financial Projections › Income statement  ›  Support contracts",
+  "month": 14,
+  "value": 650
+ },
+ {
+  "sheet": "1 Software",
+  "line": "Financial Projections › Income statement  ›  Development projects",
+  "month": 2,
+  "value": 12000
+ },
+ {
+  "sheet": "1 Software",
+  "line": "Financial Projections › Income statement  ›  Development projects",
+  "month": 12,
+  "value": 24000
+ },
+ {
+  "sheet": "1 Software",
+  "line": "Financial Projections › Income statement  ›  Total direct costs",
+  "month": 4,
+  "value": 12705
+ },
+ {
+  "sheet": "1 Software",
+  "line": "Financial Projections › Income statement  ›  Sales and marketing",
+  "month": 2,
+  "value": 9800
+ },
+ {
+  "sheet": "1 Software",
+  "line": "Financial Projections › Business metrics  ›  MRR",
+  "month": 12,
+  "value": 20453
+ },
+ {
+  "sheet": "1 Software",
+  "line": "Financial Projections › Business metrics  ›  ARR (annualized run rate)",
+  "month": 12,
+  "value": 245439
+ },
+ {
+  "sheet": "1 Software",
+  "line": "Financial Projections › Business metrics  ›  Lifetime value per subscriber",
+  "month": 12,
+  "value": 1271
+ },
+ {
+  "sheet": "1 Software",
+  "line": "Financial Projections › Business metrics  ›  Blended acquisition cost per new customer",
+  "month": 2,
+  "value": 400
+ },
+ {
+  "sheet": "1 Software",
+  "line": "Financial Projections › Cash flow  ›  Cash collected from customers",
+  "month": 1,
+  "value": 0
+ },
+ {
+  "sheet": "1 Software",
+  "line": "Financial Projections › Cash flow  ›  Cash collected from customers",
+  "month": 2,
+  "value": 10425
+ },
+ {
+  "sheet": "1 Software",
+  "line": "Financial Projections › Cash flow  ›  Cash collected from customers",
+  "month": 3,
+  "value": 27797
+ },
+ {
+  "sheet": "1 Software",
+  "line": "Financial Projections › Cash flow  ›  Deferred revenue",
+  "month": 1,
+  "value": 2200
+ },
+ {
+  "sheet": "1 Software",
+  "line": "Financial Projections › Cash flow  ›  Money customers still owe",
+  "month": 12,
+  "value": 79820
+ },
+ {
+  "sheet": "1 Software",
+  "line": "Financial Projections › Income statement  ›  Total revenue",
+  "month": "Total",
+  "value": 1247287
+ },
+ {
+  "sheet": "1 Software",
+  "line": "Financial Projections › Income statement  ›  EBITDA (simplified)",
+  "month": "Total",
+  "value": 113124
+ },
+ {
+  "sheet": "1 Software",
+  "line": "Financial Projections › Cash flow  ›  Ending cash",
+  "month": 1,
+  "value": 271510
+ },
+ {
+  "sheet": "1 Software",
+  "line": "Financial Projections › Cash flow  ›  Ending cash",
+  "month": 12,
+  "value": 270857
+ },
+ {
+  "sheet": "1 Software",
+  "line": "Financial Projections › Cash flow  ›  Ending cash",
+  "month": 24,
+  "value": 353654
+ }
+]
